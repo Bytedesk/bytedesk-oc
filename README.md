@@ -54,7 +54,13 @@ dependencies: [
 ]
 ```
 
-#### 参考步骤
+### 4. 本地集成
+
+此方法适用于有自定义界面需求的开发者
+
+- 下载源码，直接拖到自己项目中
+
+<!-- ### 参考步骤 -->
 
 <!-- - <img src="https://www.weikefu.net/assets/spm/add-package-1.png" width="250"> 
 - 此处输入源地址：<img src="https://www.weikefu.net/assets/spm/add-package-2.png" width="500">
@@ -65,10 +71,6 @@ dependencies: [
 - 添加成功之后，便可以在源文件中引用：<img src="https://www.weikefu.net/assets/spm/add-package-7.png" width="500"> -->
 <!-- #### 如果加载失败，建议重置 -->
 <!-- - <img src="https://www.weikefu.net/assets/spm/add-package-8.png" width="500"> -->
-  
-### 4. 本地集成
-
-- 此方法适用于有自定义界面需求的开发者
 
 ## 技术支持
 
