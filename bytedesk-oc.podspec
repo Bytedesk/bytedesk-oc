@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
 
   spec.name         = "bytedesk-oc"
   spec.version      = "0.0.1"
-  spec.summary      = "A short description of bytedesk-oc."
+  spec.summary      = "bytedesk.com helpdesk chat kefu lib."
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -25,7 +25,7 @@ Pod::Spec.new do |spec|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = <<-DESC
-  Online chat Lib for ios, Helpdesk system
+  Online chat kefu Lib for ios, Helpdesk system
                    DESC
 
   spec.homepage     = "https://www.bytedesk.com"
@@ -39,8 +39,8 @@ Pod::Spec.new do |spec|
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  spec.license      = "Apache License, Version 2.0"
-  # spec.license      = { :type => "MIT", :file => "FILE_LICENSE" }
+  # spec.license      = "MIT"
+  spec.license      = { :type => "MIT", :file => "LICENSE" }
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -94,7 +94,7 @@ Pod::Spec.new do |spec|
   spec.source_files  = "Classes", "bytedesk-oc/**/*.{h,m}"
   # spec.exclude_files = "Classes/Exclude"
 
-  # spec.public_header_files = "Classes/**/*.h"
+  spec.public_header_files = "bytedesk-oc/*.h"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
