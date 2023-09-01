@@ -63,10 +63,8 @@ dependencies: [
 - 此处查看，如图为添加成功：<img src="https://www.weikefu.net/assets/spm/add-package-5.png" width="500">
 - 如果没有bytedesk-oc，则需要手动添加：<img src="https://www.weikefu.net/assets/spm/add-package-6.png" width="500">
 - 添加成功之后，便可以在源文件中引用：<img src="https://www.weikefu.net/assets/spm/add-package-7.png" width="500"> -->
-
-#### 如果加载失败，建议重置
-
-- <img src="https://www.weikefu.net/assets/spm/add-package-8.png" width="500">
+<!-- #### 如果加载失败，建议重置 -->
+<!-- - <img src="https://www.weikefu.net/assets/spm/add-package-8.png" width="500"> -->
   
 ### 4. 本地集成
 
