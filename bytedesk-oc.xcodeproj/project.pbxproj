@@ -214,6 +214,17 @@
 		3D53A9BD2A97359F0060D050 /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D53A9BA2A97359E0060D050 /* SRWebSocket.m */; };
 		3D53A9BE2A97359F0060D050 /* SocketRocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D53A9BB2A97359E0060D050 /* SocketRocket.h */; };
 		3D53A9BF2A97359F0060D050 /* SRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D53A9BC2A97359E0060D050 /* SRWebSocket.h */; };
+		3DC01FAE2AA2AC020012ACA0 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DC01FA32AA2AC020012ACA0 /* FMDatabase.h */; };
+		3DC01FAF2AA2AC020012ACA0 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC01FA42AA2AC020012ACA0 /* FMDatabaseQueue.m */; };
+		3DC01FB02AA2AC020012ACA0 /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DC01FA52AA2AC020012ACA0 /* FMResultSet.h */; };
+		3DC01FB12AA2AC020012ACA0 /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DC01FA62AA2AC020012ACA0 /* FMDatabasePool.h */; };
+		3DC01FB22AA2AC020012ACA0 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC01FA72AA2AC020012ACA0 /* FMDatabaseAdditions.m */; };
+		3DC01FB32AA2AC020012ACA0 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC01FA82AA2AC020012ACA0 /* FMDatabase.m */; };
+		3DC01FB42AA2AC020012ACA0 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DC01FA92AA2AC020012ACA0 /* FMDatabaseQueue.h */; };
+		3DC01FB52AA2AC020012ACA0 /* FMDB.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DC01FAA2AA2AC020012ACA0 /* FMDB.h */; };
+		3DC01FB62AA2AC020012ACA0 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DC01FAB2AA2AC020012ACA0 /* FMDatabaseAdditions.h */; };
+		3DC01FB72AA2AC020012ACA0 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC01FAC2AA2AC020012ACA0 /* FMDatabasePool.m */; };
+		3DC01FB82AA2AC020012ACA0 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC01FAD2AA2AC020012ACA0 /* FMResultSet.m */; };
 		AB95E5F0342EB942CCBAD439 /* Pods_bytedesk_oc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3554ED08B446A315D803582 /* Pods_bytedesk_oc.framework */; };
 		D67D67D10157AFECD5098C9D /* Pods_bytedesk_oc_bytedesk_ocTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EED0F6E04470F38E8C0E9D08 /* Pods_bytedesk_oc_bytedesk_ocTests.framework */; };
 /* End PBXBuildFile section */
@@ -438,6 +449,17 @@
 		3D53A9BA2A97359E0060D050 /* SRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRWebSocket.m; sourceTree = "<group>"; };
 		3D53A9BB2A97359E0060D050 /* SocketRocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketRocket.h; sourceTree = "<group>"; };
 		3D53A9BC2A97359E0060D050 /* SRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRWebSocket.h; sourceTree = "<group>"; };
+		3DC01FA32AA2AC020012ACA0 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		3DC01FA42AA2AC020012ACA0 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		3DC01FA52AA2AC020012ACA0 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		3DC01FA62AA2AC020012ACA0 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		3DC01FA72AA2AC020012ACA0 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		3DC01FA82AA2AC020012ACA0 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		3DC01FA92AA2AC020012ACA0 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		3DC01FAA2AA2AC020012ACA0 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		3DC01FAB2AA2AC020012ACA0 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		3DC01FAC2AA2AC020012ACA0 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		3DC01FAD2AA2AC020012ACA0 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		6CE644175D760F77C124A58F /* Pods-bytedesk-oc-bytedesk-ocTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bytedesk-oc-bytedesk-ocTests.release.xcconfig"; path = "../bytedesk-oc/Pods/Target Support Files/Pods-bytedesk-oc-bytedesk-ocTests/Pods-bytedesk-oc-bytedesk-ocTests.release.xcconfig"; sourceTree = "<group>"; };
 		9B10A10FE47742E3C865C9BA /* Pods-bytedesk-oc.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bytedesk-oc.debug.xcconfig"; path = "../bytedesk-oc/Pods/Target Support Files/Pods-bytedesk-oc/Pods-bytedesk-oc.debug.xcconfig"; sourceTree = "<group>"; };
 		AD508AFC0A02E2F83E20E082 /* Pods-bytedesk-oc-bytedesk-ocTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bytedesk-oc-bytedesk-ocTests.debug.xcconfig"; path = "../bytedesk-oc/Pods/Target Support Files/Pods-bytedesk-oc-bytedesk-ocTests/Pods-bytedesk-oc-bytedesk-ocTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -662,6 +684,7 @@
 		3D27F5682A8D9577005C8744 /* vendors */ = {
 			isa = PBXGroup;
 			children = (
+				3DC01FA22AA2AC020012ACA0 /* FMDB */,
 				3D53A9B92A97359E0060D050 /* SocketRocket */,
 				3D53A93B2A96C3150060D050 /* M80AttributedLabel */,
 				3D27F5692A8D9577005C8744 /* MQTTClient */,
@@ -915,6 +938,24 @@
 			path = SocketRocket;
 			sourceTree = "<group>";
 		};
+		3DC01FA22AA2AC020012ACA0 /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				3DC01FA32AA2AC020012ACA0 /* FMDatabase.h */,
+				3DC01FA42AA2AC020012ACA0 /* FMDatabaseQueue.m */,
+				3DC01FA52AA2AC020012ACA0 /* FMResultSet.h */,
+				3DC01FA62AA2AC020012ACA0 /* FMDatabasePool.h */,
+				3DC01FA72AA2AC020012ACA0 /* FMDatabaseAdditions.m */,
+				3DC01FA82AA2AC020012ACA0 /* FMDatabase.m */,
+				3DC01FA92AA2AC020012ACA0 /* FMDatabaseQueue.h */,
+				3DC01FAA2AA2AC020012ACA0 /* FMDB.h */,
+				3DC01FAB2AA2AC020012ACA0 /* FMDatabaseAdditions.h */,
+				3DC01FAC2AA2AC020012ACA0 /* FMDatabasePool.m */,
+				3DC01FAD2AA2AC020012ACA0 /* FMResultSet.m */,
+			);
+			path = FMDB;
+			sourceTree = "<group>";
+		};
 		66D28B7FC47980268BAC2A44 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -957,12 +998,14 @@
 				3D27FAB22A8D9579005C8744 /* BDCategoryModel.h in Headers */,
 				3D27FAB62A8D9579005C8744 /* BDBlockModel.h in Headers */,
 				3D27FA9B2A8D9579005C8744 /* BDConstants.h in Headers */,
+				3DC01FB62AA2AC020012ACA0 /* FMDatabaseAdditions.h in Headers */,
 				3D27FAB32A8D9579005C8744 /* BDProfileModel.h in Headers */,
 				3D27FAA52A8D9579005C8744 /* BDContactModel.h in Headers */,
 				3D53A9492A96C3150060D050 /* BDM80AttributedLabel.h in Headers */,
 				3D27FABA2A8D9579005C8744 /* ExtraParam.h in Headers */,
 				3D27FABC2A8D9579005C8744 /* BDQueueModel.h in Headers */,
 				3D27FA962A8D9579005C8744 /* BDUtils.h in Headers */,
+				3DC01FB12AA2AC020012ACA0 /* FMDatabasePool.h in Headers */,
 				3D27FAB92A8D9579005C8744 /* BDLeaveMsgModel.h in Headers */,
 				3D27FA8F2A8D9579005C8744 /* BDMQTTApis.h in Headers */,
 				3D53A94F2A96C3150060D050 /* BDM80AttributedLabelAttachment.h in Headers */,
@@ -974,6 +1017,7 @@
 				3D27FB0A2A8DFDA5005C8744 /* BDInputView.h in Headers */,
 				3D27FAC32A8D9579005C8744 /* User.pbobjc.h in Headers */,
 				3D27F84D2A8D9578005C8744 /* BDMsgVoiceContentView.h in Headers */,
+				3DC01FB42AA2AC020012ACA0 /* FMDatabaseQueue.h in Headers */,
 				3D27F81D2A8D9578005C8744 /* BDLeaveMessageViewController.h in Headers */,
 				3D27F8A32A8D9578005C8744 /* MQTTProperties.h in Headers */,
 				3D27F8B22A8D9578005C8744 /* BDWBiCloudManager.h in Headers */,
@@ -1012,8 +1056,10 @@
 				3D27F89C2A8D9578005C8744 /* MQTTMessage.h in Headers */,
 				3D27F8152A8D9578005C8744 /* BDChatKFViewController.h in Headers */,
 				3D27F8502A8D9578005C8744 /* BDMsgListContentView.h in Headers */,
+				3DC01FB02AA2AC020012ACA0 /* FMResultSet.h in Headers */,
 				3D53A9BF2A97359F0060D050 /* SRWebSocket.h in Headers */,
 				3D27F7FF2A8D9578005C8744 /* BDBadgeView.h in Headers */,
+				3DC01FB52AA2AC020012ACA0 /* FMDB.h in Headers */,
 				3D53A9482A96C3150060D050 /* BDM80AttributedLabelURL.h in Headers */,
 				3D27F7F02A8D9578005C8744 /* UIView+KFDSUI.h in Headers */,
 				3D27F7F32A8D9578005C8744 /* BDVideoCompress.h in Headers */,
@@ -1041,6 +1087,7 @@
 				3D27F8212A8D9578005C8744 /* BDFeedbackViewController.h in Headers */,
 				3D27F8A22A8D9578005C8744 /* MQTTSSLSecurityPolicyDecoder.h in Headers */,
 				3D27FB032A8DFDA5005C8744 /* BDPlusView.h in Headers */,
+				3DC01FAE2AA2AC020012ACA0 /* FMDatabase.h in Headers */,
 				3D53A9552A96C34E0060D050 /* BDM80AttributedLabel+KFDSUI.h in Headers */,
 				3D27F82D2A8D9578005C8744 /* BDFaqViewController.h in Headers */,
 				3D27FB0B2A8DFDA5005C8744 /* BDInputEmotionManager.h in Headers */,
@@ -1222,6 +1269,7 @@
 				3D27FAA32A8D9579005C8744 /* BDNoticeModel.m in Sources */,
 				3D27F8902A8D9578005C8744 /* MQTTSSLSecurityPolicyEncoder.m in Sources */,
 				3D27FAA92A8D9579005C8744 /* BDQueueModel.m in Sources */,
+				3DC01FAF2AA2AC020012ACA0 /* FMDatabaseQueue.m in Sources */,
 				3D27F7E82A8D9578005C8744 /* BDUIApis.m in Sources */,
 				3D27F8B02A8D9578005C8744 /* BDWBiCloudManager.m in Sources */,
 				3D27F82C2A8D9578005C8744 /* BDSupportArticleViewController.m in Sources */,
@@ -1248,6 +1296,7 @@
 				3D27FAFF2A8DFDA5005C8744 /* BDRecordVoiceViewHUD.m in Sources */,
 				3D27F81A2A8D9578005C8744 /* BDLeaveMessageViewController.m in Sources */,
 				3D27F8942A8D9578005C8744 /* MQTTCoreDataPersistence.m in Sources */,
+				3DC01FB82AA2AC020012ACA0 /* FMResultSet.m in Sources */,
 				3D53A94D2A96C3150060D050 /* BDM80AttributedLabel.m in Sources */,
 				3D27FB042A8DFDA5005C8744 /* BDInputEmotionParser.m in Sources */,
 				3D27FA9F2A8D9579005C8744 /* BDWorkGroupModel.m in Sources */,
@@ -1281,6 +1330,7 @@
 				3D27F87C2A8D9578005C8744 /* MQTTWebsocketTransport.m in Sources */,
 				3D27FA932A8D9579005C8744 /* BDSettings.m in Sources */,
 				3D27F89A2A8D9578005C8744 /* MQTTInMemoryPersistence.m in Sources */,
+				3DC01FB32AA2AC020012ACA0 /* FMDatabase.m in Sources */,
 				3D27FA9D2A8D9579005C8744 /* BDProfileModel.m in Sources */,
 				3D27F8862A8D9578005C8744 /* MQTTSessionManager.m in Sources */,
 				3D27F8872A8D9578005C8744 /* GCDTimer.m in Sources */,
@@ -1296,6 +1346,7 @@
 				3D27FB0D2A8DFDA5005C8744 /* BDPlusView.m in Sources */,
 				3D27F88A2A8D9578005C8744 /* MQTTMessage.m in Sources */,
 				3D27FAB82A8D9579005C8744 /* BDFeedbackModel.m in Sources */,
+				3DC01FB72AA2AC020012ACA0 /* FMDatabasePool.m in Sources */,
 				3D27FA8E2A8D9579005C8744 /* BDDBApis.m in Sources */,
 				3D27F88B2A8D9578005C8744 /* MQTTDecoder.m in Sources */,
 				3D27F8A12A8D9578005C8744 /* MQTTSessionLegacy.m in Sources */,
@@ -1313,6 +1364,7 @@
 				3D27FB052A8DFDA5005C8744 /* BDInputEmotionManager.m in Sources */,
 				3D27F8982A8D9578005C8744 /* ForegroundReconnection.m in Sources */,
 				3D27FA832A8D9579005C8744 /* BDHttpApis.m in Sources */,
+				3DC01FB22AA2AC020012ACA0 /* FMDatabaseAdditions.m in Sources */,
 				3D27F8962A8D9578005C8744 /* ReconnectTimer.m in Sources */,
 				3D27F8612A8D9578005C8744 /* BDMsgQuestionnairViewCell.m in Sources */,
 				3D27F8002A8D9578005C8744 /* BDLoadProgressView.m in Sources */,
