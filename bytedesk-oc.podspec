@@ -28,8 +28,8 @@ Pod::Spec.new do |spec|
   # 
   spec.requires_arc = true
   # 
-  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  spec.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   # 
   spec.dependency "AFNetworking", "~> 4.0.1"
   spec.dependency "FMDB", "~> 2.7.5"
