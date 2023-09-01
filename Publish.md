@@ -10,7 +10,7 @@
 - 打标签，并提交
 
 ```bash
-arch -x86_64 pod spec lint bytedesk-oc.podspec --skip-import-validation --verbose
+arch -x86_64 pod spec lint bytedesk-oc.podspec --allow-warnings --skip-import-validation --verbose
 arch -x86_64 pod trunk push bytedesk-oc.podspec --verbose
 ```
 
