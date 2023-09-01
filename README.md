@@ -33,7 +33,7 @@
 ```bash
 ```
 
-### 2. Cartage
+### 2. Carthage
 
 ```bash
 ```
