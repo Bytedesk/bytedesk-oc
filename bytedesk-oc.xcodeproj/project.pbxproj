@@ -117,89 +117,6 @@
 		3D27F8B12A8D9578005C8744 /* BDWBDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F5AA2A8D9577005C8744 /* BDWBDocument.m */; };
 		3D27F8B22A8D9578005C8744 /* BDWBiCloudManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F5AB2A8D9577005C8744 /* BDWBiCloudManager.h */; };
 		3D27F8B32A8D9578005C8744 /* BDWBDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F5AC2A8D9577005C8744 /* BDWBDocument.h */; };
-		3D27FA272A8D9579005C8744 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F73F2A8D9578005C8744 /* FMDatabase.h */; };
-		3D27FA282A8D9579005C8744 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7402A8D9578005C8744 /* FMDatabaseQueue.m */; };
-		3D27FA292A8D9579005C8744 /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7412A8D9578005C8744 /* FMResultSet.h */; };
-		3D27FA2A2A8D9579005C8744 /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7422A8D9578005C8744 /* FMDatabasePool.h */; };
-		3D27FA2B2A8D9579005C8744 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7432A8D9578005C8744 /* FMDatabaseAdditions.m */; };
-		3D27FA2C2A8D9579005C8744 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7442A8D9578005C8744 /* FMDatabase.m */; };
-		3D27FA2D2A8D9579005C8744 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7452A8D9578005C8744 /* FMDatabaseQueue.h */; };
-		3D27FA2E2A8D9579005C8744 /* FMDB.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7462A8D9578005C8744 /* FMDB.h */; };
-		3D27FA2F2A8D9579005C8744 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7472A8D9578005C8744 /* FMDatabaseAdditions.h */; };
-		3D27FA302A8D9579005C8744 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7482A8D9578005C8744 /* FMDatabasePool.m */; };
-		3D27FA312A8D9579005C8744 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7492A8D9578005C8744 /* FMResultSet.m */; };
-		3D27FA322A8D9579005C8744 /* GPBType.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F74B2A8D9578005C8744 /* GPBType.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA332A8D9579005C8744 /* GPBCodedOutputStream_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F74C2A8D9578005C8744 /* GPBCodedOutputStream_PackagePrivate.h */; };
-		3D27FA342A8D9579005C8744 /* GPBArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F74D2A8D9578005C8744 /* GPBArray.h */; };
-		3D27FA352A8D9579005C8744 /* GPBAny.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F74E2A8D9578005C8744 /* GPBAny.pbobjc.h */; };
-		3D27FA362A8D9579005C8744 /* GPBExtensionRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F74F2A8D9578005C8744 /* GPBExtensionRegistry.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA372A8D9579005C8744 /* GPBRootObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7502A8D9578005C8744 /* GPBRootObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA382A8D9579005C8744 /* GPBDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7512A8D9578005C8744 /* GPBDescriptor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA392A8D9579005C8744 /* GPBMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7522A8D9578005C8744 /* GPBMessage.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA3A2A8D9579005C8744 /* GPBEmpty.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7532A8D9578005C8744 /* GPBEmpty.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA3B2A8D9579005C8744 /* GPBProtocolBuffers.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7542A8D9578005C8744 /* GPBProtocolBuffers.h */; };
-		3D27FA3C2A8D9579005C8744 /* GPBWireFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7552A8D9578005C8744 /* GPBWireFormat.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA3D2A8D9579005C8744 /* GPBFieldMask.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7562A8D9578005C8744 /* GPBFieldMask.pbobjc.h */; };
-		3D27FA3E2A8D9579005C8744 /* GPBUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7572A8D9578005C8744 /* GPBUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA3F2A8D9579005C8744 /* GPBDuration.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7582A8D9578005C8744 /* GPBDuration.pbobjc.h */; };
-		3D27FA402A8D9579005C8744 /* GPBExtensionInternals.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7592A8D9578005C8744 /* GPBExtensionInternals.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA412A8D9579005C8744 /* GPBUnknownFieldSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F75A2A8D9578005C8744 /* GPBUnknownFieldSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA422A8D9579005C8744 /* GPBDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F75B2A8D9578005C8744 /* GPBDictionary.h */; };
-		3D27FA432A8D9579005C8744 /* GPBCodedOutputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F75C2A8D9578005C8744 /* GPBCodedOutputStream.h */; };
-		3D27FA442A8D9579005C8744 /* GPBStruct.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F75D2A8D9578005C8744 /* GPBStruct.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA452A8D9579005C8744 /* GPBRootObject_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F75E2A8D9578005C8744 /* GPBRootObject_PackagePrivate.h */; };
-		3D27FA462A8D9579005C8744 /* Api.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7612A8D9578005C8744 /* Api.pbobjc.h */; };
-		3D27FA472A8D9579005C8744 /* SourceContext.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7622A8D9578005C8744 /* SourceContext.pbobjc.h */; };
-		3D27FA482A8D9579005C8744 /* Duration.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7632A8D9578005C8744 /* Duration.pbobjc.h */; };
-		3D27FA492A8D9579005C8744 /* Empty.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7642A8D9578005C8744 /* Empty.pbobjc.h */; };
-		3D27FA4A2A8D9579005C8744 /* Wrappers.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7652A8D9578005C8744 /* Wrappers.pbobjc.h */; };
-		3D27FA4B2A8D9579005C8744 /* Struct.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7662A8D9578005C8744 /* Struct.pbobjc.h */; };
-		3D27FA4C2A8D9579005C8744 /* FieldMask.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7672A8D9578005C8744 /* FieldMask.pbobjc.h */; };
-		3D27FA4D2A8D9579005C8744 /* Timestamp.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7682A8D9578005C8744 /* Timestamp.pbobjc.h */; };
-		3D27FA4E2A8D9579005C8744 /* Type.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7692A8D9578005C8744 /* Type.pbobjc.h */; };
-		3D27FA4F2A8D9579005C8744 /* Any.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F76A2A8D9578005C8744 /* Any.pbobjc.h */; };
-		3D27FA502A8D9579005C8744 /* GPBUtilities_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F76B2A8D9578005C8744 /* GPBUtilities_PackagePrivate.h */; };
-		3D27FA512A8D9579005C8744 /* GPBTimestamp.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F76C2A8D9578005C8744 /* GPBTimestamp.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA522A8D9579005C8744 /* GPBCodedInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F76D2A8D9578005C8744 /* GPBCodedInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA532A8D9579005C8744 /* GPBWrappers.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F76E2A8D9578005C8744 /* GPBWrappers.pbobjc.h */; };
-		3D27FA542A8D9579005C8744 /* GPBApi.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F76F2A8D9578005C8744 /* GPBApi.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA552A8D9579005C8744 /* GPBWellKnownTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7702A8D9578005C8744 /* GPBWellKnownTypes.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA562A8D9579005C8744 /* GPBUnknownField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7712A8D9578005C8744 /* GPBUnknownField.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA572A8D9579005C8744 /* GPBSourceContext.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7722A8D9578005C8744 /* GPBSourceContext.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA582A8D9579005C8744 /* GPBDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7732A8D9578005C8744 /* GPBDescriptor.h */; };
-		3D27FA592A8D9579005C8744 /* GPBCodedInputStream_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7742A8D9578005C8744 /* GPBCodedInputStream_PackagePrivate.h */; };
-		3D27FA5A2A8D9579005C8744 /* GPBRootObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7752A8D9578005C8744 /* GPBRootObject.h */; };
-		3D27FA5B2A8D9579005C8744 /* GPBBootstrap.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7762A8D9578005C8744 /* GPBBootstrap.h */; };
-		3D27FA5C2A8D9579005C8744 /* GPBExtensionRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7772A8D9578005C8744 /* GPBExtensionRegistry.h */; };
-		3D27FA5D2A8D9579005C8744 /* GPBArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7782A8D9578005C8744 /* GPBArray.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA5E2A8D9579005C8744 /* GPBAny.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7792A8D9578005C8744 /* GPBAny.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA5F2A8D9579005C8744 /* GPBType.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F77A2A8D9578005C8744 /* GPBType.pbobjc.h */; };
-		3D27FA602A8D9579005C8744 /* GPBRuntimeTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F77B2A8D9578005C8744 /* GPBRuntimeTypes.h */; };
-		3D27FA612A8D9579005C8744 /* GPBFieldMask.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F77C2A8D9578005C8744 /* GPBFieldMask.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA622A8D9579005C8744 /* GPBUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F77D2A8D9578005C8744 /* GPBUtilities.h */; };
-		3D27FA632A8D9579005C8744 /* GPBDuration.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F77E2A8D9578005C8744 /* GPBDuration.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA642A8D9579005C8744 /* GPBMessage_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F77F2A8D9578005C8744 /* GPBMessage_PackagePrivate.h */; };
-		3D27FA652A8D9579005C8744 /* GPBWireFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7802A8D9578005C8744 /* GPBWireFormat.h */; };
-		3D27FA662A8D9579005C8744 /* GPBArray_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7812A8D9578005C8744 /* GPBArray_PackagePrivate.h */; };
-		3D27FA672A8D9579005C8744 /* GPBEmpty.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7822A8D9578005C8744 /* GPBEmpty.pbobjc.h */; };
-		3D27FA682A8D9579005C8744 /* GPBMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7832A8D9578005C8744 /* GPBMessage.h */; };
-		3D27FA692A8D9579005C8744 /* GPBProtocolBuffers_RuntimeSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7842A8D9578005C8744 /* GPBProtocolBuffers_RuntimeSupport.h */; };
-		3D27FA6A2A8D9579005C8744 /* GPBApi.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7852A8D9578005C8744 /* GPBApi.pbobjc.h */; };
-		3D27FA6B2A8D9579005C8744 /* GPBWrappers.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7862A8D9578005C8744 /* GPBWrappers.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA6C2A8D9579005C8744 /* GPBCodedInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7872A8D9578005C8744 /* GPBCodedInputStream.h */; };
-		3D27FA6D2A8D9579005C8744 /* GPBDescriptor_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7882A8D9578005C8744 /* GPBDescriptor_PackagePrivate.h */; };
-		3D27FA6E2A8D9579005C8744 /* GPBTimestamp.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7892A8D9578005C8744 /* GPBTimestamp.pbobjc.h */; };
-		3D27FA6F2A8D9579005C8744 /* GPBStruct.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F78A2A8D9578005C8744 /* GPBStruct.pbobjc.h */; };
-		3D27FA702A8D9579005C8744 /* GPBCodedOutputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F78B2A8D9578005C8744 /* GPBCodedOutputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA712A8D9579005C8744 /* GPBDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F78C2A8D9578005C8744 /* GPBDictionary.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3D27FA722A8D9579005C8744 /* GPBUnknownFieldSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F78D2A8D9578005C8744 /* GPBUnknownFieldSet.h */; };
-		3D27FA732A8D9579005C8744 /* GPBExtensionInternals.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F78E2A8D9578005C8744 /* GPBExtensionInternals.h */; };
-		3D27FA742A8D9579005C8744 /* GPBSourceContext.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F78F2A8D9578005C8744 /* GPBSourceContext.pbobjc.h */; };
-		3D27FA752A8D9579005C8744 /* GPBUnknownField.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7902A8D9578005C8744 /* GPBUnknownField.h */; };
-		3D27FA762A8D9579005C8744 /* GPBUnknownFieldSet_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7912A8D9578005C8744 /* GPBUnknownFieldSet_PackagePrivate.h */; };
-		3D27FA772A8D9579005C8744 /* GPBWellKnownTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7922A8D9578005C8744 /* GPBWellKnownTypes.h */; };
-		3D27FA782A8D9579005C8744 /* GPBUnknownField_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7932A8D9578005C8744 /* GPBUnknownField_PackagePrivate.h */; };
-		3D27FA792A8D9579005C8744 /* GPBDictionary_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7942A8D9578005C8744 /* GPBDictionary_PackagePrivate.h */; };
 		3D27FA7D2A8D9579005C8744 /* BDConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F79A2A8D9578005C8744 /* BDConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FA7E2A8D9579005C8744 /* BDCoreApis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F79B2A8D9578005C8744 /* BDCoreApis.m */; };
 		3D27FA812A8D9579005C8744 /* BDMQTTApis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F79E2A8D9578005C8744 /* BDMQTTApis.m */; };
@@ -424,89 +341,6 @@
 		3D27F5AA2A8D9577005C8744 /* BDWBDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDWBDocument.m; sourceTree = "<group>"; };
 		3D27F5AB2A8D9577005C8744 /* BDWBiCloudManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDWBiCloudManager.h; sourceTree = "<group>"; };
 		3D27F5AC2A8D9577005C8744 /* BDWBDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDWBDocument.h; sourceTree = "<group>"; };
-		3D27F73F2A8D9578005C8744 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
-		3D27F7402A8D9578005C8744 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
-		3D27F7412A8D9578005C8744 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
-		3D27F7422A8D9578005C8744 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
-		3D27F7432A8D9578005C8744 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
-		3D27F7442A8D9578005C8744 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
-		3D27F7452A8D9578005C8744 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
-		3D27F7462A8D9578005C8744 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
-		3D27F7472A8D9578005C8744 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
-		3D27F7482A8D9578005C8744 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
-		3D27F7492A8D9578005C8744 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		3D27F74B2A8D9578005C8744 /* GPBType.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBType.pbobjc.m; sourceTree = "<group>"; };
-		3D27F74C2A8D9578005C8744 /* GPBCodedOutputStream_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBCodedOutputStream_PackagePrivate.h; sourceTree = "<group>"; };
-		3D27F74D2A8D9578005C8744 /* GPBArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBArray.h; sourceTree = "<group>"; };
-		3D27F74E2A8D9578005C8744 /* GPBAny.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBAny.pbobjc.h; sourceTree = "<group>"; };
-		3D27F74F2A8D9578005C8744 /* GPBExtensionRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBExtensionRegistry.m; sourceTree = "<group>"; };
-		3D27F7502A8D9578005C8744 /* GPBRootObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBRootObject.m; sourceTree = "<group>"; };
-		3D27F7512A8D9578005C8744 /* GPBDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBDescriptor.m; sourceTree = "<group>"; };
-		3D27F7522A8D9578005C8744 /* GPBMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBMessage.m; sourceTree = "<group>"; };
-		3D27F7532A8D9578005C8744 /* GPBEmpty.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBEmpty.pbobjc.m; sourceTree = "<group>"; };
-		3D27F7542A8D9578005C8744 /* GPBProtocolBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBProtocolBuffers.h; sourceTree = "<group>"; };
-		3D27F7552A8D9578005C8744 /* GPBWireFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBWireFormat.m; sourceTree = "<group>"; };
-		3D27F7562A8D9578005C8744 /* GPBFieldMask.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBFieldMask.pbobjc.h; sourceTree = "<group>"; };
-		3D27F7572A8D9578005C8744 /* GPBUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBUtilities.m; sourceTree = "<group>"; };
-		3D27F7582A8D9578005C8744 /* GPBDuration.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBDuration.pbobjc.h; sourceTree = "<group>"; };
-		3D27F7592A8D9578005C8744 /* GPBExtensionInternals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBExtensionInternals.m; sourceTree = "<group>"; };
-		3D27F75A2A8D9578005C8744 /* GPBUnknownFieldSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBUnknownFieldSet.m; sourceTree = "<group>"; };
-		3D27F75B2A8D9578005C8744 /* GPBDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBDictionary.h; sourceTree = "<group>"; };
-		3D27F75C2A8D9578005C8744 /* GPBCodedOutputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBCodedOutputStream.h; sourceTree = "<group>"; };
-		3D27F75D2A8D9578005C8744 /* GPBStruct.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBStruct.pbobjc.m; sourceTree = "<group>"; };
-		3D27F75E2A8D9578005C8744 /* GPBRootObject_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBRootObject_PackagePrivate.h; sourceTree = "<group>"; };
-		3D27F7612A8D9578005C8744 /* Api.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Api.pbobjc.h; sourceTree = "<group>"; };
-		3D27F7622A8D9578005C8744 /* SourceContext.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SourceContext.pbobjc.h; sourceTree = "<group>"; };
-		3D27F7632A8D9578005C8744 /* Duration.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Duration.pbobjc.h; sourceTree = "<group>"; };
-		3D27F7642A8D9578005C8744 /* Empty.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Empty.pbobjc.h; sourceTree = "<group>"; };
-		3D27F7652A8D9578005C8744 /* Wrappers.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wrappers.pbobjc.h; sourceTree = "<group>"; };
-		3D27F7662A8D9578005C8744 /* Struct.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Struct.pbobjc.h; sourceTree = "<group>"; };
-		3D27F7672A8D9578005C8744 /* FieldMask.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldMask.pbobjc.h; sourceTree = "<group>"; };
-		3D27F7682A8D9578005C8744 /* Timestamp.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timestamp.pbobjc.h; sourceTree = "<group>"; };
-		3D27F7692A8D9578005C8744 /* Type.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Type.pbobjc.h; sourceTree = "<group>"; };
-		3D27F76A2A8D9578005C8744 /* Any.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Any.pbobjc.h; sourceTree = "<group>"; };
-		3D27F76B2A8D9578005C8744 /* GPBUtilities_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBUtilities_PackagePrivate.h; sourceTree = "<group>"; };
-		3D27F76C2A8D9578005C8744 /* GPBTimestamp.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBTimestamp.pbobjc.m; sourceTree = "<group>"; };
-		3D27F76D2A8D9578005C8744 /* GPBCodedInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBCodedInputStream.m; sourceTree = "<group>"; };
-		3D27F76E2A8D9578005C8744 /* GPBWrappers.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBWrappers.pbobjc.h; sourceTree = "<group>"; };
-		3D27F76F2A8D9578005C8744 /* GPBApi.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBApi.pbobjc.m; sourceTree = "<group>"; };
-		3D27F7702A8D9578005C8744 /* GPBWellKnownTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBWellKnownTypes.m; sourceTree = "<group>"; };
-		3D27F7712A8D9578005C8744 /* GPBUnknownField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBUnknownField.m; sourceTree = "<group>"; };
-		3D27F7722A8D9578005C8744 /* GPBSourceContext.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBSourceContext.pbobjc.m; sourceTree = "<group>"; };
-		3D27F7732A8D9578005C8744 /* GPBDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBDescriptor.h; sourceTree = "<group>"; };
-		3D27F7742A8D9578005C8744 /* GPBCodedInputStream_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBCodedInputStream_PackagePrivate.h; sourceTree = "<group>"; };
-		3D27F7752A8D9578005C8744 /* GPBRootObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBRootObject.h; sourceTree = "<group>"; };
-		3D27F7762A8D9578005C8744 /* GPBBootstrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBBootstrap.h; sourceTree = "<group>"; };
-		3D27F7772A8D9578005C8744 /* GPBExtensionRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBExtensionRegistry.h; sourceTree = "<group>"; };
-		3D27F7782A8D9578005C8744 /* GPBArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBArray.m; sourceTree = "<group>"; };
-		3D27F7792A8D9578005C8744 /* GPBAny.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBAny.pbobjc.m; sourceTree = "<group>"; };
-		3D27F77A2A8D9578005C8744 /* GPBType.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBType.pbobjc.h; sourceTree = "<group>"; };
-		3D27F77B2A8D9578005C8744 /* GPBRuntimeTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBRuntimeTypes.h; sourceTree = "<group>"; };
-		3D27F77C2A8D9578005C8744 /* GPBFieldMask.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBFieldMask.pbobjc.m; sourceTree = "<group>"; };
-		3D27F77D2A8D9578005C8744 /* GPBUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBUtilities.h; sourceTree = "<group>"; };
-		3D27F77E2A8D9578005C8744 /* GPBDuration.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBDuration.pbobjc.m; sourceTree = "<group>"; };
-		3D27F77F2A8D9578005C8744 /* GPBMessage_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBMessage_PackagePrivate.h; sourceTree = "<group>"; };
-		3D27F7802A8D9578005C8744 /* GPBWireFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBWireFormat.h; sourceTree = "<group>"; };
-		3D27F7812A8D9578005C8744 /* GPBArray_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBArray_PackagePrivate.h; sourceTree = "<group>"; };
-		3D27F7822A8D9578005C8744 /* GPBEmpty.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBEmpty.pbobjc.h; sourceTree = "<group>"; };
-		3D27F7832A8D9578005C8744 /* GPBMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBMessage.h; sourceTree = "<group>"; };
-		3D27F7842A8D9578005C8744 /* GPBProtocolBuffers_RuntimeSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBProtocolBuffers_RuntimeSupport.h; sourceTree = "<group>"; };
-		3D27F7852A8D9578005C8744 /* GPBApi.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBApi.pbobjc.h; sourceTree = "<group>"; };
-		3D27F7862A8D9578005C8744 /* GPBWrappers.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBWrappers.pbobjc.m; sourceTree = "<group>"; };
-		3D27F7872A8D9578005C8744 /* GPBCodedInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBCodedInputStream.h; sourceTree = "<group>"; };
-		3D27F7882A8D9578005C8744 /* GPBDescriptor_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBDescriptor_PackagePrivate.h; sourceTree = "<group>"; };
-		3D27F7892A8D9578005C8744 /* GPBTimestamp.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBTimestamp.pbobjc.h; sourceTree = "<group>"; };
-		3D27F78A2A8D9578005C8744 /* GPBStruct.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBStruct.pbobjc.h; sourceTree = "<group>"; };
-		3D27F78B2A8D9578005C8744 /* GPBCodedOutputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBCodedOutputStream.m; sourceTree = "<group>"; };
-		3D27F78C2A8D9578005C8744 /* GPBDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPBDictionary.m; sourceTree = "<group>"; };
-		3D27F78D2A8D9578005C8744 /* GPBUnknownFieldSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBUnknownFieldSet.h; sourceTree = "<group>"; };
-		3D27F78E2A8D9578005C8744 /* GPBExtensionInternals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBExtensionInternals.h; sourceTree = "<group>"; };
-		3D27F78F2A8D9578005C8744 /* GPBSourceContext.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBSourceContext.pbobjc.h; sourceTree = "<group>"; };
-		3D27F7902A8D9578005C8744 /* GPBUnknownField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBUnknownField.h; sourceTree = "<group>"; };
-		3D27F7912A8D9578005C8744 /* GPBUnknownFieldSet_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBUnknownFieldSet_PackagePrivate.h; sourceTree = "<group>"; };
-		3D27F7922A8D9578005C8744 /* GPBWellKnownTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBWellKnownTypes.h; sourceTree = "<group>"; };
-		3D27F7932A8D9578005C8744 /* GPBUnknownField_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBUnknownField_PackagePrivate.h; sourceTree = "<group>"; };
-		3D27F7942A8D9578005C8744 /* GPBDictionary_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBDictionary_PackagePrivate.h; sourceTree = "<group>"; };
 		3D27F79A2A8D9578005C8744 /* BDConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDConfig.h; sourceTree = "<group>"; };
 		3D27F79B2A8D9578005C8744 /* BDCoreApis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDCoreApis.m; sourceTree = "<group>"; };
 		3D27F79E2A8D9578005C8744 /* BDMQTTApis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDMQTTApis.m; sourceTree = "<group>"; };
@@ -832,8 +666,6 @@
 				3D53A93B2A96C3150060D050 /* M80AttributedLabel */,
 				3D27F5692A8D9577005C8744 /* MQTTClient */,
 				3D27F5A82A8D9577005C8744 /* WBDocument */,
-				3D27F73E2A8D9578005C8744 /* FMDB */,
-				3D27F74A2A8D9578005C8744 /* Protobuf */,
 			);
 			path = vendors;
 			sourceTree = "<group>";
@@ -909,119 +741,6 @@
 				3D27F5AA2A8D9577005C8744 /* BDWBDocument.m */,
 			);
 			path = WBDocument;
-			sourceTree = "<group>";
-		};
-		3D27F73E2A8D9578005C8744 /* FMDB */ = {
-			isa = PBXGroup;
-			children = (
-				3D27F73F2A8D9578005C8744 /* FMDatabase.h */,
-				3D27F7402A8D9578005C8744 /* FMDatabaseQueue.m */,
-				3D27F7412A8D9578005C8744 /* FMResultSet.h */,
-				3D27F7422A8D9578005C8744 /* FMDatabasePool.h */,
-				3D27F7432A8D9578005C8744 /* FMDatabaseAdditions.m */,
-				3D27F7442A8D9578005C8744 /* FMDatabase.m */,
-				3D27F7452A8D9578005C8744 /* FMDatabaseQueue.h */,
-				3D27F7462A8D9578005C8744 /* FMDB.h */,
-				3D27F7472A8D9578005C8744 /* FMDatabaseAdditions.h */,
-				3D27F7482A8D9578005C8744 /* FMDatabasePool.m */,
-				3D27F7492A8D9578005C8744 /* FMResultSet.m */,
-			);
-			path = FMDB;
-			sourceTree = "<group>";
-		};
-		3D27F74A2A8D9578005C8744 /* Protobuf */ = {
-			isa = PBXGroup;
-			children = (
-				3D27F74B2A8D9578005C8744 /* GPBType.pbobjc.m */,
-				3D27F74C2A8D9578005C8744 /* GPBCodedOutputStream_PackagePrivate.h */,
-				3D27F74D2A8D9578005C8744 /* GPBArray.h */,
-				3D27F74E2A8D9578005C8744 /* GPBAny.pbobjc.h */,
-				3D27F74F2A8D9578005C8744 /* GPBExtensionRegistry.m */,
-				3D27F7502A8D9578005C8744 /* GPBRootObject.m */,
-				3D27F7512A8D9578005C8744 /* GPBDescriptor.m */,
-				3D27F7522A8D9578005C8744 /* GPBMessage.m */,
-				3D27F7532A8D9578005C8744 /* GPBEmpty.pbobjc.m */,
-				3D27F7542A8D9578005C8744 /* GPBProtocolBuffers.h */,
-				3D27F7552A8D9578005C8744 /* GPBWireFormat.m */,
-				3D27F7562A8D9578005C8744 /* GPBFieldMask.pbobjc.h */,
-				3D27F7572A8D9578005C8744 /* GPBUtilities.m */,
-				3D27F7582A8D9578005C8744 /* GPBDuration.pbobjc.h */,
-				3D27F7592A8D9578005C8744 /* GPBExtensionInternals.m */,
-				3D27F75A2A8D9578005C8744 /* GPBUnknownFieldSet.m */,
-				3D27F75B2A8D9578005C8744 /* GPBDictionary.h */,
-				3D27F75C2A8D9578005C8744 /* GPBCodedOutputStream.h */,
-				3D27F75D2A8D9578005C8744 /* GPBStruct.pbobjc.m */,
-				3D27F75E2A8D9578005C8744 /* GPBRootObject_PackagePrivate.h */,
-				3D27F75F2A8D9578005C8744 /* google */,
-				3D27F76B2A8D9578005C8744 /* GPBUtilities_PackagePrivate.h */,
-				3D27F76C2A8D9578005C8744 /* GPBTimestamp.pbobjc.m */,
-				3D27F76D2A8D9578005C8744 /* GPBCodedInputStream.m */,
-				3D27F76E2A8D9578005C8744 /* GPBWrappers.pbobjc.h */,
-				3D27F76F2A8D9578005C8744 /* GPBApi.pbobjc.m */,
-				3D27F7702A8D9578005C8744 /* GPBWellKnownTypes.m */,
-				3D27F7712A8D9578005C8744 /* GPBUnknownField.m */,
-				3D27F7722A8D9578005C8744 /* GPBSourceContext.pbobjc.m */,
-				3D27F7732A8D9578005C8744 /* GPBDescriptor.h */,
-				3D27F7742A8D9578005C8744 /* GPBCodedInputStream_PackagePrivate.h */,
-				3D27F7752A8D9578005C8744 /* GPBRootObject.h */,
-				3D27F7762A8D9578005C8744 /* GPBBootstrap.h */,
-				3D27F7772A8D9578005C8744 /* GPBExtensionRegistry.h */,
-				3D27F7782A8D9578005C8744 /* GPBArray.m */,
-				3D27F7792A8D9578005C8744 /* GPBAny.pbobjc.m */,
-				3D27F77A2A8D9578005C8744 /* GPBType.pbobjc.h */,
-				3D27F77B2A8D9578005C8744 /* GPBRuntimeTypes.h */,
-				3D27F77C2A8D9578005C8744 /* GPBFieldMask.pbobjc.m */,
-				3D27F77D2A8D9578005C8744 /* GPBUtilities.h */,
-				3D27F77E2A8D9578005C8744 /* GPBDuration.pbobjc.m */,
-				3D27F77F2A8D9578005C8744 /* GPBMessage_PackagePrivate.h */,
-				3D27F7802A8D9578005C8744 /* GPBWireFormat.h */,
-				3D27F7812A8D9578005C8744 /* GPBArray_PackagePrivate.h */,
-				3D27F7822A8D9578005C8744 /* GPBEmpty.pbobjc.h */,
-				3D27F7832A8D9578005C8744 /* GPBMessage.h */,
-				3D27F7842A8D9578005C8744 /* GPBProtocolBuffers_RuntimeSupport.h */,
-				3D27F7852A8D9578005C8744 /* GPBApi.pbobjc.h */,
-				3D27F7862A8D9578005C8744 /* GPBWrappers.pbobjc.m */,
-				3D27F7872A8D9578005C8744 /* GPBCodedInputStream.h */,
-				3D27F7882A8D9578005C8744 /* GPBDescriptor_PackagePrivate.h */,
-				3D27F7892A8D9578005C8744 /* GPBTimestamp.pbobjc.h */,
-				3D27F78A2A8D9578005C8744 /* GPBStruct.pbobjc.h */,
-				3D27F78B2A8D9578005C8744 /* GPBCodedOutputStream.m */,
-				3D27F78C2A8D9578005C8744 /* GPBDictionary.m */,
-				3D27F78D2A8D9578005C8744 /* GPBUnknownFieldSet.h */,
-				3D27F78E2A8D9578005C8744 /* GPBExtensionInternals.h */,
-				3D27F78F2A8D9578005C8744 /* GPBSourceContext.pbobjc.h */,
-				3D27F7902A8D9578005C8744 /* GPBUnknownField.h */,
-				3D27F7912A8D9578005C8744 /* GPBUnknownFieldSet_PackagePrivate.h */,
-				3D27F7922A8D9578005C8744 /* GPBWellKnownTypes.h */,
-				3D27F7932A8D9578005C8744 /* GPBUnknownField_PackagePrivate.h */,
-				3D27F7942A8D9578005C8744 /* GPBDictionary_PackagePrivate.h */,
-			);
-			path = Protobuf;
-			sourceTree = "<group>";
-		};
-		3D27F75F2A8D9578005C8744 /* google */ = {
-			isa = PBXGroup;
-			children = (
-				3D27F7602A8D9578005C8744 /* protobuf */,
-			);
-			path = google;
-			sourceTree = "<group>";
-		};
-		3D27F7602A8D9578005C8744 /* protobuf */ = {
-			isa = PBXGroup;
-			children = (
-				3D27F7612A8D9578005C8744 /* Api.pbobjc.h */,
-				3D27F7622A8D9578005C8744 /* SourceContext.pbobjc.h */,
-				3D27F7632A8D9578005C8744 /* Duration.pbobjc.h */,
-				3D27F7642A8D9578005C8744 /* Empty.pbobjc.h */,
-				3D27F7652A8D9578005C8744 /* Wrappers.pbobjc.h */,
-				3D27F7662A8D9578005C8744 /* Struct.pbobjc.h */,
-				3D27F7672A8D9578005C8744 /* FieldMask.pbobjc.h */,
-				3D27F7682A8D9578005C8744 /* Timestamp.pbobjc.h */,
-				3D27F7692A8D9578005C8744 /* Type.pbobjc.h */,
-				3D27F76A2A8D9578005C8744 /* Any.pbobjc.h */,
-			);
-			path = protobuf;
 			sourceTree = "<group>";
 		};
 		3D27F7952A8D9578005C8744 /* core */ = {
@@ -1252,132 +971,78 @@
 				3D27FA822A8D9579005C8744 /* BDDBApis.h in Headers */,
 				3D27FA7D2A8D9579005C8744 /* BDConfig.h in Headers */,
 				3D27FA892A8D9579005C8744 /* BDCoreApis.h in Headers */,
-				3D27FA462A8D9579005C8744 /* Api.pbobjc.h in Headers */,
-				3D27FA472A8D9579005C8744 /* SourceContext.pbobjc.h in Headers */,
-				3D27FA672A8D9579005C8744 /* GPBEmpty.pbobjc.h in Headers */,
-				3D27FA532A8D9579005C8744 /* GPBWrappers.pbobjc.h in Headers */,
-				3D27FA3F2A8D9579005C8744 /* GPBDuration.pbobjc.h in Headers */,
-				3D27FA4B2A8D9579005C8744 /* Struct.pbobjc.h in Headers */,
-				3D27FA6C2A8D9579005C8744 /* GPBCodedInputStream.h in Headers */,
-				3D27FA432A8D9579005C8744 /* GPBCodedOutputStream.h in Headers */,
 				3D27FB0A2A8DFDA5005C8744 /* BDInputView.h in Headers */,
 				3D27FAC32A8D9579005C8744 /* User.pbobjc.h in Headers */,
-				3D27FA4E2A8D9579005C8744 /* Type.pbobjc.h in Headers */,
 				3D27F84D2A8D9578005C8744 /* BDMsgVoiceContentView.h in Headers */,
 				3D27F81D2A8D9578005C8744 /* BDLeaveMessageViewController.h in Headers */,
 				3D27F8A32A8D9578005C8744 /* MQTTProperties.h in Headers */,
 				3D27F8B22A8D9578005C8744 /* BDWBiCloudManager.h in Headers */,
 				3D27F7EE2A8D9578005C8744 /* UIView+FeedBack.h in Headers */,
-				3D27FA752A8D9579005C8744 /* GPBUnknownField.h in Headers */,
 				3D53A94C2A96C3150060D050 /* NSMutableAttributedString+BDM80.h in Headers */,
 				3D27F8532A8D9578005C8744 /* BDMsgTextContentView.h in Headers */,
 				3D27FA9A2A8D9579005C8744 /* LogUtil.h in Headers */,
-				3D27FA4C2A8D9579005C8744 /* FieldMask.pbobjc.h in Headers */,
 				3D27F84F2A8D9578005C8744 /* BDCommodityTableViewCell.h in Headers */,
 				3D27F8932A8D9578005C8744 /* MQTTLog.h in Headers */,
 				3D27F82E2A8D9578005C8744 /* BDSupportCategoryViewController.h in Headers */,
 				3D27FB0C2A8DFDA5005C8744 /* BDInputEmotionParser.h in Headers */,
 				3D27F87F2A8D9578005C8744 /* MQTTSession.h in Headers */,
 				3D27F8552A8D9578005C8744 /* BDMsgNotificationViewCell.h in Headers */,
-				3D27FA772A8D9579005C8744 /* GPBWellKnownTypes.h in Headers */,
-				3D27FA6D2A8D9579005C8744 /* GPBDescriptor_PackagePrivate.h in Headers */,
 				3D27F8292A8D9578005C8744 /* BDSupportArticleViewController.h in Headers */,
 				3D27F8952A8D9578005C8744 /* MQTTSSLSecurityPolicyTransport.h in Headers */,
 				3D27F84B2A8D9578005C8744 /* BDMsgViewCell.h in Headers */,
-				3D27FA732A8D9579005C8744 /* GPBExtensionInternals.h in Headers */,
-				3D27FA2D2A8D9579005C8744 /* FMDatabaseQueue.h in Headers */,
 				3D27F7F22A8D9578005C8744 /* BDUIUtils.h in Headers */,
 				3D27FB022A8DFDA5005C8744 /* BDEmotionView.h in Headers */,
 				3D27FABD2A8D9579005C8744 /* Thread.pbobjc.h in Headers */,
 				3D27F8512A8D9578005C8744 /* BDMsgQuestionnairViewCell.h in Headers */,
-				3D27FA782A8D9579005C8744 /* GPBUnknownField_PackagePrivate.h in Headers */,
-				3D27FA422A8D9579005C8744 /* GPBDictionary.h in Headers */,
-				3D27FA5F2A8D9579005C8744 /* GPBType.pbobjc.h in Headers */,
-				3D27FA482A8D9579005C8744 /* Duration.pbobjc.h in Headers */,
-				3D27FA352A8D9579005C8744 /* GPBAny.pbobjc.h in Headers */,
-				3D27FA332A8D9579005C8744 /* GPBCodedOutputStream_PackagePrivate.h in Headers */,
 				3D27F8562A8D9578005C8744 /* BDMsgFileContentView.h in Headers */,
-				3D27FA4A2A8D9579005C8744 /* Wrappers.pbobjc.h in Headers */,
-				3D27FA492A8D9579005C8744 /* Empty.pbobjc.h in Headers */,
 				3D27F8822A8D9578005C8744 /* MQTTStrict.h in Headers */,
-				3D27FA762A8D9579005C8744 /* GPBUnknownFieldSet_PackagePrivate.h in Headers */,
-				3D27FA652A8D9579005C8744 /* GPBWireFormat.h in Headers */,
 				3D37A2F42A98590800BB9DFE /* UITextView+Placeholder.h in Headers */,
-				3D27FA6A2A8D9579005C8744 /* GPBApi.pbobjc.h in Headers */,
-				3D27FA452A8D9579005C8744 /* GPBRootObject_PackagePrivate.h in Headers */,
-				3D27FA722A8D9579005C8744 /* GPBUnknownFieldSet.h in Headers */,
 				3D27F87E2A8D9578005C8744 /* MQTTSSLSecurityPolicyEncoder.h in Headers */,
 				3D53A9472A96C3150060D050 /* BDM80AttributedLabelDefines.h in Headers */,
-				3D27FA5B2A8D9579005C8744 /* GPBBootstrap.h in Headers */,
 				3D27F8912A8D9578005C8744 /* MQTTTransport.h in Headers */,
-				3D27FA6F2A8D9579005C8744 /* GPBStruct.pbobjc.h in Headers */,
-				3D27FA2E2A8D9579005C8744 /* FMDB.h in Headers */,
 				3D27FAC52A8D9579005C8744 /* Message.pbobjc.h in Headers */,
-				3D27FA682A8D9579005C8744 /* GPBMessage.h in Headers */,
-				3D27FA292A8D9579005C8744 /* FMResultSet.h in Headers */,
-				3D27FA602A8D9579005C8744 /* GPBRuntimeTypes.h in Headers */,
 				3D53A9392A966BD10060D050 /* BDLeaveRecordViewController.h in Headers */,
-				3D27FA4F2A8D9579005C8744 /* Any.pbobjc.h in Headers */,
-				3D27FA6E2A8D9579005C8744 /* GPBTimestamp.pbobjc.h in Headers */,
 				3D27F89E2A8D9578005C8744 /* MQTTCFSocketTransport.h in Headers */,
 				3D27F7E92A8D9578005C8744 /* NSString+KFDSUI.h in Headers */,
-				3D27FA342A8D9579005C8744 /* GPBArray.h in Headers */,
 				3D27F4B62A8D8FCC005C8744 /* bytedesk_oc.h in Headers */,
 				3D27F8A42A8D9578005C8744 /* MQTTSSLSecurityPolicy.h in Headers */,
 				3D27F8842A8D9578005C8744 /* MQTTPersistence.h in Headers */,
 				3D53A94B2A96C3150060D050 /* BDM80AttributedLabelURLDetector.h in Headers */,
 				3D27F8A02A8D9578005C8744 /* MQTTSessionManager.h in Headers */,
-				3D27FA592A8D9579005C8744 /* GPBCodedInputStream_PackagePrivate.h in Headers */,
-				3D27FA662A8D9579005C8744 /* GPBArray_PackagePrivate.h in Headers */,
-				3D27FA3D2A8D9579005C8744 /* GPBFieldMask.pbobjc.h in Headers */,
 				3D27F89C2A8D9578005C8744 /* MQTTMessage.h in Headers */,
 				3D27F8152A8D9578005C8744 /* BDChatKFViewController.h in Headers */,
 				3D27F8502A8D9578005C8744 /* BDMsgListContentView.h in Headers */,
 				3D53A9BF2A97359F0060D050 /* SRWebSocket.h in Headers */,
-				3D27FA5A2A8D9579005C8744 /* GPBRootObject.h in Headers */,
-				3D27FA5C2A8D9579005C8744 /* GPBExtensionRegistry.h in Headers */,
 				3D27F7FF2A8D9578005C8744 /* BDBadgeView.h in Headers */,
 				3D53A9482A96C3150060D050 /* BDM80AttributedLabelURL.h in Headers */,
 				3D27F7F02A8D9578005C8744 /* UIView+KFDSUI.h in Headers */,
-				3D27FA502A8D9579005C8744 /* GPBUtilities_PackagePrivate.h in Headers */,
 				3D27F7F32A8D9578005C8744 /* BDVideoCompress.h in Headers */,
-				3D27FA642A8D9579005C8744 /* GPBMessage_PackagePrivate.h in Headers */,
-				3D27FA622A8D9579005C8744 /* GPBUtilities.h in Headers */,
 				3D27F8892A8D9578005C8744 /* MQTTCFSocketDecoder.h in Headers */,
 				3D47DABC2AA1B1CA00179CA8 /* BDLeaveDetailViewController.h in Headers */,
-				3D27FA272A8D9579005C8744 /* FMDatabase.h in Headers */,
 				3D27F8922A8D9578005C8744 /* MQTTClient.h in Headers */,
 				3D27F8812A8D9578005C8744 /* ForegroundReconnection.h in Headers */,
 				3D27FB082A8DFDA5005C8744 /* BDRecordVoiceViewHUD.h in Headers */,
 				3D27F8592A8D9578005C8744 /* BDMsgBaseContentView.h in Headers */,
 				3D27F8B32A8D9578005C8744 /* BDWBDocument.h in Headers */,
 				3D27F8522A8D9578005C8744 /* BDMsgRobotContentView.h in Headers */,
-				3D27FA582A8D9579005C8744 /* GPBDescriptor.h in Headers */,
 				3D27F85C2A8D9578005C8744 /* BDMsgVideoContentView.h in Headers */,
-				3D27FA2A2A8D9579005C8744 /* FMDatabasePool.h in Headers */,
 				3D27F8772A8D9578005C8744 /* ReconnectTimer.h in Headers */,
 				3D27F8802A8D9578005C8744 /* MQTTInMemoryPersistence.h in Headers */,
 				3D27F8A52A8D9578005C8744 /* MQTTDecoder.h in Headers */,
 				3D27F89F2A8D9578005C8744 /* GCDTimer.h in Headers */,
 				3D27F87D2A8D9578005C8744 /* MQTTWebsocketTransport.h in Headers */,
-				3D27FA4D2A8D9579005C8744 /* Timestamp.pbobjc.h in Headers */,
 				3D53A9BE2A97359F0060D050 /* SocketRocket.h in Headers */,
 				3D27F8832A8D9578005C8744 /* MQTTClient-Prefix.pch in Headers */,
 				3D27F8642A8D9578005C8744 /* BDMsgImageContentView.h in Headers */,
-				3D27FA3B2A8D9579005C8744 /* GPBProtocolBuffers.h in Headers */,
 				3D27F88E2A8D9578005C8744 /* MQTTSessionLegacy.h in Headers */,
 				3D53A95A2A972C930060D050 /* BDRateViewController.h in Headers */,
 				3D27F7F12A8D9578005C8744 /* BDUIConstants.h in Headers */,
-				3D27FA692A8D9579005C8744 /* GPBProtocolBuffers_RuntimeSupport.h in Headers */,
 				3D27F7F92A8D9578005C8744 /* BDLoadProgressView.h in Headers */,
-				3D27FA2F2A8D9579005C8744 /* FMDatabaseAdditions.h in Headers */,
 				3D27F8212A8D9578005C8744 /* BDFeedbackViewController.h in Headers */,
 				3D27F8A22A8D9578005C8744 /* MQTTSSLSecurityPolicyDecoder.h in Headers */,
 				3D27FB032A8DFDA5005C8744 /* BDPlusView.h in Headers */,
-				3D27FA742A8D9579005C8744 /* GPBSourceContext.pbobjc.h in Headers */,
 				3D53A9552A96C34E0060D050 /* BDM80AttributedLabel+KFDSUI.h in Headers */,
 				3D27F82D2A8D9578005C8744 /* BDFaqViewController.h in Headers */,
-				3D27FA792A8D9579005C8744 /* GPBDictionary_PackagePrivate.h in Headers */,
 				3D27FB0B2A8DFDA5005C8744 /* BDInputEmotionManager.h in Headers */,
 				3D27F8792A8D9578005C8744 /* MQTTCoreDataPersistence.h in Headers */,
 				3D27F8222A8D9578005C8744 /* BDFeedbackRecordViewController.h in Headers */,
@@ -1562,34 +1227,25 @@
 				3D27F82C2A8D9578005C8744 /* BDSupportArticleViewController.m in Sources */,
 				3D27FA9E2A8D9579005C8744 /* BDCategoryModel.m in Sources */,
 				3D53A95B2A972C930060D050 /* BDRateViewController.m in Sources */,
-				3D27FA2C2A8D9579005C8744 /* FMDatabase.m in Sources */,
 				3D27F7EB2A8D9578005C8744 /* UIView+FeedBack.m in Sources */,
 				3D27F82B2A8D9578005C8744 /* BDFaqViewController.m in Sources */,
 				3D27FB012A8DFDA5005C8744 /* BDInputView.m in Sources */,
 				3D27F7F42A8D9578005C8744 /* BDUIUtils.m in Sources */,
 				3D27F88D2A8D9578005C8744 /* MQTTProperties.m in Sources */,
-				3D27FA412A8D9579005C8744 /* GPBUnknownFieldSet.m in Sources */,
 				3D27F89B2A8D9578005C8744 /* MQTTSession.m in Sources */,
-				3D27FA392A8D9579005C8744 /* GPBMessage.m in Sources */,
 				3D27FA7E2A8D9579005C8744 /* BDCoreApis.m in Sources */,
 				3D27F7ED2A8D9578005C8744 /* NSString+KFDSUI.m in Sources */,
 				3D27FA922A8D9579005C8744 /* BDUtils.m in Sources */,
 				3D27F7FA2A8D9578005C8744 /* BDBadgeView.m in Sources */,
-				3D27FA3A2A8D9579005C8744 /* GPBEmpty.pbobjc.m in Sources */,
 				3D27FAC12A8D9579005C8744 /* Thread.pbobjc.m in Sources */,
 				3D27F84E2A8D9578005C8744 /* BDMsgVideoContentView.m in Sources */,
-				3D27FA362A8D9579005C8744 /* GPBExtensionRegistry.m in Sources */,
 				3D27FAA82A8D9579005C8744 /* BDBlockModel.m in Sources */,
 				3D27F8202A8D9578005C8744 /* BDFeedbackRecordViewController.m in Sources */,
 				3D27F84C2A8D9578005C8744 /* BDMsgBaseContentView.m in Sources */,
 				3D53A9502A96C3150060D050 /* BDM80AttributedLabelURLDetector.m in Sources */,
-				3D27FA512A8D9579005C8744 /* GPBTimestamp.pbobjc.m in Sources */,
 				3D27FAB52A8D9579005C8744 /* BDGroupModel.m in Sources */,
 				3D27FAA22A8D9579005C8744 /* BDArticleModel.m in Sources */,
 				3D27FAFF2A8DFDA5005C8744 /* BDRecordVoiceViewHUD.m in Sources */,
-				3D27FA522A8D9579005C8744 /* GPBCodedInputStream.m in Sources */,
-				3D27FA2B2A8D9579005C8744 /* FMDatabaseAdditions.m in Sources */,
-				3D27FA372A8D9579005C8744 /* GPBRootObject.m in Sources */,
 				3D27F81A2A8D9578005C8744 /* BDLeaveMessageViewController.m in Sources */,
 				3D27F8942A8D9578005C8744 /* MQTTCoreDataPersistence.m in Sources */,
 				3D53A94D2A96C3150060D050 /* BDM80AttributedLabel.m in Sources */,
@@ -1600,20 +1256,15 @@
 				3D27FABE2A8D9579005C8744 /* User.pbobjc.m in Sources */,
 				3D27F81F2A8D9578005C8744 /* BDFeedbackViewController.m in Sources */,
 				3D27FA812A8D9579005C8744 /* BDMQTTApis.m in Sources */,
-				3D27FA442A8D9579005C8744 /* GPBStruct.pbobjc.m in Sources */,
-				3D27FA322A8D9579005C8744 /* GPBType.pbobjc.m in Sources */,
 				3D27F87A2A8D9578005C8744 /* MQTTLog.m in Sources */,
 				3D27FABF2A8D9579005C8744 /* Message.pbobjc.m in Sources */,
 				3D27F89D2A8D9578005C8744 /* MQTTCFSocketDecoder.m in Sources */,
 				3D53A94E2A96C3150060D050 /* BDM80AttributedLabelURL.m in Sources */,
 				3D27F8B12A8D9578005C8744 /* BDWBDocument.m in Sources */,
 				3D27FAAB2A8D9579005C8744 /* ExtraParam.m in Sources */,
-				3D27FA6B2A8D9579005C8744 /* GPBWrappers.pbobjc.m in Sources */,
 				3D27F85B2A8D9578005C8744 /* BDCommodityTableViewCell.m in Sources */,
 				3D27FAB42A8D9579005C8744 /* BDContactModel.m in Sources */,
-				3D27FA302A8D9579005C8744 /* FMDatabasePool.m in Sources */,
 				3D27F4AA2A8D8FCC005C8744 /* bytedesk_oc.docc in Sources */,
-				3D27FA632A8D9579005C8744 /* GPBDuration.pbobjc.m in Sources */,
 				3D27FAB72A8D9579005C8744 /* BDMessageModel.m in Sources */,
 				3D47DABD2AA1B1CA00179CA8 /* BDLeaveDetailViewController.m in Sources */,
 				3D27F8882A8D9578005C8744 /* MQTTCFSocketTransport.m in Sources */,
@@ -1625,12 +1276,9 @@
 				3D53A93A2A966BD10060D050 /* BDLeaveRecordViewController.m in Sources */,
 				3D27FAAC2A8D9579005C8744 /* BDLeaveMsgModel.m in Sources */,
 				3D37A2F32A98590800BB9DFE /* UITextView+Placeholder.m in Sources */,
-				3D27FA572A8D9579005C8744 /* GPBSourceContext.pbobjc.m in Sources */,
 				3D27F8992A8D9578005C8744 /* MQTTStrict.m in Sources */,
-				3D27FA5D2A8D9579005C8744 /* GPBArray.m in Sources */,
 				3D27F7EC2A8D9578005C8744 /* UIView+KFDSUI.m in Sources */,
 				3D27F87C2A8D9578005C8744 /* MQTTWebsocketTransport.m in Sources */,
-				3D27FA402A8D9579005C8744 /* GPBExtensionInternals.m in Sources */,
 				3D27FA932A8D9579005C8744 /* BDSettings.m in Sources */,
 				3D27F89A2A8D9578005C8744 /* MQTTInMemoryPersistence.m in Sources */,
 				3D27FA9D2A8D9579005C8744 /* BDProfileModel.m in Sources */,
@@ -1639,10 +1287,7 @@
 				3D27FB092A8DFDA5005C8744 /* BDEmotionView.m in Sources */,
 				3D27F88F2A8D9578005C8744 /* MQTTSSLSecurityPolicyDecoder.m in Sources */,
 				3D27F8852A8D9578005C8744 /* MQTTCFSocketEncoder.m in Sources */,
-				3D27FA282A8D9579005C8744 /* FMDatabaseQueue.m in Sources */,
-				3D27FA562A8D9579005C8744 /* GPBUnknownField.m in Sources */,
 				3D27FA952A8D9579005C8744 /* LogUtil.m in Sources */,
-				3D27FA3E2A8D9579005C8744 /* GPBUtilities.m in Sources */,
 				3D27F82A2A8D9578005C8744 /* BDSupportCategoryViewController.m in Sources */,
 				3D53A9542A96C34E0060D050 /* BDM80AttributedLabel+KFDSUI.m in Sources */,
 				3D27F8602A8D9578005C8744 /* BDMsgRobotContentView.m in Sources */,
@@ -1650,36 +1295,27 @@
 				3D27FA882A8D9579005C8744 /* BDConfig.m in Sources */,
 				3D27FB0D2A8DFDA5005C8744 /* BDPlusView.m in Sources */,
 				3D27F88A2A8D9578005C8744 /* MQTTMessage.m in Sources */,
-				3D27FA542A8D9579005C8744 /* GPBApi.pbobjc.m in Sources */,
-				3D27FA5E2A8D9579005C8744 /* GPBAny.pbobjc.m in Sources */,
 				3D27FAB82A8D9579005C8744 /* BDFeedbackModel.m in Sources */,
 				3D27FA8E2A8D9579005C8744 /* BDDBApis.m in Sources */,
-				3D27FA712A8D9579005C8744 /* GPBDictionary.m in Sources */,
 				3D27F88B2A8D9578005C8744 /* MQTTDecoder.m in Sources */,
 				3D27F8A12A8D9578005C8744 /* MQTTSessionLegacy.m in Sources */,
 				3D27F8662A8D9578005C8744 /* BDMsgFileContentView.m in Sources */,
-				3D27FA552A8D9579005C8744 /* GPBWellKnownTypes.m in Sources */,
 				3D27F8572A8D9578005C8744 /* BDMsgImageContentView.m in Sources */,
 				3D27F8622A8D9578005C8744 /* BDMsgListContentView.m in Sources */,
 				3D27F88C2A8D9578005C8744 /* MQTTSSLSecurityPolicy.m in Sources */,
 				3D53A94A2A96C3150060D050 /* BDM80AttributedLabelAttachment.m in Sources */,
 				3D27FAA12A8D9579005C8744 /* BDTodoModel.m in Sources */,
 				3D27F85D2A8D9578005C8744 /* BDMsgVoiceContentView.m in Sources */,
-				3D27FA312A8D9579005C8744 /* FMResultSet.m in Sources */,
-				3D27FA382A8D9579005C8744 /* GPBDescriptor.m in Sources */,
 				3D27FABB2A8D9579005C8744 /* BDThreadModel.m in Sources */,
 				3D27FAB12A8D9579005C8744 /* BDTicketModel.m in Sources */,
 				3D27F80F2A8D9578005C8744 /* BDChatKFViewController.m in Sources */,
 				3D27F87B2A8D9578005C8744 /* MQTTTransport.m in Sources */,
-				3D27FA3C2A8D9579005C8744 /* GPBWireFormat.m in Sources */,
 				3D27FB052A8DFDA5005C8744 /* BDInputEmotionManager.m in Sources */,
 				3D27F8982A8D9578005C8744 /* ForegroundReconnection.m in Sources */,
 				3D27FA832A8D9579005C8744 /* BDHttpApis.m in Sources */,
-				3D27FA612A8D9579005C8744 /* GPBFieldMask.pbobjc.m in Sources */,
 				3D27F8962A8D9578005C8744 /* ReconnectTimer.m in Sources */,
 				3D27F8612A8D9578005C8744 /* BDMsgQuestionnairViewCell.m in Sources */,
 				3D27F8002A8D9578005C8744 /* BDLoadProgressView.m in Sources */,
-				3D27FA702A8D9579005C8744 /* GPBCodedOutputStream.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

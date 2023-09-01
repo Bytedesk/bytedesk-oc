@@ -17,7 +17,7 @@
 #endif
 
 @interface FMDatabase (PrivateStuff)
-- (FMResultSet * _Nullable)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray * _Nullable)arrayArgs orDictionary:(NSDictionary * _Nullable)dictionaryArgs orVAList:(va_list)args shouldBind:(BOOL)shouldBind;
+- (FMResultSet *)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray * _Nullable)arrayArgs orDictionary:(NSDictionary * _Nullable)dictionaryArgs orVAList:(va_list)args;
 @end
 
 @implementation FMDatabase (FMDatabaseAdditions)
@@ -25,7 +25,7 @@
 #define RETURN_RESULT_FOR_QUERY_WITH_SELECTOR(type, sel)             \
 va_list args;                                                        \
 va_start(args, query);                                               \
-FMResultSet *resultSet = [self executeQuery:query withArgumentsInArray:0x00 orDictionary:0x00 orVAList:args shouldBind:true];   \
+FMResultSet *resultSet = [self executeQuery:query withArgumentsInArray:0x00 orDictionary:0x00 orVAList:args];   \
 va_end(args);                                                        \
 if (![resultSet next]) { return (type)0; }                           \
 type ret = [resultSet sel:0];                                        \
@@ -222,7 +222,7 @@ return ret;
 
 #pragma clang diagnostic pop
 
-- (BOOL)validateSQL:(NSString*)sql error:(NSError * _Nullable __autoreleasing *)error {
+- (BOOL)validateSQL:(NSString*)sql error:(NSError**)error {
     sqlite3_stmt *pStmt = NULL;
     BOOL validationSucceeded = YES;
     

@@ -14,17 +14,27 @@ PODS:
   - AFNetworking/Serialization (4.0.1)
   - AFNetworking/UIKit (4.0.1):
     - AFNetworking/NSURLSession
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - Protobuf (3.21.12)
 
 DEPENDENCIES:
   - AFNetworking (~> 4.0.1)
+  - FMDB (~> 2.7.5)
+  - Protobuf (~> 3.21.11)
 
 SPEC REPOS:
   trunk:
     - AFNetworking
+    - FMDB
+    - Protobuf
 
 SPEC CHECKSUMS:
   AFNetworking: 3bd23d814e976cd148d7d44c3ab78017b744cd58
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  Protobuf: 120350fc38646e2dedc26f49ecba778184ea1de2
 
-PODFILE CHECKSUM: ee974503afecbfb5f0ede487400acf10c46ff9f7
+PODFILE CHECKSUM: a6b0b9fc29b37b650029c24cab9cf60956a8a07a
 
 COCOAPODS: 1.12.1

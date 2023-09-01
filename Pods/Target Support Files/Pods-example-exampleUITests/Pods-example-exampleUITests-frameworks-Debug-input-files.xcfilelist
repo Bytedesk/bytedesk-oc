@@ -1,2 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-example-exampleUITests/Pods-example-exampleUITests-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework
+${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework
+${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework

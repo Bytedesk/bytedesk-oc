@@ -8,31 +8,23 @@
 #import <sqlite3.h>
 #endif
 
-// MARK: - FMDatabase Private Extension
-
 @interface FMDatabase ()
 - (void)resultSetDidClose:(FMResultSet *)resultSet;
-- (BOOL)bindStatement:(sqlite3_stmt *)pStmt WithArgumentsInArray:(NSArray*)arrayArgs orDictionary:(NSDictionary *)dictionaryArgs orVAList:(va_list)args;
 @end
-
-// MARK: - FMResultSet Private Extension
 
 @interface FMResultSet () {
     NSMutableDictionary *_columnNameToIndexMap;
 }
-@property (nonatomic) BOOL shouldAutoClose;
 @end
-
-// MARK: - FMResultSet
 
 @implementation FMResultSet
 
-+ (instancetype)resultSetWithStatement:(FMStatement *)statement usingParentDatabase:(FMDatabase*)aDB shouldAutoClose:(BOOL)shouldAutoClose {
++ (instancetype)resultSetWithStatement:(FMStatement *)statement usingParentDatabase:(FMDatabase*)aDB {
+    
     FMResultSet *rs = [[FMResultSet alloc] init];
     
     [rs setStatement:statement];
     [rs setParentDB:aDB];
-    [rs setShouldAutoClose:shouldAutoClose];
     
     NSParameterAssert(![statement inUse]);
     [statement setInUse:YES]; // weak reference
@@ -161,25 +153,15 @@
     return nil;
 }
 
+
+
+
 - (BOOL)next {
     return [self nextWithError:nil];
 }
 
-- (BOOL)nextWithError:(NSError * _Nullable __autoreleasing *)outErr {
-    int rc = [self internalStepWithError:outErr];
-    return rc == SQLITE_ROW;
-}
-
-- (BOOL)step {
-    return [self stepWithError:nil];
-}
-
-- (BOOL)stepWithError:(NSError * _Nullable __autoreleasing *)outErr {
-    int rc = [self internalStepWithError:outErr];
-    return rc == SQLITE_DONE;
-}
-
-- (int)internalStepWithError:(NSError * _Nullable __autoreleasing *)outErr {
+- (BOOL)nextWithError:(NSError **)outErr {
+    
     int rc = sqlite3_step([_statement statement]);
     
     if (SQLITE_BUSY == rc || SQLITE_LOCKED == rc) {
@@ -221,12 +203,13 @@
             *outErr = [_parentDB lastError];
         }
     }
-
-    if (rc != SQLITE_ROW && _shouldAutoClose) {
+    
+    
+    if (rc != SQLITE_ROW) {
         [self close];
     }
     
-    return rc;
+    return (rc == SQLITE_ROW);
 }
 
 - (BOOL)hasAnotherRow {
@@ -432,14 +415,6 @@
     return [self objectForColumnIndex:[self columnIndexForName:columnName]];
 }
 
-- (SqliteValueType)typeForColumn:(NSString*)columnName {
-    return sqlite3_column_type([_statement statement], [self columnIndexForName:columnName]);
-}
-
-- (SqliteValueType)typeForColumnIndex:(int)columnIdx {
-    return sqlite3_column_type([_statement statement], columnIdx);
-}
-
 // returns autoreleased NSString containing the name of the column in the result set
 - (NSString*)columnNameForIndex:(int)columnIdx {
     return [NSString stringWithUTF8String: sqlite3_column_name([_statement statement], columnIdx)];
@@ -453,19 +428,5 @@
     return [self objectForColumn:columnName];
 }
 
-// MARK: Bind
-
-- (BOOL)bindWithArray:(NSArray*)array orDictionary:(NSDictionary *)dictionary orVAList:(va_list)args {
-    [_statement reset];
-    return [_parentDB bindStatement:_statement.statement WithArgumentsInArray:array orDictionary:dictionary orVAList:args];
-}
-
-- (BOOL)bindWithArray:(NSArray*)array {
-    return [self bindWithArray:array orDictionary:nil orVAList:nil];
-}
-
-- (BOOL)bindWithDictionary:(NSDictionary *)dictionary {
-    return [self bindWithArray:nil orDictionary:dictionary orVAList:nil];
-}
 
 @end

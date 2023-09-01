@@ -11,63 +11,57 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/** To perform queries and updates on multiple threads, you'll want to use @c FMDatabaseQueue .
+/** To perform queries and updates on multiple threads, you'll want to use `FMDatabaseQueue`.
 
- Using a single instance of @c FMDatabase from multiple threads at once is a bad idea.  It has always been OK to make a @c FMDatabase  object *per thread*.  Just don't share a single instance across threads, and definitely not across multiple threads at the same time.
+ Using a single instance of `<FMDatabase>` from multiple threads at once is a bad idea.  It has always been OK to make a `<FMDatabase>` object *per thread*.  Just don't share a single instance across threads, and definitely not across multiple threads at the same time.
 
- Instead, use @c FMDatabaseQueue . Here's how to use it:
+ Instead, use `FMDatabaseQueue`. Here's how to use it:
 
  First, make your queue.
 
-@code
-FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
-@endcode
+    FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
 
  Then use it like so:
 
-@code
-[queue inDatabase:^(FMDatabase *db) {
-    [db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:1]];
-    [db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:2]];
-    [db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:3]];
+    [queue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:1]];
+        [db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:2]];
+        [db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:3]];
 
-    FMResultSet *rs = [db executeQuery:@"select * from foo"];
-    while ([rs next]) {
-        //…
-    }
-}];
-@endcode
+        FMResultSet *rs = [db executeQuery:@"select * from foo"];
+        while ([rs next]) {
+            //…
+        }
+    }];
 
  An easy way to wrap things up in a transaction can be done like this:
 
-@code
-[queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
-    [db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:1]];
-    [db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:2]];
-    [db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:3]];
+    [queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        [db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:1]];
+        [db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:2]];
+        [db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:3]];
 
-    // if (whoopsSomethingWrongHappened) {
-    //     *rollback = YES;
-    //     return;
-    // }
+        if (whoopsSomethingWrongHappened) {
+            *rollback = YES;
+            return;
+        }
+        // etc…
+        [db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:4]];
+    }];
 
-    // etc…
-    [db executeUpdate:@"INSERT INTO myTable VALUES (?)", [NSNumber numberWithInt:4]];
-}];
-@endcode
+ `FMDatabaseQueue` will run the blocks on a serialized queue (hence the name of the class).  So if you call `FMDatabaseQueue`'s methods from multiple threads at the same time, they will be executed in the order they are received.  This way queries and updates won't step on each other's toes, and every one is happy.
 
- @c FMDatabaseQueue will run the blocks on a serialized queue (hence the name of the class).  So if you call @c FMDatabaseQueue 's methods from multiple threads at the same time, they will be executed in the order they are received.  This way queries and updates won't step on each other's toes, and every one is happy.
+ ### See also
 
- @warning Do not instantiate a single @c FMDatabase  object and use it across multiple threads. Use @c FMDatabaseQueue  instead.
+ - `<FMDatabase>`
+
+ @warning Do not instantiate a single `<FMDatabase>` object and use it across multiple threads. Use `FMDatabaseQueue` instead.
  
- @warning The calls to @c FMDatabaseQueue 's methods are blocking.  So even though you are passing along blocks, they will **not** be run on another thread.
-
- @sa FMDatabase
+ @warning The calls to `FMDatabaseQueue`'s methods are blocking.  So even though you are passing along blocks, they will **not** be run on another thread.
 
  */
 
 @interface FMDatabaseQueue : NSObject
-
 /** Path of database */
 
 @property (atomic, retain, nullable) NSString *path;
@@ -88,16 +82,16 @@ FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
  
  @param aPath The file path of the database.
  
- @return The @c FMDatabaseQueue  object. @c nil  on error.
+ @return The `FMDatabaseQueue` object. `nil` on error.
  */
 
 + (nullable instancetype)databaseQueueWithPath:(NSString * _Nullable)aPath;
 
 /** Create queue using file URL.
  
- @param url The file @c NSURL  of the database.
+ @param url The file `NSURL` of the database.
  
- @return The @c FMDatabaseQueue  object. @c nil  on error.
+ @return The `FMDatabaseQueue` object. `nil` on error.
  */
 
 + (nullable instancetype)databaseQueueWithURL:(NSURL * _Nullable)url;
@@ -107,16 +101,16 @@ FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
  @param aPath The file path of the database.
  @param openFlags Flags passed to the openWithFlags method of the database.
  
- @return The @c FMDatabaseQueue  object. @c nil  on error.
+ @return The `FMDatabaseQueue` object. `nil` on error.
  */
 + (nullable instancetype)databaseQueueWithPath:(NSString * _Nullable)aPath flags:(int)openFlags;
 
 /** Create queue using file URL and specified flags.
  
- @param url The file @c NSURL  of the database.
+ @param url The file `NSURL` of the database.
  @param openFlags Flags passed to the openWithFlags method of the database.
  
- @return The @c FMDatabaseQueue  object. @c nil  on error.
+ @return The `FMDatabaseQueue` object. `nil` on error.
  */
 + (nullable instancetype)databaseQueueWithURL:(NSURL * _Nullable)url flags:(int)openFlags;
 
@@ -124,7 +118,7 @@ FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
  
  @param aPath The file path of the database.
  
- @return The @c FMDatabaseQueue  object. @c nil  on error.
+ @return The `FMDatabaseQueue` object. `nil` on error.
  */
 
 - (nullable instancetype)initWithPath:(NSString * _Nullable)aPath;
@@ -133,7 +127,7 @@ FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
  
  @param url The file `NSURL of the database.
  
- @return The @c FMDatabaseQueue  object. @c nil  on error.
+ @return The `FMDatabaseQueue` object. `nil` on error.
  */
 
 - (nullable instancetype)initWithURL:(NSURL * _Nullable)url;
@@ -143,7 +137,7 @@ FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
  @param aPath The file path of the database.
  @param openFlags Flags passed to the openWithFlags method of the database.
  
- @return The @c FMDatabaseQueue  object. @c nil  on error.
+ @return The `FMDatabaseQueue` object. `nil` on error.
  */
 
 - (nullable instancetype)initWithPath:(NSString * _Nullable)aPath flags:(int)openFlags;
@@ -153,7 +147,7 @@ FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
  @param url The file path of the database.
  @param openFlags Flags passed to the openWithFlags method of the database.
  
- @return The @c FMDatabaseQueue  object. @c nil  on error.
+ @return The `FMDatabaseQueue` object. `nil` on error.
  */
 
 - (nullable instancetype)initWithURL:(NSURL * _Nullable)url flags:(int)openFlags;
@@ -164,7 +158,7 @@ FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
  @param openFlags Flags passed to the openWithFlags method of the database
  @param vfsName The name of a custom virtual file system
  
- @return The @c FMDatabaseQueue  object. @c nil  on error.
+ @return The `FMDatabaseQueue` object. `nil` on error.
  */
 
 - (nullable instancetype)initWithPath:(NSString * _Nullable)aPath flags:(int)openFlags vfs:(NSString * _Nullable)vfsName;
@@ -175,7 +169,7 @@ FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
  @param openFlags Flags passed to the openWithFlags method of the database
  @param vfsName The name of a custom virtual file system
  
- @return The @c FMDatabaseQueue  object. @c nil  on error.
+ @return The `FMDatabaseQueue` object. `nil` on error.
  */
 
 - (nullable instancetype)initWithURL:(NSURL * _Nullable)url flags:(int)openFlags vfs:(NSString * _Nullable)vfsName;
@@ -203,14 +197,14 @@ FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
 
 /** Synchronously perform database operations on queue.
  
- @param block The code to be run on the queue of @c FMDatabaseQueue 
+ @param block The code to be run on the queue of `FMDatabaseQueue`
  */
 
 - (void)inDatabase:(__attribute__((noescape)) void (^)(FMDatabase *db))block;
 
 /** Synchronously perform database operations on queue, using transactions.
 
- @param block The code to be run on the queue of @c FMDatabaseQueue 
+ @param block The code to be run on the queue of `FMDatabaseQueue`
  
  @warning    Unlike SQLite's `BEGIN TRANSACTION`, this method currently performs
              an exclusive transaction, not a deferred transaction. This behavior
@@ -226,21 +220,21 @@ FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
 
 /** Synchronously perform database operations on queue, using deferred transactions.
  
- @param block The code to be run on the queue of @c FMDatabaseQueue 
+ @param block The code to be run on the queue of `FMDatabaseQueue`
  */
 
 - (void)inDeferredTransaction:(__attribute__((noescape)) void (^)(FMDatabase *db, BOOL *rollback))block;
 
 /** Synchronously perform database operations on queue, using exclusive transactions.
  
- @param block The code to be run on the queue of @c FMDatabaseQueue 
+ @param block The code to be run on the queue of `FMDatabaseQueue`
  */
 
 - (void)inExclusiveTransaction:(__attribute__((noescape)) void (^)(FMDatabase *db, BOOL *rollback))block;
 
 /** Synchronously perform database operations on queue, using immediate transactions.
 
- @param block The code to be run on the queue of @c FMDatabaseQueue 
+ @param block The code to be run on the queue of `FMDatabaseQueue`
  */
 
 - (void)inImmediateTransaction:(__attribute__((noescape)) void (^)(FMDatabase *db, BOOL *rollback))block;
@@ -251,7 +245,7 @@ FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
 
 /** Synchronously perform database operations using save point.
 
- @param block The code to be run on the queue of @c FMDatabaseQueue 
+ @param block The code to be run on the queue of `FMDatabaseQueue`
  */
 
 // NOTE: you can not nest these, since calling it will pull another database out of the pool and you'll get a deadlock.
