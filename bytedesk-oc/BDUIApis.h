@@ -7,9 +7,13 @@
 //
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-#import <bytedesk_oc/BDThreadModel.h>
-#import <bytedesk_oc/BDContactModel.h>
-#import <bytedesk_oc/BDGroupModel.h>
+//#import <bytedesk_oc/BDThreadModel.h>
+//#import <bytedesk_oc/BDContactModel.h>
+//#import <bytedesk_oc/BDGroupModel.h>
+
+@class BDThreadModel;
+@class BDContactModel;
+@class BDGroupModel;
 
 @interface BDUIApis : NSObject
 

@@ -117,57 +117,33 @@
 		3D27F8B12A8D9578005C8744 /* BDWBDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F5AA2A8D9577005C8744 /* BDWBDocument.m */; };
 		3D27F8B22A8D9578005C8744 /* BDWBiCloudManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F5AB2A8D9577005C8744 /* BDWBiCloudManager.h */; };
 		3D27F8B32A8D9578005C8744 /* BDWBDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F5AC2A8D9577005C8744 /* BDWBDocument.h */; };
-		3D27FA7D2A8D9579005C8744 /* BDConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F79A2A8D9578005C8744 /* BDConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FA7E2A8D9579005C8744 /* BDCoreApis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F79B2A8D9578005C8744 /* BDCoreApis.m */; };
 		3D27FA812A8D9579005C8744 /* BDMQTTApis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F79E2A8D9578005C8744 /* BDMQTTApis.m */; };
-		3D27FA822A8D9579005C8744 /* BDDBApis.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F79F2A8D9578005C8744 /* BDDBApis.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FA832A8D9579005C8744 /* BDHttpApis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7A02A8D9578005C8744 /* BDHttpApis.m */; };
 		3D27FA882A8D9579005C8744 /* BDConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7A52A8D9578005C8744 /* BDConfig.m */; };
 		3D27FA892A8D9579005C8744 /* BDCoreApis.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7A62A8D9578005C8744 /* BDCoreApis.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3D27FA8C2A8D9579005C8744 /* BDHttpApis.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7A92A8D9578005C8744 /* BDHttpApis.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FA8E2A8D9579005C8744 /* BDDBApis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7AB2A8D9578005C8744 /* BDDBApis.m */; };
-		3D27FA8F2A8D9579005C8744 /* BDMQTTApis.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7AC2A8D9578005C8744 /* BDMQTTApis.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FA922A8D9579005C8744 /* BDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7B02A8D9578005C8744 /* BDUtils.m */; };
 		3D27FA932A8D9579005C8744 /* BDSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7B12A8D9578005C8744 /* BDSettings.m */; };
-		3D27FA942A8D9579005C8744 /* BDNotify.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7B22A8D9578005C8744 /* BDNotify.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FA952A8D9579005C8744 /* LogUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7B32A8D9578005C8744 /* LogUtil.m */; };
-		3D27FA962A8D9579005C8744 /* BDUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7B42A8D9578005C8744 /* BDUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3D27FA972A8D9579005C8744 /* BDSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7B52A8D9578005C8744 /* BDSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FA992A8D9579005C8744 /* BDNotify.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7B72A8D9578005C8744 /* BDNotify.m */; };
 		3D27FA9A2A8D9579005C8744 /* LogUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7B82A8D9578005C8744 /* LogUtil.h */; };
-		3D27FA9B2A8D9579005C8744 /* BDConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7B92A8D9578005C8744 /* BDConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FA9D2A8D9579005C8744 /* BDProfileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7BC2A8D9578005C8744 /* BDProfileModel.m */; };
 		3D27FA9E2A8D9579005C8744 /* BDCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7BD2A8D9578005C8744 /* BDCategoryModel.m */; };
 		3D27FA9F2A8D9579005C8744 /* BDWorkGroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7BE2A8D9578005C8744 /* BDWorkGroupModel.m */; };
-		3D27FAA02A8D9579005C8744 /* BDTicketModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7BF2A8D9578005C8744 /* BDTicketModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FAA12A8D9579005C8744 /* BDTodoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7C02A8D9578005C8744 /* BDTodoModel.m */; };
 		3D27FAA22A8D9579005C8744 /* BDArticleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7C12A8D9578005C8744 /* BDArticleModel.m */; };
 		3D27FAA32A8D9579005C8744 /* BDNoticeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7C22A8D9578005C8744 /* BDNoticeModel.m */; };
-		3D27FAA42A8D9579005C8744 /* BDGroupModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7C32A8D9578005C8744 /* BDGroupModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3D27FAA52A8D9579005C8744 /* BDContactModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7C42A8D9578005C8744 /* BDContactModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3D27FAA62A8D9579005C8744 /* BDFeedbackModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7C52A8D9578005C8744 /* BDFeedbackModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3D27FAA72A8D9579005C8744 /* BDMessageModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7C62A8D9578005C8744 /* BDMessageModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FAA82A8D9579005C8744 /* BDBlockModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7C72A8D9578005C8744 /* BDBlockModel.m */; };
 		3D27FAA92A8D9579005C8744 /* BDQueueModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7C82A8D9578005C8744 /* BDQueueModel.m */; };
-		3D27FAAA2A8D9579005C8744 /* BDThreadModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7C92A8D9578005C8744 /* BDThreadModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FAAB2A8D9579005C8744 /* ExtraParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7CA2A8D9578005C8744 /* ExtraParam.m */; };
 		3D27FAAC2A8D9579005C8744 /* BDLeaveMsgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7CB2A8D9578005C8744 /* BDLeaveMsgModel.m */; };
-		3D27FAAD2A8D9579005C8744 /* BDArticleModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7CC2A8D9578005C8744 /* BDArticleModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3D27FAAE2A8D9579005C8744 /* BDNoticeModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7CD2A8D9578005C8744 /* BDNoticeModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3D27FAAF2A8D9579005C8744 /* BDTodoModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7CE2A8D9578005C8744 /* BDTodoModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3D27FAB02A8D9579005C8744 /* BDWorkGroupModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7CF2A8D9578005C8744 /* BDWorkGroupModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FAB12A8D9579005C8744 /* BDTicketModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7D02A8D9578005C8744 /* BDTicketModel.m */; };
-		3D27FAB22A8D9579005C8744 /* BDCategoryModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7D12A8D9578005C8744 /* BDCategoryModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3D27FAB32A8D9579005C8744 /* BDProfileModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7D22A8D9578005C8744 /* BDProfileModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FAB42A8D9579005C8744 /* BDContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7D32A8D9578005C8744 /* BDContactModel.m */; };
 		3D27FAB52A8D9579005C8744 /* BDGroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7D42A8D9578005C8744 /* BDGroupModel.m */; };
-		3D27FAB62A8D9579005C8744 /* BDBlockModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7D52A8D9578005C8744 /* BDBlockModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FAB72A8D9579005C8744 /* BDMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7D62A8D9578005C8744 /* BDMessageModel.m */; };
 		3D27FAB82A8D9579005C8744 /* BDFeedbackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7D72A8D9578005C8744 /* BDFeedbackModel.m */; };
-		3D27FAB92A8D9579005C8744 /* BDLeaveMsgModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7D82A8D9578005C8744 /* BDLeaveMsgModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3D27FABA2A8D9579005C8744 /* ExtraParam.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7D92A8D9578005C8744 /* ExtraParam.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FABB2A8D9579005C8744 /* BDThreadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7DA2A8D9578005C8744 /* BDThreadModel.m */; };
-		3D27FABC2A8D9579005C8744 /* BDQueueModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7DB2A8D9578005C8744 /* BDQueueModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D27FABD2A8D9579005C8744 /* Thread.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7DD2A8D9578005C8744 /* Thread.pbobjc.h */; };
 		3D27FABE2A8D9579005C8744 /* User.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7DE2A8D9578005C8744 /* User.pbobjc.m */; };
 		3D27FABF2A8D9579005C8744 /* Message.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27F7DF2A8D9578005C8744 /* Message.pbobjc.m */; };
@@ -225,6 +201,10 @@
 		3DC01FB62AA2AC020012ACA0 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DC01FAB2AA2AC020012ACA0 /* FMDatabaseAdditions.h */; };
 		3DC01FB72AA2AC020012ACA0 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC01FAC2AA2AC020012ACA0 /* FMDatabasePool.m */; };
 		3DC01FB82AA2AC020012ACA0 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC01FAD2AA2AC020012ACA0 /* FMResultSet.m */; };
+		3DC01FB92AA2C6390012ACA0 /* BDSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7B52A8D9578005C8744 /* BDSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3DC01FBA2AA2C6700012ACA0 /* BDConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7B92A8D9578005C8744 /* BDConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3DC01FBB2AA2C6B50012ACA0 /* BDThreadModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7C92A8D9578005C8744 /* BDThreadModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3DC01FBC2AA2C6B70012ACA0 /* BDMessageModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D27F7C62A8D9578005C8744 /* BDMessageModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB95E5F0342EB942CCBAD439 /* Pods_bytedesk_oc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3554ED08B446A315D803582 /* Pods_bytedesk_oc.framework */; };
 		D67D67D10157AFECD5098C9D /* Pods_bytedesk_oc_bytedesk_ocTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EED0F6E04470F38E8C0E9D08 /* Pods_bytedesk_oc_bytedesk_ocTests.framework */; };
 /* End PBXBuildFile section */
@@ -512,6 +492,12 @@
 			isa = PBXGroup;
 			children = (
 				3D27F4A82A8D8FCC005C8744 /* bytedesk_oc.h */,
+				3D27F7A62A8D9578005C8744 /* BDCoreApis.h */,
+				3D27F4C72A8D9577005C8744 /* BDUIApis.h */,
+				3D27F7B52A8D9578005C8744 /* BDSettings.h */,
+				3D27F7B92A8D9578005C8744 /* BDConstants.h */,
+				3D27F7C92A8D9578005C8744 /* BDThreadModel.h */,
+				3D27F7C62A8D9578005C8744 /* BDMessageModel.h */,
 				3D27F7952A8D9578005C8744 /* core */,
 				3D27F4C52A8D9577005C8744 /* ui */,
 				3D27F5682A8D9577005C8744 /* vendors */,
@@ -546,7 +532,6 @@
 		3D27F4C62A8D9577005C8744 /* apis */ = {
 			isa = PBXGroup;
 			children = (
-				3D27F4C72A8D9577005C8744 /* BDUIApis.h */,
 				3D27F4C82A8D9577005C8744 /* BDUIApis.m */,
 			);
 			path = apis;
@@ -782,7 +767,6 @@
 			children = (
 				3D27F79A2A8D9578005C8744 /* BDConfig.h */,
 				3D27F7A52A8D9578005C8744 /* BDConfig.m */,
-				3D27F7A62A8D9578005C8744 /* BDCoreApis.h */,
 				3D27F79B2A8D9578005C8744 /* BDCoreApis.m */,
 				3D27F79F2A8D9578005C8744 /* BDDBApis.h */,
 				3D27F7AB2A8D9578005C8744 /* BDDBApis.m */,
@@ -801,11 +785,9 @@
 				3D27F7B72A8D9578005C8744 /* BDNotify.m */,
 				3D27F7B42A8D9578005C8744 /* BDUtils.h */,
 				3D27F7B02A8D9578005C8744 /* BDUtils.m */,
-				3D27F7B52A8D9578005C8744 /* BDSettings.h */,
 				3D27F7B12A8D9578005C8744 /* BDSettings.m */,
 				3D27F7B82A8D9578005C8744 /* LogUtil.h */,
 				3D27F7B32A8D9578005C8744 /* LogUtil.m */,
-				3D27F7B92A8D9578005C8744 /* BDConstants.h */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -823,9 +805,7 @@
 				3D27F7D32A8D9578005C8744 /* BDContactModel.m */,
 				3D27F7C52A8D9578005C8744 /* BDFeedbackModel.h */,
 				3D27F7D72A8D9578005C8744 /* BDFeedbackModel.m */,
-				3D27F7C62A8D9578005C8744 /* BDMessageModel.h */,
 				3D27F7D62A8D9578005C8744 /* BDMessageModel.m */,
-				3D27F7C92A8D9578005C8744 /* BDThreadModel.h */,
 				3D27F7DA2A8D9578005C8744 /* BDThreadModel.m */,
 				3D27F7CD2A8D9578005C8744 /* BDNoticeModel.h */,
 				3D27F7C22A8D9578005C8744 /* BDNoticeModel.m */,
@@ -984,35 +964,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D27FAA42A8D9579005C8744 /* BDGroupModel.h in Headers */,
-				3D27FAA02A8D9579005C8744 /* BDTicketModel.h in Headers */,
+				3DC01FB92AA2C6390012ACA0 /* BDSettings.h in Headers */,
+				3DC01FBC2AA2C6B70012ACA0 /* BDMessageModel.h in Headers */,
+				3DC01FBB2AA2C6B50012ACA0 /* BDThreadModel.h in Headers */,
+				3DC01FBA2AA2C6700012ACA0 /* BDConstants.h in Headers */,
 				3D27F7E72A8D9578005C8744 /* BDUIApis.h in Headers */,
-				3D27FAAA2A8D9579005C8744 /* BDThreadModel.h in Headers */,
-				3D27FA942A8D9579005C8744 /* BDNotify.h in Headers */,
-				3D27FAAD2A8D9579005C8744 /* BDArticleModel.h in Headers */,
-				3D27FA972A8D9579005C8744 /* BDSettings.h in Headers */,
-				3D27FAA72A8D9579005C8744 /* BDMessageModel.h in Headers */,
-				3D27FAAE2A8D9579005C8744 /* BDNoticeModel.h in Headers */,
-				3D27FAAF2A8D9579005C8744 /* BDTodoModel.h in Headers */,
-				3D27FAB02A8D9579005C8744 /* BDWorkGroupModel.h in Headers */,
-				3D27FAB22A8D9579005C8744 /* BDCategoryModel.h in Headers */,
-				3D27FAB62A8D9579005C8744 /* BDBlockModel.h in Headers */,
-				3D27FA9B2A8D9579005C8744 /* BDConstants.h in Headers */,
 				3DC01FB62AA2AC020012ACA0 /* FMDatabaseAdditions.h in Headers */,
-				3D27FAB32A8D9579005C8744 /* BDProfileModel.h in Headers */,
-				3D27FAA52A8D9579005C8744 /* BDContactModel.h in Headers */,
 				3D53A9492A96C3150060D050 /* BDM80AttributedLabel.h in Headers */,
-				3D27FABA2A8D9579005C8744 /* ExtraParam.h in Headers */,
-				3D27FABC2A8D9579005C8744 /* BDQueueModel.h in Headers */,
-				3D27FA962A8D9579005C8744 /* BDUtils.h in Headers */,
 				3DC01FB12AA2AC020012ACA0 /* FMDatabasePool.h in Headers */,
-				3D27FAB92A8D9579005C8744 /* BDLeaveMsgModel.h in Headers */,
-				3D27FA8F2A8D9579005C8744 /* BDMQTTApis.h in Headers */,
 				3D53A94F2A96C3150060D050 /* BDM80AttributedLabelAttachment.h in Headers */,
-				3D27FAA62A8D9579005C8744 /* BDFeedbackModel.h in Headers */,
-				3D27FA8C2A8D9579005C8744 /* BDHttpApis.h in Headers */,
-				3D27FA822A8D9579005C8744 /* BDDBApis.h in Headers */,
-				3D27FA7D2A8D9579005C8744 /* BDConfig.h in Headers */,
 				3D27FA892A8D9579005C8744 /* BDCoreApis.h in Headers */,
 				3D27FB0A2A8DFDA5005C8744 /* BDInputView.h in Headers */,
 				3D27FAC32A8D9579005C8744 /* User.pbobjc.h in Headers */,
