@@ -27,7 +27,12 @@
 
 ```bash
 brew update
+# 安装 carthage
 brew install carthage
+# 添加依赖，如：
+# github "AFNetworking/AFNetworking" ~> 4.0
+# 更新
+carthage update
 ```
 
 ## 支持 Swift Package Manager (SPM) 流程
