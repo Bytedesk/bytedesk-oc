@@ -47,7 +47,7 @@ pod 'Protobuf', '~> 3.21.11'
 - 下载源码，直接拖到自己项目中
 - 选择项目，选中项目TARGET，选中 General，在 framework 中添加 bytedesk_oc.framework
 
-### 3. Carthage TODO: 待支持
+### 3. Carthage
 
 ```bash
 github 'bytedesk-oc/bytedesk-oc' ~> 0.2.1

@@ -10,7 +10,6 @@ target 'bytedesk-oc' do
   project 'bytedesk-oc.xcodeproj'
   # Pods for bytedesk-oc
   pod 'AFNetworking', '~> 4.0.1'
-#  pod 'FMDB', '~> 2.7.5'
   pod 'Protobuf', '~> 3.21.11'
 
   target 'bytedesk-ocTests' do
@@ -27,7 +26,6 @@ target 'example' do
 
   # Pods for example
   pod 'AFNetworking', '~> 4.0.1'
-#  pod 'FMDB', '~> 2.7.5'
   pod 'Protobuf', '~> 3.21.11'
 
   target 'exampleTests' do
