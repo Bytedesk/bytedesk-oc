@@ -71,6 +71,14 @@ dependencies: [
 ]
 ```
 
+### 预览
+
+|                      image1                      |                       image2                       |                        image3                        |
+| :----------------------------------------------: | :------------------------------------------------: | :--------------------------------------------------: |
+| <img src="https://www.weikefu.net/assets/screen/ios_1.jpg" width="250"> | <img src="https://www.weikefu.net/assets/screen/ios_2.jpg" width="250">  |  <img src="https://www.weikefu.net/assets/screen/ios_3.jpg" width="250">  |
+| <img src="https://www.weikefu.net/assets/screen/ios_4.jpg" width="250">  | <img src="https://www.weikefu.net/assets/screen/ios_5.jpg" width="250"> | <img src="https://www.weikefu.net/assets/screen/ios_6.jpg" width="250"> |
+| <img src="https://www.weikefu.net/assets/screen/ios_7.jpg" width="250">  | <img src="https://www.weikefu.net/assets/screen/ios_8.jpg" width="250"> | <img src="https://www.weikefu.net/assets/screen/ios_9.jpg" width="250"> |
+
 <!-- ### 参考步骤 -->
 
 <!-- - <img src="https://www.weikefu.net/assets/spm/add-package-1.png" width="250"> 
