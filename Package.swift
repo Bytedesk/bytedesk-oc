@@ -23,9 +23,5 @@ let package = Package(
             dependencies: [],
             path: "bytedesk-oc"
         ),
-        // .testTarget(
-        //     name: "bytedesk-ocTests",
-        //     dependencies: ["bytedesk-oc"]
-        // ),
     ]
 )
