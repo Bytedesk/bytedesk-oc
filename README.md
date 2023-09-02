@@ -26,7 +26,7 @@
 - [Gitee](https://gitee.com/270580156/bytedesk-oc)
 - [Github](https://github.com/Bytedesk/bytedesk-oc)
 
-## 集成方式（4种）
+## 集成方式
 
 ### 1. Pod
 
