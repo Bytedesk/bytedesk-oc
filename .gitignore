@@ -30,7 +30,7 @@ DerivedData/
 *.dSYM.zip
 *.dSYM
 *.proto
-*.lock
+Podfile.lock
 
 # CocoaPods
 #
