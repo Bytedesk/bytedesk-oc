@@ -59,6 +59,7 @@ dependencies: [
 此方法适用于有自定义界面需求的开发者
 
 - 下载源码，直接拖到自己项目中
+- 选中项目TARGET，选中 General，在 framework 中添加 bytedesk_oc.framework
 
 <!-- ### 参考步骤 -->
 
