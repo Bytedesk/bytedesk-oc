@@ -31,6 +31,11 @@
 ### 1. Pod
 
 ```bash
+# 项目本身
+pod 'bytedesk-oc', '~> 0.1.8'
+# 项目依赖第三方
+pod 'AFNetworking', '~> 4.0.1'
+pod 'Protobuf', '~> 3.21.11'
 ```
 
 ### 2. Carthage
@@ -46,11 +51,11 @@
   
 ```bash
 dependencies: [
-    .package(url: "https://gitee.com/270580156/bytedesk-oc", .upToNextMajor(from: "0.0.1"))
+    .package(url: "https://gitee.com/270580156/bytedesk-oc", .upToNextMajor(from: "0.1.8"))
 ]
 或
 dependencies: [
-    .package(url: "https://github.com/Bytedesk/bytedesk-oc", .upToNextMajor(from: "0.0.1"))
+    .package(url: "https://github.com/Bytedesk/bytedesk-oc", .upToNextMajor(from: "0.1.8"))
 ]
 ```
 
