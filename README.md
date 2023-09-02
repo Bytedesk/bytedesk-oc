@@ -34,7 +34,7 @@
 
 ```bash
 # 项目本身
-pod 'bytedesk-oc', '~> 0.2.2'
+pod 'bytedesk-oc', '~> 0.2.1'
 # 项目依赖第三方
 pod 'AFNetworking', '~> 4.0.1'
 pod 'Protobuf', '~> 3.21.11'
@@ -47,28 +47,29 @@ pod 'Protobuf', '~> 3.21.11'
 - 下载源码，直接拖到自己项目中
 - 选择项目，选中项目TARGET，选中 General，在 framework 中添加 bytedesk_oc.framework
 
-<!-- ### 3. Carthage TODO: 待支持
+### 3. Carthage TODO: 待支持
 
 ```bash
-``` -->
+github 'bytedesk-oc/bytedesk-oc' ~> 0.2.1
+```
 
-<!-- ### 4. Swift Package Manager (SPM): TODO: 待完善
+### 4. Swift Package Manager (SPM): TODO: 待完善
 
-FIXME: 集成报错：
-public headers ("include") directory path for 'bytedesk-oc' is invalid or not contained in the target
+<!-- FIXME: 集成报错：
+public headers ("include") directory path for 'bytedesk-oc' is invalid or not contained in the target -->
 - 源地址1-gitee：<https://gitee.com/270580156/bytedesk-oc>
 - 源地址2-github：<https://github.com/Bytedesk/bytedesk-oc>
 - 国内用户建议使用源地址1
   
 ```bash
 dependencies: [
-    .package(url: "https://gitee.com/270580156/bytedesk-oc", .upToNextMajor(from: "0.2.2"))
+    .package(url: "https://gitee.com/270580156/bytedesk-oc", .upToNextMajor(from: "0.2.1"))
 ]
 或
 dependencies: [
-    .package(url: "https://github.com/Bytedesk/bytedesk-oc", .upToNextMajor(from: "0.2.2"))
+    .package(url: "https://github.com/Bytedesk/bytedesk-oc", .upToNextMajor(from: "0.2.1"))
 ]
-``` -->
+```
 
 <!-- ### 参考步骤 -->
 
