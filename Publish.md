@@ -11,7 +11,7 @@
 
 ```bash
 # --skip-import-validation
-arch -x86_64 pod spec lint bytedesk-oc.podspec --allow-warnings --verbose
+arch -x86_64 pod spec lint bytedesk-oc.podspec --allow-warnings --verbose --skip-import-validation
 arch -x86_64 pod trunk push bytedesk-oc.podspec --allow-warnings --verbose
 ```
 
