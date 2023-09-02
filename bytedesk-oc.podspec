@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |spec|
   spec.name         = "bytedesk-oc"
-  spec.version      = "0.1.7"
+  spec.version      = "0.1.8"
   spec.summary      = "bytedesk.com helpdesk chat kefu lib."
   spec.description  = <<-DESC
   Online chat kefu Lib for ios, Helpdesk system
@@ -24,7 +24,7 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => "https://github.com/Bytedesk/bytedesk-oc.git", :tag => "#{spec.version}" }
   spec.source_files  = "Classes", "bytedesk-oc/**/*.{h,m}"
   # spec.exclude_files = "Classes/Exclude"
-  # spec.public_header_files = "bytedesk-oc/*.h"
+  spec.public_header_files = "bytedesk-oc/*.h"
   # 
   spec.requires_arc = true
   # https://www.jianshu.com/p/9de438f8f406

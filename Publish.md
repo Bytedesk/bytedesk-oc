@@ -10,6 +10,9 @@
 - 打标签，并提交
 
 ```bash
+# 设置代理
+export http_proxy=http://127.0.0.1:10818
+export https_proxy=http://127.0.0.1:10818
 # --skip-import-validation
 arch -x86_64 pod spec lint bytedesk-oc.podspec --allow-warnings --verbose --skip-import-validation
 arch -x86_64 pod trunk push bytedesk-oc.podspec --allow-warnings --verbose
