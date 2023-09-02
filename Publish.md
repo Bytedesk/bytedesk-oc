@@ -34,6 +34,9 @@ brew install carthage
 carthage update
 # 编译
 carthage build --no-skip-current
+# 注意：
+# 如果你使用了类别,那么你需要在Build Settings的Linking的Other Linker Flags里加上-all_load
+# 如果你想你的工程支持bitcode,需要在Other C Flags 里加上-fembed-bitcode
 ```
 
 ## 支持 Swift Package Manager (SPM) 流程
