@@ -28,6 +28,8 @@
 
 ## 集成方式
 
+建议: Xcode Version 14.3，最低兼容: iOS 13
+
 ### 1. Pod
 
 ```bash
