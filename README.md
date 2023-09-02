@@ -45,17 +45,15 @@ pod 'Protobuf', '~> 3.21.11'
 - 下载源码，直接拖到自己项目中
 - 选中项目TARGET，选中 General，在 framework 中添加 bytedesk_oc.framework
 
-### 3. Carthage TODO: 待支持
+<!-- ### 3. Carthage TODO: 待支持
 
 ```bash
-```
+``` -->
 
-### 4. Swift Package Manager (SPM): TODO: 待完善
+<!-- ### 4. Swift Package Manager (SPM): TODO: 待完善
 
-<!-- 
 FIXME: 集成报错：
 public headers ("include") directory path for 'bytedesk-oc' is invalid or not contained in the target
- -->
 - 源地址1-gitee：<https://gitee.com/270580156/bytedesk-oc>
 - 源地址2-github：<https://github.com/Bytedesk/bytedesk-oc>
 - 国内用户建议使用源地址1
@@ -68,7 +66,7 @@ dependencies: [
 dependencies: [
     .package(url: "https://github.com/Bytedesk/bytedesk-oc", .upToNextMajor(from: "0.2.2"))
 ]
-```
+``` -->
 
 <!-- ### 参考步骤 -->
 
