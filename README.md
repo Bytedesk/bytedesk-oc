@@ -30,7 +30,14 @@
 
 建议: Xcode Version 14.3，最低兼容: iOS 13
 
-### 1. Pod
+### 1. 本地集成
+
+此方法适用于有自定义界面需求的开发者
+
+- 下载源码，直接拖到自己项目中
+- 选择项目，选中项目TARGET，选中 General，在 framework 中添加 bytedesk_oc.framework
+
+### 2. Pod
 
 ```bash
 # 项目本身
@@ -39,13 +46,6 @@ pod 'bytedesk-oc', '~> 2.9.1'
 pod 'AFNetworking', '~> 4.0.1'
 pod 'Protobuf', '~> 3.21.11'
 ```
-
-### 2. 本地集成
-
-此方法适用于有自定义界面需求的开发者
-
-- 下载源码，直接拖到自己项目中
-- 选择项目，选中项目TARGET，选中 General，在 framework 中添加 bytedesk_oc.framework
 
 ### 3. Carthage
 
