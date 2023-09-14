@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |spec|
   spec.name         = "bytedesk-oc"
-  spec.version      = "2.9.1"
+  spec.version      = "2.9.2"
   spec.summary      = "bytedesk.com helpdesk chat kefu lib."
   spec.description  = <<-DESC
   Online chat kefu Lib for ios, Helpdesk system

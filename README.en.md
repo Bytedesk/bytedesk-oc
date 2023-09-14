@@ -34,7 +34,7 @@
 
 ```bash
 # 项目本身
-pod 'bytedesk-oc', '~> 2.9.1'
+pod 'bytedesk-oc', '~> 2.9.2'
 # 项目依赖第三方
 pod 'AFNetworking', '~> 4.0.1'
 pod 'Protobuf', '~> 3.21.11'
@@ -50,7 +50,7 @@ pod 'Protobuf', '~> 3.21.11'
 ### 3. Carthage
 
 ```bash
-github 'bytedesk-oc/bytedesk-oc' ~> 2.9.1
+github 'bytedesk-oc/bytedesk-oc' ~> 2.9.2
 ```
 
 ### 4. Swift Package Manager (SPM): TODO: 待完善
@@ -63,11 +63,11 @@ public headers ("include") directory path for 'bytedesk-oc' is invalid or not co
   
 ```bash
 dependencies: [
-    .package(url: "https://gitee.com/270580156/bytedesk-oc", .upToNextMajor(from: "2.9.1"))
+    .package(url: "https://gitee.com/270580156/bytedesk-oc", .upToNextMajor(from: "2.9.2"))
 ]
 或
 dependencies: [
-    .package(url: "https://github.com/Bytedesk/bytedesk-oc", .upToNextMajor(from: "2.9.1"))
+    .package(url: "https://github.com/Bytedesk/bytedesk-oc", .upToNextMajor(from: "2.9.2"))
 ]
 ```
 
