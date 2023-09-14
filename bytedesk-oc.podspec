@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |spec|
   spec.name         = "bytedesk-oc"
-  spec.version      = "0.2.1"
+  spec.version      = "2.9.1"
   spec.summary      = "bytedesk.com helpdesk chat kefu lib."
   spec.description  = <<-DESC
   Online chat kefu Lib for ios, Helpdesk system
@@ -33,7 +33,6 @@ Pod::Spec.new do |spec|
   # spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   # 
   spec.dependency "AFNetworking", "~> 4.0.1"
-  # spec.dependency "FMDB", "~> 2.7.5"
   spec.dependency "Protobuf", "~> 3.21.11"
 
 end
