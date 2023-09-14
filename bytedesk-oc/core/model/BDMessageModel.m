@@ -178,23 +178,17 @@
         if ([_type isEqualToString:BD_MESSAGE_TYPE_ROBOT]) {
             // 解析机器人问答
             NSMutableArray *answersArray = [dictionary objectForKey:@"answers"];
+            if ([answersArray count] > 0) {
+                _content = [NSString stringWithFormat:@"%@\n", _content];
+            }
             for (NSDictionary *answerDict in answersArray) {
                 NSLog(@"aid: %@, question: %@", answerDict[@"aid"], answerDict[@"question"]);
                 //
                 NSString *aid = answerDict[@"aid"];
                 NSString *question = answerDict[@"question"];
-//                _content = [NSString stringWithFormat:@"%@\n\n<_link>%@|%@</_link>", _content, [NSString stringWithFormat:@"%@:%@", @"question", aid], question];
-                _content = [NSString stringWithFormat:@"%@\n\n<p><a href=\"robot://%@?%@\">%@</a></p>", _content, aid, [BDUtils encodeString:question], question];
-                //
-//                NSAttributedString *attributedQuestion = [[NSAttributedString alloc] initWithString:question];
-//                [attributedContent appendAttributedString:attributedQuestion];
-//                [attributedContent addAttribute:NSLinkAttributeName value:[NSString stringWithFormat:@"robot://%@", aid] range:[[attributedContent string] rangeOfString:question]];
+                NSString *answer = answerDict[@"answer"];
+                _content = [NSString stringWithFormat:@"%@\n\n<p><a href=\"robot://%@??%@??%@\">%@</a></p>", _content, aid, [BDUtils encodeString:question], [BDUtils encodeString:answer], question];
             }
-//            _content = attributedContent.string;
-//            _contentAttr = attributedContent;
-//            NSLog(@"_content: %@, attributedContent: %@", _content, attributedContent);
-//            _content = [NSString stringWithFormat:@"%@\n\n<_link>%@|%@</_link>", _content, @"requestAgent", @"转人工"];
-            
             NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithData:[_content dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
             [attributedString addAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:16]} range:NSMakeRange(0, attributedString.length)];
             _contentAttr = attributedString;
@@ -503,8 +497,8 @@
 
 - (CGSize)contentSize {
     
-    if ([_type isEqualToString:BD_MESSAGE_TYPE_TEXT] || [_type isEqualToString:BD_MESSAGE_TYPE_ROBOT]) {
-        //
+    if ([_type isEqualToString:BD_MESSAGE_TYPE_TEXT]) {
+        //  || [_type isEqualToString:BD_MESSAGE_TYPE_ROBOT]
         return [_content boundingRectWithSize:CGSizeMake(200, FLT_MAX)
                                       options:NSStringDrawingUsesLineFragmentOrigin
                                    attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14.0f]}

@@ -19,8 +19,9 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-//        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
 //        [self setQmui_shouldShowDebugColor:YES];
+        self.backgroundColor = [UIColor systemGroupedBackgroundColor];
     }
     return self;
 }
@@ -38,7 +39,6 @@
 - (void)initWithMessageModel:(BDMessageModel *)messageModel {
     //
     _messageModel = messageModel;
-    //
     [self addSubviews];
     //
     [self setNeedsLayout];

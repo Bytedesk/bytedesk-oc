@@ -12,6 +12,7 @@
 #import "BDSettings.h"
 #import "BDMQTTApis.h"
 #import "BDDBApis.h"
+//#import "BDMessageModel.h"
 
 #import <AVFoundation/AVFoundation.h>
 
@@ -19,6 +20,15 @@
 //#import <MMKV/MMKV.h>
 
 @implementation BDUtils
+
++ (NSString*)getGuid
+{
+    NSDateFormatter *dateformat=[[NSDateFormatter alloc] init];
+    [dateformat setDateFormat:@"yyyyMMddHHmmss"];
+    NSString *timestamp = [dateformat stringFromDate:[NSDate date]];
+    NSString *uuid = [[[NSUUID UUID] UUIDString] stringByReplacingOccurrencesOfString:@"-" withString:@""].lowercaseString;
+    return [NSString stringWithFormat:@"%@%@", timestamp, uuid];
+}
 
 + (NSString*)getCurrentDate
 {
@@ -180,15 +190,6 @@
     }
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     return jsonString;
-    
-//    NSMutableString *mutStr = [NSMutableString stringWithString:jsonString];
-//    NSRange range = {0,jsonString.length};
-//    //去掉字符串中的空格
-//    [mutStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:range];
-//    NSRange range2 = {0,mutStr.length};
-//    //去掉字符串中的换行符
-//    [mutStr replaceOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:range2];
-//    return mutStr;
 }
 
 + (NSString *)getQRCodeLogin {
@@ -349,13 +350,27 @@
 #pragma mark -
 
 + (NSString*)encodeString:(NSString*)originalUrl {
-//    return [string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSCharacterSet *encodeUrlSet = [NSCharacterSet URLQueryAllowedCharacterSet];
     return [originalUrl stringByAddingPercentEncodingWithAllowedCharacters:encodeUrlSet];
 }
 
 + (NSString *)decodeString:(NSString *)string {
     return [string stringByRemovingPercentEncoding];
+}
+
++ (NSAttributedString*)transformContentToContentAttr:(NSString *)content {
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithData:[content dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    [attributedString addAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:16]} range:NSMakeRange(0, attributedString.length)];
+    return attributedString;
+}
+
++ (void)setButtonTitleColor:(UIButton *)button {
+    UIUserInterfaceStyle mode = UITraitCollection.currentTraitCollection.userInterfaceStyle;
+    if (mode == UIUserInterfaceStyleDark) {
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    } else if (mode == UIUserInterfaceStyleLight) {
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }
 }
 
 @end

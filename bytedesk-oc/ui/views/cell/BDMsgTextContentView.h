@@ -11,14 +11,8 @@
 
 @class BDM80AttributedLabel;
 
-//@protocol KFDSMsgTextContentViewDelegate <NSObject>
-//
-//@end
-
 @interface BDMsgTextContentView : BDMsgBaseContentView
 
 @property (nonatomic, strong) BDM80AttributedLabel *textLabel;
-
-//@property(nonatomic, assign) id<KFDSMsgTextContentViewDelegate>  subdelegate;
 
 @end

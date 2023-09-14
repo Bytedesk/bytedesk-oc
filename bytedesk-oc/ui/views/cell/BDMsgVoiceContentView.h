@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BDMsgBaseContentView.h"
 
-@protocol KFDSPlayAudioUIDelegate <NSObject>
+@protocol BDPlayAudioUIDelegate <NSObject>
 
 @end
 

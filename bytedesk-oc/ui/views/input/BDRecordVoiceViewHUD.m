@@ -302,15 +302,9 @@
     voiceRecordLength = voiceRecordEndTime - voiceRecordStartTime;
     
     if (voiceRecordLength < 1) {
-
-//        [KFProgressHUD showErrorWithStatus:AppKeFuLocalizedString(@"RecordingTooShort", nil)];
-//        // [QMUITips showError:@"录音时间太短" inView:self hideAfterDelay:2.0f];
         return @"tooshort";
     }
     else if (voiceRecordLength > 60) {
-
-//        [KFProgressHUD showErrorWithStatus:AppKeFuLocalizedString(@"RecordingTooLong", nil)];
-//        // [QMUITips showError:@"录音时间太长" inView:self hideAfterDelay:2.0f];
         return @"toolong";
     }
 
@@ -328,13 +322,6 @@
     if (error) {
         NSLog(@"rename file Error: %@ %ld %@", [error domain], (long)[error code], [[error userInfo] description]);
     }
-    
-//    转成amr格式
-//    [KFUtils wavToAmr:wavVoicePath amrSavePath:amrVoicePath];
-//    [VoiceConverter wavToAmr:wavVoicePath amrSavePath:amrVoicePath]; // 实际使用
-    
-//    发送语音文件
-//    [[KFUtils sharedInstance] uploadVoice:amrVoiceFileName workgroupName:workgroupName];
 
     return amrVoiceFileName;
 }
@@ -356,9 +343,7 @@
 
 -(void) updateSignalWaveMeters
 {
-    
     [[self voiceRecorder] updateMeters];
-    
     //
     CGFloat meter = [[self voiceRecorder] averagePowerForChannel:0];
     

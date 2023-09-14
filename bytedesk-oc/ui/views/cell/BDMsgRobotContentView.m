@@ -28,22 +28,22 @@
         //
 //        _kfCoreTextView = [[BDCoreTextView alloc] initWithFrame:CGRectZero];
 //        _kfCoreTextView = [[DTAttributedTextView alloc] initWithFrame:CGRectZero];
-        _kfCoreTextView = [[UITextView alloc] initWithFrame:CGRectZero];
-        [_kfCoreTextView setBackgroundColor:[UIColor clearColor]];
-        [_kfCoreTextView setDelegate:self];
-        [_kfCoreTextView setEditable:NO];
-        [_kfCoreTextView setShowsVerticalScrollIndicator:NO];
-        [_kfCoreTextView setDataDetectorTypes:UIDataDetectorTypeAll];
+        _contentTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+        [_contentTextView setBackgroundColor:[UIColor clearColor]];
+        [_contentTextView setDelegate:self];
+        [_contentTextView setEditable:NO];
+        [_contentTextView setShowsVerticalScrollIndicator:NO];
+        [_contentTextView setDataDetectorTypes:UIDataDetectorTypeAll];
 //        _kfCoreTextView.linkTextAttributes = @{ NSForegroundColorAttributeName: [UIColor blueColor],
 //                                                NSUnderlineColorAttributeName: [UIColor clearColor],
 //                                                NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)};
 //        [_kfCoreTextView setTextDelegate:self];
-        _kfCoreTextView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        _kfCoreTextView.userInteractionEnabled = YES;
-        _kfCoreTextView.scrollEnabled = NO;
+        _contentTextView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        _contentTextView.userInteractionEnabled = YES;
+        _contentTextView.scrollEnabled = NO;
 //        _kfCoreTextView.font = [UIFont systemFontOfSize:16]; // 无法修改attributed字体大小
 //        _kfCoreTextView.linkTextAttributes = @{};
-        [self addSubview:_kfCoreTextView];
+        [self addSubview:_contentTextView];
         
         //
         _upButton = [[UIButton alloc]  initWithFrame:CGRectZero];
@@ -74,12 +74,12 @@
 }
 
 - (BOOL)canBecomeFirstResponder {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+//    NSLog(@"%s", __PRETTY_FUNCTION__);
     return YES;
 }
 
-- (void)refresh:(BDMessageModel *)data isAgent:(BOOL)agent{
-    [super refresh:data isAgent:agent];
+- (void)initWithMessageModel:(BDMessageModel *)data {
+    [super initWithMessageModel:data];
 //    NSLog(@"%s, type: %@, content: %@", __PRETTY_FUNCTION__, self.model.type, self.model.content);
 //    [_kfCoreTextView setText:self.model.content];
 //    _kfCoreTextView.attributedString = [self getAttributedStringWithHtml:self.model.content];
@@ -89,7 +89,7 @@
 //    // NSMutableAttributedString
 //    [attributedString addAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:16]} range:NSMakeRange(0, attributedString.length)];
 //    [_kfCoreTextView setAttributedText:attributedString];
-    [_kfCoreTextView setAttributedText:self.model.contentAttr];
+    [_contentTextView setAttributedText:self.model.contentAttr];
     
 //    if ([self.delegate respondsToSelector:@selector(shouldReloadTable)]) {
 //        [self.delegate performSelector:@selector(shouldReloadTable)];
@@ -109,42 +109,29 @@
         
 //    CGSize size = [BDUIUtils sizeOfRobotContent:self.model.content];
     CGSize size = [BDUIUtils sizeOfRobotContentAttr:self.model.contentAttr];
-    UIEdgeInsets contentInsets = self.model.contentViewInsets; // UIEdgeInsetsMake(10, 13, 13, 10);
+    UIEdgeInsets contentViewInsets = self.model.contentViewInsets; // UIEdgeInsetsMake(10, 13, 13, 10);
     self.model.contentSize = size;
     
-    CGRect labelFrame = CGRectZero;
+    CGRect textContentFrame = CGRectZero;
     CGRect bubbleFrame = CGRectZero;
-    CGRect boundsFrame = CGRectZero;
+    CGRect backFrame = CGRectZero;
     CGRect upFrame = CGRectZero;
     CGRect downFrame = CGRectZero;
     
-    if (self.isAgent && [self.model isClientSystem]) {
-//        NSLog(@"1. 系统消息 %s, content=%@", __PRETTY_FUNCTION__, self.model.content);
-        // 系统消息
-        labelFrame = CGRectMake(contentInsets.left, contentInsets.top, size.width, size.height);
-        bubbleFrame = CGRectMake(0, 0, contentInsets.left + size.width + contentInsets.right + 5, contentInsets.top + size.height + contentInsets.bottom );
-//        boundsFrame = CGRectMake(BDScreen.width - bubbleFrame.size.width - 55, 23, bubbleFrame.size.width,  bubbleFrame.size.height);
-        boundsFrame = CGRectMake(BDScreen.width - bubbleFrame.size.width, 23, bubbleFrame.size.width,  bubbleFrame.size.height);
-        
-        _kfCoreTextView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-
-    } else if ([self.model isSend]) {
+    if ([self.model isSend]) {
 //        NSLog(@"2. 用户自己发送的消息：%s, content=%@", __PRETTY_FUNCTION__, self.model.content);
         // 访客发送消息
-        labelFrame = CGRectMake(contentInsets.left, 0, size.width, size.height);
-        bubbleFrame = CGRectMake(0, 0, contentInsets.left + size.width + contentInsets.right + 5, labelFrame.size.height); // contentInsets.top + size.height + contentInsets.bottom
-//        boundsFrame = CGRectMake(BDScreen.width - bubbleFrame.size.width - 55, 23, bubbleFrame.size.width,  bubbleFrame.size.height);
-        boundsFrame = CGRectMake(BDScreen.width - bubbleFrame.size.width, 23, bubbleFrame.size.width,  bubbleFrame.size.height);
+        textContentFrame = CGRectMake(contentViewInsets.left, contentViewInsets.top, size.width, size.height);
+        bubbleFrame = CGRectMake(0, 0, contentViewInsets.left + size.width + contentViewInsets.right + 5,  textContentFrame.size.height);
+        backFrame = CGRectMake(BDScreen.width - bubbleFrame.size.width - self.xMargin, self.yTop, bubbleFrame.size.width,  bubbleFrame.size.height);
         //
     } else {
 //        NSLog(@"3. 机器人消息：%s, content=%@, size.height: %f", __PRETTY_FUNCTION__, self.model.content, size.height);
-        NSLog(@"3. 机器人消息：%s, size.height: %f", __PRETTY_FUNCTION__, size.height);
         int upDownBtnWidthHeight = 25; //
         // 机器人消息
-        labelFrame = CGRectMake(contentInsets.left, 0, size.width, size.height);
-        bubbleFrame = CGRectMake(0, 0, contentInsets.left + size.width + contentInsets.right, size.height);
-//        boundsFrame = CGRectMake(50, 40, bubbleFrame.size.width + upDownBtnWidthHeight, size.height);
-        boundsFrame = CGRectMake(0, 40, bubbleFrame.size.width + upDownBtnWidthHeight, size.height);
+        textContentFrame = CGRectMake(contentViewInsets.left, contentViewInsets.top/2, size.width, size.height);
+        bubbleFrame = CGRectMake(0, 0, contentViewInsets.left + size.width + contentViewInsets.right, size.height);
+        backFrame = CGRectMake(self.xMargin, self.yTop, bubbleFrame.size.width + upDownBtnWidthHeight, size.height);
         // 右侧
         upFrame = CGRectMake(bubbleFrame.origin.x + bubbleFrame.size.width, bubbleFrame.origin.y, upDownBtnWidthHeight, upDownBtnWidthHeight);
         _upButton.frame = upFrame;
@@ -152,14 +139,13 @@
         downFrame = CGRectMake(upFrame.origin.x, upFrame.origin.y + upFrame.size.height + 5, upDownBtnWidthHeight, upDownBtnWidthHeight);
         _downButton.frame = downFrame;
         //
-        _kfCoreTextView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
+        _contentTextView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
 //        CGRect toAgentButtonFrame = CGRectMake(labelFrame.origin.x, labelFrame.origin.y + labelFrame.size.height, 100, 20);
 //        [_toAgentButton setFrame:toAgentButtonFrame];
     }
-//    NSLog(@"labelFrame: x=%f, y=%f, height=%f, width=%f", labelFrame.origin.x, labelFrame.origin.y, labelFrame.size.height, labelFrame.size.width);
-    self.frame = boundsFrame;
-    self.bubbleImageView.frame = bubbleFrame;
-    self.kfCoreTextView.frame = labelFrame;
+    self.contentTextView.frame = textContentFrame;
+    self.bubbleView.frame = bubbleFrame;
+    self.frame = backFrame;
 //    [_kfCoreTextView fitToSuggestedHeight];
 //    self.model.contentSize = boundsFrame.size;
     // 调试颜色
@@ -178,18 +164,24 @@
     
     NSString *key = URL.absoluteString;
     if ([key hasPrefix:@"robot://"]) {
-        NSArray *arrayWithLabel = [key componentsSeparatedByString:@"?"];
-        NSString *label = [arrayWithLabel lastObject];
-        label = [BDUtils decodeString:label];
+        // key的格式如下：robot://aid??question??answer
+        NSArray *arrayWithLabel = [key componentsSeparatedByString:@"??"];
         //
         NSString *keyWithoutLabel = [arrayWithLabel objectAtIndex:0];
         NSArray *arrayWithKey = [keyWithoutLabel componentsSeparatedByString:@"//"];
-        key = [arrayWithKey lastObject];
-        key = [NSString stringWithFormat:@"question:%@", key];
-        NSLog(@"%s key: %@, label:%@", __PRETTY_FUNCTION__, key, label);
+        
+        NSString *aid = [arrayWithKey lastObject];
+        
+        NSString *question = arrayWithLabel[1];
+        question = [BDUtils decodeString:question];
+        
+        NSString *answer = [arrayWithLabel lastObject];
+        answer = [BDUtils decodeString:answer];
+        
+        NSLog(@"%s aid: %@, question:%@, answer: %@", __PRETTY_FUNCTION__, aid, question, answer);
         //
-        if ([self.delegate respondsToSelector:@selector(robotLinkClicked:withKey:)]) {
-            [self.delegate robotLinkClicked:label withKey:key];
+        if ([self.delegate respondsToSelector:@selector(robotQuestionClicked:withQuestion:withAnswer:)]) {
+            [self.delegate robotQuestionClicked:aid withQuestion:question withAnswer:answer];
         }
         
     //    return YES 除了监听点击事件之外还是监听长按事件 长按弹出copy share 按钮 ，不过点击open 会跳转到应用外打开链接，
@@ -224,10 +216,6 @@
 //}
 
 #pragma mark - 转人工
-
-//- (void)toAgentButtonClicked:(id)sender {
-//    NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
 
 - (void)rateUpBtnClicked:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);

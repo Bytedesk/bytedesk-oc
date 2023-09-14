@@ -40,8 +40,8 @@
 //    return YES;
 //}
 
-- (void)refresh:(BDMessageModel *)data isAgent:(BOOL)agent{
-    [super refresh:data isAgent:agent];
+- (void)initWithMessageModel:(BDMessageModel *)data{
+    [super initWithMessageModel:data];
     //    NSLog(@"%s %@", __PRETTY_FUNCTION__, self.model.pic_url);
     
     // TODO: 图片大小按照图片长宽比例显示
@@ -84,7 +84,7 @@
     
     self.imageView.frame = imageFrame;
     self.fileNameLabel.frame = fileNameFrame;
-    self.bubbleImageView.frame = bubbleFrame;
+    self.bubbleView.frame = bubbleFrame;
     self.model.contentSize = boundsFrame.size;
 }
 

@@ -11,7 +11,7 @@
 #import "BDUIConstants.h"
 
 #import "BDM80AttributedLabel.h"
-#import "BDM80AttributedLabel+KFDSUI.h"
+#import "BDM80AttributedLabel+BDUI.h"
 
 #import "BDInputEmotionManager.h"
 #import "BDInputEmotionParser.h"
@@ -29,7 +29,7 @@
         _textLabel = [[BDM80AttributedLabel alloc] initWithFrame:CGRectZero];
         _textLabel.delegate = self;
         _textLabel.numberOfLines = 0;
-        _textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+//        _textLabel.lineBreakMode = NSLineBreakByWordWrapping;
         _textLabel.backgroundColor = [UIColor clearColor];
         _textLabel.font = [UIFont systemFontOfSize:12.0f];
         [self addSubview:_textLabel];
@@ -41,8 +41,8 @@
 //    return YES;
 //}
 
-- (void)refresh:(BDMessageModel *)data isAgent:(BOOL)agent{
-    [super refresh:data isAgent:agent];
+- (void)initWithMessageModel:(BDMessageModel *)data{
+    [super initWithMessageModel:data];
     //    NSLog(@"%s, type: %@, content: %@", __PRETTY_FUNCTION__, self.model.type, self.model.content);
     
     NSString *text = self.model.content;
@@ -52,7 +52,7 @@
     [_textLabel setText:@""];
     NSArray *tokens = [[BDInputEmotionParser currentParser] tokens:text];
     for (BDInputTextToken *token in tokens) {
-        if (token.type == KFDSInputTokenTypeEmoticon) {
+        if (token.type == BDInputTokenTypeEmoticon) {
             BDInputEmotion *emoticon = [[BDInputEmotionManager sharedManager] emotionByText:token.text];
             if (emoticon) {
                 UIImage *image = [UIImage imageNamed:emoticon.filename inBundle:[NSBundle bundleForClass:self.class] compatibleWithTraitCollection:nil];
@@ -103,7 +103,7 @@
     self.frame = boundsFrame;
     
     self.textLabel.frame = labelFrame;
-    self.bubbleImageView.frame = bubbleFrame;
+    self.bubbleView.frame = bubbleFrame;
     self.model.contentSize = boundsFrame.size;
 }
 

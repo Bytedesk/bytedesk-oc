@@ -9,17 +9,13 @@
 #import "BDMsgBaseContentView.h"
 
 //@class BDCoreTextView;
-//@class DTAttributedLabel;
-//@class DTAttributedTextView;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BDMsgRobotContentView : BDMsgBaseContentView
 
 //@property (nonatomic, strong) BDCoreTextView *kfCoreTextView;
-//@property (strong, nonatomic) DTAttributedLabel *attributedLabel;
-//@property (strong, nonatomic) DTAttributedTextView *kfCoreTextView;
-@property (strong, nonatomic) UITextView *kfCoreTextView;
+@property (strong, nonatomic) UITextView *contentTextView;
 
 @property (nonatomic, strong) UIButton *upButton;
 @property (nonatomic, strong) UIButton *downButton;

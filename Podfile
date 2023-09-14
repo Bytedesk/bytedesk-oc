@@ -18,24 +18,24 @@ target 'bytedesk-oc' do
 
 end
 
-target 'example' do
+target 'demo_oc' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  project 'example/example.xcodeproj'
+  project 'example/demo_oc/demo_oc.xcodeproj'
 
   # Pods for example
   pod 'AFNetworking', '~> 4.0.1'
   pod 'Protobuf', '~> 3.21.11'
 
-  target 'exampleTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-  target 'exampleUITests' do
-    # Pods for testing
-  end
+#  target 'demo_ocTests' do
+#    inherit! :search_paths
+#    # Pods for testing
+#  end
+#
+#  target 'demo_ocUITests' do
+#    # Pods for testing
+#  end
 
 end
 

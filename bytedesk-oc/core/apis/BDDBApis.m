@@ -1313,14 +1313,25 @@ static BDDBApis *sharedInstance = nil;
                            withWorkGroupWid:(NSString *)wid
                                 withContent:(NSString *)content
                                 withLocalId:(NSString *)localId
-                            withSessionType:(NSString *)sessionType {
-    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_TEXT withSessionType:sessionType withVoiceLength:0 withFormat:@"" withFileName:@"" withFileSize:@""];
+                            withSessionType:(NSString *)sessionType
+                                   withSend:(BOOL)isSend {
+    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_TEXT withSessionType:sessionType withVoiceLength:0 withFormat:@"" withFileName:@"" withFileSize:@"" withSend:isSend];
+}
+
+- (BDMessageModel *) insertRobotMessageLocal:(NSString *)tid
+                           withWorkGroupWid:(NSString *)wid
+                                withContent:(NSString *)content
+                                withLocalId:(NSString *)localId
+                             withSessionType:(NSString *)sessionType
+                                    withSend:(BOOL)isSend {
+    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_ROBOT withSessionType:sessionType withVoiceLength:0 withFormat:@"" withFileName:@"" withFileSize:@"" withSend:isSend];
 }
 
 - (BDMessageModel *) insertImageMessageLocal:(NSString *)tid withWorkGroupWid:(NSString *)wid
                      withContent:(NSString *)content withLocalId:(NSString *)localId
-                 withSessionType:(NSString *)sessionType {
-    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_IMAGE withSessionType:sessionType withVoiceLength:0 withFormat:@"" withFileName:@"" withFileSize:@""];
+                 withSessionType:(NSString *)sessionType
+                                    withSend:(BOOL)isSend {
+    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_IMAGE withSessionType:sessionType withVoiceLength:0 withFormat:@"" withFileName:@"" withFileSize:@"" withSend:isSend];
 }
 
 - (BDMessageModel *) insertVoiceMessageLocal:(NSString *)tid
@@ -1329,8 +1340,9 @@ static BDDBApis *sharedInstance = nil;
                                  withLocalId:(NSString *)localId
                              withSessionType:(NSString *)sessionType
                                  withVoiceLength:(int)voiceLength
-                                  withFormat:format {
-    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_VOICE withSessionType:sessionType withVoiceLength:voiceLength withFormat:format withFileName:@"" withFileSize:@""];
+                                  withFormat:format
+                                    withSend:(BOOL)isSend {
+    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_VOICE withSessionType:sessionType withVoiceLength:voiceLength withFormat:format withFileName:@"" withFileSize:@"" withSend:isSend];
 }
 
 - (BDMessageModel *) insertFileMessageLocal:(NSString *)tid
@@ -1340,31 +1352,37 @@ static BDDBApis *sharedInstance = nil;
                             withSessionType:(NSString *)sessionType
                                  withFormat:format
                                withFileName:(NSString *)fileName
-                               withFileSize:(NSString *)fileSize {
-    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_FILE withSessionType:sessionType withVoiceLength:0 withFormat:format withFileName:fileName withFileSize:fileSize];
+                               withFileSize:(NSString *)fileSize
+                                   withSend:(BOOL)isSend {
+    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_FILE withSessionType:sessionType withVoiceLength:0 withFormat:format withFileName:fileName withFileSize:fileSize withSend:isSend];
 }
 
 - (BDMessageModel *) insertVideoMessageLocal:(NSString *)tid withWorkGroupWid:(NSString *)wid
                      withContent:(NSString *)content withLocalId:(NSString *)localId
-                 withSessionType:(NSString *)sessionType {
-    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_VIDEO withSessionType:sessionType withVoiceLength:0 withFormat:@"" withFileName:@"" withFileSize:@""];
+                 withSessionType:(NSString *)sessionType
+                                    withSend:(BOOL)isSend {
+    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_VIDEO withSessionType:sessionType withVoiceLength:0 withFormat:@"" withFileName:@"" withFileSize:@"" withSend:isSend];
 }
 
 - (BDMessageModel *) insertCommodityMessageLocal:(NSString *)tid
                                 withWorkGroupWid:(NSString *)wid
                                      withContent:(NSString *)content
                                      withLocalId:(NSString *)localId
-                                 withSessionType:(NSString *)sessionType {
-    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_COMMODITY withSessionType:sessionType withVoiceLength:0 withFormat:@"" withFileName:@"" withFileSize:@""];
+                                 withSessionType:(NSString *)sessionType
+                                        withSend:(BOOL)isSend {
+    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_COMMODITY withSessionType:sessionType withVoiceLength:0 withFormat:@"" withFileName:@"" withFileSize:@"" withSend:isSend];
 }
 
 - (BDMessageModel *) insertRedPacketMessageLocal:(NSString *)tid
                                 withWorkGroupWid:(NSString *)wid
                                      withContent:(NSString *)content
                                      withLocalId:(NSString *)localId
-                                 withSessionType:(NSString *)sessionType {
-    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_RED_PACKET withSessionType:sessionType withVoiceLength:0 withFormat:@"" withFileName:@"" withFileSize:@""];
+                                 withSessionType:(NSString *)sessionType
+                                        withSend:(BOOL)isSend {
+    return [self insertMessageLocal:tid withWorkGroupWid:wid withContent:content withLocalId:localId withType:BD_MESSAGE_TYPE_RED_PACKET withSessionType:sessionType withVoiceLength:0 withFormat:@"" withFileName:@"" withFileSize:@"" withSend:isSend];
 }
+
+
 
 - (BDMessageModel *) insertMessageLocal:(NSString *)tid
                        withWorkGroupWid:(NSString *)wid
@@ -1375,7 +1393,8 @@ static BDDBApis *sharedInstance = nil;
                         withVoiceLength:(int)voiceLength
                              withFormat:(NSString *)format
                            withFileName:(NSString *)fileName
-                           withFileSize:(NSString *)fileSize{
+                           withFileSize:(NSString *)fileSize
+                               withSend:(BOOL)isSend {
     
     BDMessageModel *message = [[BDMessageModel alloc] init];
     // 设置mid === localId
@@ -1395,6 +1414,9 @@ static BDDBApis *sharedInstance = nil;
     //
     if ([type isEqualToString:BD_MESSAGE_TYPE_TEXT]) {
         message.content = content;
+    } else if ([type isEqualToString:BD_MESSAGE_TYPE_ROBOT]) {
+        message.content = content;
+        message.contentAttr = [BDUtils transformContentToContentAttr:content];
     } else if ([type isEqualToString:BD_MESSAGE_TYPE_IMAGE]) {
         message.image_url = content;
     } else if ([type isEqualToString:BD_MESSAGE_TYPE_VOICE]) {
@@ -1416,10 +1438,15 @@ static BDDBApis *sharedInstance = nil;
     message.session_type = sessionType;
     message.created_at = [BDUtils getCurrentDate];
     //
-    message.uid = [BDSettings getUid];
-    message.username = [BDSettings getUsername];
-    message.nickname = [BDSettings getNickname];
-    message.avatar = [BDSettings getAvatar];
+    if (isSend) {
+        message.uid = [BDSettings getUid];
+        message.username = [BDSettings getUsername];
+        message.nickname = [BDSettings getNickname];
+        message.avatar = [BDSettings getAvatar];
+    } else {
+        message.uid = @"";
+    }
+    
     message.current_uid = [BDSettings getUid];
 //    message.visitor
     

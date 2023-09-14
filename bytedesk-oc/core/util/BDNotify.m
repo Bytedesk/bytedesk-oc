@@ -110,19 +110,13 @@ messageReceivedSoundID;
 + (void)notifyMessageTextSend:(NSString *)tid withContent:(NSString *)content withLocalId:(NSNumber *)localId {
     //
     BDMessageModel *messageModel = [[BDMessageModel alloc] init];
-    
-//    messageModel.local_id = localId;
     messageModel.current_uid = [BDSettings getUid];
     messageModel.username = [BDSettings getUsername];
     messageModel.nickname = [BDSettings getNickname];
     messageModel.avatar = [BDSettings getAvatar];
     messageModel.type = BD_MESSAGE_TYPE_TEXT;
-//    messageModel.role = BD_ROLE_AGENT; // 参数定
     messageModel.content = content;
     messageModel.client = [BDSettings getClient];
-//    messageModel.thread_tid = threadId;
-//    messageModel.timestamp = [BDUtils getCurrentDate];
-//    messageModel.send_status = BD_MESSAGE_STATUS_SENDING;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:BD_NOTIFICATION_MESSAGE_ADD object:messageModel];
 }
@@ -131,19 +125,14 @@ messageReceivedSoundID;
     //
     BDMessageModel *messageModel = [[BDMessageModel alloc] init];
     
-//    messageModel.local_id = localId;
     messageModel.current_uid = [BDSettings getUid];
     messageModel.username = [BDSettings getUsername];
     messageModel.nickname = [BDSettings getNickname];
     messageModel.avatar = [BDSettings getAvatar];
     messageModel.type = BD_MESSAGE_TYPE_IMAGE;
-//    messageModel.role = BD_ROLE_AGENT; // 参数定
     messageModel.pic_url = imageUrl;
     messageModel.image_url = imageUrl;
     messageModel.client = [BDSettings getClient];
-//    messageModel.thread_tid = threadId;
-//    messageModel.timestamp = [BDUtils getCurrentDate];
-//    messageModel.send_status = BD_MESSAGE_STATUS_SENDING;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:BD_NOTIFICATION_MESSAGE_ADD object:messageModel];
 }

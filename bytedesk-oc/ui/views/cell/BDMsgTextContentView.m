@@ -10,7 +10,7 @@
 #import "BDUIConstants.h"
 
 #import "BDM80AttributedLabel.h"
-#import "BDM80AttributedLabel+KFDSUI.h"
+#import "BDM80AttributedLabel+BDUI.h"
 
 #import "BDInputEmotionManager.h"
 #import "BDInputEmotionParser.h"
@@ -33,7 +33,7 @@
 //        _textLabel.numberOfLines = 0;
 //        _textLabel.lineBreakMode = NSLineBreakByWordWrapping;
         _textLabel.backgroundColor = [UIColor clearColor];
-        _textLabel.font = [UIFont systemFontOfSize:12.0f];
+        _textLabel.font = [UIFont systemFontOfSize:16.0f];
         //
         [self addSubview:_textLabel];
     }
@@ -45,8 +45,8 @@
 //    return YES;
 //}
 
-- (void)refresh:(BDMessageModel *)data isAgent:(BOOL)agent{
-    [super refresh:data isAgent:agent];
+- (void)initWithMessageModel:(BDMessageModel *)data{
+    [super initWithMessageModel:data];
 //    NSLog(@"%s, type: %@, content: %@", __PRETTY_FUNCTION__, self.model.type, self.model.content);
 
     NSString *text = self.model.content;
@@ -56,7 +56,7 @@
     [_textLabel setText:@""];
     NSArray *tokens = [[BDInputEmotionParser currentParser] tokens:text];
     for (BDInputTextToken *token in tokens) {
-        if (token.type == KFDSInputTokenTypeEmoticon) {
+        if (token.type == BDInputTokenTypeEmoticon) {
             BDInputEmotion *emoticon = [[BDInputEmotionManager sharedManager] emotionByText:token.text];
             if (emoticon) {
                 UIImage *image = [UIImage imageNamed:emoticon.filename inBundle:[NSBundle bundleForClass:self.class] compatibleWithTraitCollection:nil];
@@ -84,31 +84,34 @@
     [super layoutSubviews];
 //    NSLog(@"%s", __PRETTY_FUNCTION__);
    
-    UIEdgeInsets contentInsets = self.model.contentViewInsets;
-    CGSize size = [_textLabel sizeThatFits:CGSizeMake(200, CGFLOAT_MAX)];
-    self.model.contentSize = size;
+    UIEdgeInsets contentViewInsets = self.model.contentViewInsets;
+//    CGSize contentSize = self.messageModel.contentSize()
+    CGSize contentSize = [_textLabel sizeThatFits:CGSizeMake(200, CGFLOAT_MAX)];
+    self.model.contentSize = contentSize;
+    
+    CGFloat width = contentViewInsets.left + contentSize.width + contentViewInsets.right;
+    CGFloat height = contentViewInsets.top + contentSize.height + contentViewInsets.bottom;
 
-    CGRect labelFrame = CGRectZero;
+    CGRect textContentFrame = CGRectZero;
     CGRect bubbleFrame = CGRectZero;
-    CGRect boundsFrame = CGRectZero;
+    CGRect backFrame = CGRectZero;
 
     if ([self.model isSend]) {
-        labelFrame = CGRectMake(contentInsets.left+2, contentInsets.top, size.width, size.height);
-        bubbleFrame = CGRectMake(0, 0, contentInsets.left + size.width + contentInsets.right + 5, contentInsets.top + size.height + contentInsets.bottom );
-//        boundsFrame = CGRectMake(BDScreen.width - bubbleFrame.size.width - 55, 23, bubbleFrame.size.width,  bubbleFrame.size.height);
-        boundsFrame = CGRectMake(BDScreen.width - bubbleFrame.size.width, 23, bubbleFrame.size.width,  bubbleFrame.size.height);
+        textContentFrame = CGRectMake(contentViewInsets.left, contentViewInsets.top, width, height);
+        bubbleFrame = CGRectMake(0, 0, contentViewInsets.left + contentSize.width + contentViewInsets.right + 5, contentViewInsets.top + contentSize.height + contentViewInsets.bottom );
+        backFrame = CGRectMake(BDScreen.width - width - self.xMargin, self.yTop, bubbleFrame.size.width,  bubbleFrame.size.height);
     }
     else {
-        labelFrame = CGRectMake(contentInsets.left+3, contentInsets.top, size.width, size.height);
-        bubbleFrame = CGRectMake(0, 0, contentInsets.left + size.width + contentInsets.right + 5, contentInsets.top + size.height + contentInsets.bottom );
-//        boundsFrame = CGRectMake(50, 40, bubbleFrame.size.width, bubbleFrame.size.height);
-        boundsFrame = CGRectMake(0, 40, bubbleFrame.size.width, bubbleFrame.size.height);
+        textContentFrame = CGRectMake(contentViewInsets.left, contentViewInsets.top, width, height);
+        bubbleFrame = CGRectMake(0, 0, contentViewInsets.left + contentSize.width + contentViewInsets.right + 5, contentViewInsets.top + contentSize.height + contentViewInsets.bottom );
+        backFrame = CGRectMake(self.xMargin, self.yTop, bubbleFrame.size.width, bubbleFrame.size.height);
     }
-    self.frame = boundsFrame;
     //
-    self.textLabel.frame = labelFrame;
-    self.bubbleImageView.frame = bubbleFrame;
-    self.model.contentSize = boundsFrame.size;
+    self.textLabel.frame = textContentFrame;
+    self.bubbleView.frame = bubbleFrame;
+    self.frame = backFrame;
+    //
+    self.model.contentSize = backFrame.size;
 }
 
 #pragma mark - M80AttributedLabelDelegate

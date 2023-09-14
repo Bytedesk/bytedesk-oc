@@ -9,6 +9,7 @@
 #import "UITextView+Placeholder.h"
 #import "BDCoreApis.h"
 #import "BDUIApis.h"
+#import "BDUtils.h"
 
 #define DeviceHeight [[UIScreen mainScreen] bounds].size.height
 #define DeviceWidth [[UIScreen mainScreen] bounds].size.width
@@ -38,7 +39,6 @@
 
 - (void)initWithThreadTid:(NSString *)tid withPush:(BOOL)isPush{
     NSLog(@"1.%s, threadTid: %@", __PRETTY_FUNCTION__, tid);
-//    self.mAdminUid = uid;
     self.threadTid = tid;
     self.isSolved = NO;
     self.note = @"";
@@ -67,12 +67,6 @@
 //        self.navigationItem.leftBarButtonItem = [UIBarButtonItem qmui_closeItemWithTarget:self action:@selector(handleCloseButtonEvent:)];
     }
     self.forceEnableBackGesture = YES;// 当系统的返回按钮被屏蔽的时候，系统的手势返回也会跟着失效，所以这里要手动强制打开手势返回
-    //
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -90,7 +84,7 @@
 #pragma mark - 初始化评价机器人界面
 
 - (void)initRateRobotView {
-    self.view.frame = CGRectMake(self.view.frame.origin.x, DeviceHeight / 2, DeviceWidth, DeviceHeight / 2);
+    self.view.frame = CGRectMake(self.view.frame.origin.x, DeviceHeight / 3, DeviceWidth, DeviceHeight * 2 / 3);
     self.view.layer.cornerRadius = 20.0;
     //
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((DeviceWidth - 100)/2, 20, 100, 20)];
@@ -102,7 +96,7 @@
     [closeButton setImage:[UIImage systemImageNamed:@"xmark.circle.fill" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateHighlighted];
     [closeButton addTarget:self action:@selector(closeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:closeButton];
-    [self setButtonTitleColor:closeButton];
+    [BDUtils setButtonTitleColor:closeButton];
     //
     UILabel *tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 50, DeviceWidth - 40, 40)];
     [tipLabel setText:@"机器人是否解决您的问题？"];
@@ -123,7 +117,7 @@
     upButton.layer.borderColor = [UIColor systemGrayColor].CGColor;
     upButton.layer.borderWidth = 0.5;
     [self.view addSubview:upButton];
-    [self setButtonTitleColor:upButton];
+    [BDUtils setButtonTitleColor:upButton];
     //
     downButton = [[UIButton alloc] initWithFrame:CGRectMake((DeviceWidth - 300)*2/3 + 150, 100, 150, 40)];
     [downButton setImage:[UIImage systemImageNamed:@"hand.thumbsdown"] forState:UIControlStateNormal];
@@ -139,7 +133,7 @@
     downButton.layer.borderColor = [UIColor systemGrayColor].CGColor;
     downButton.layer.borderWidth = 0.5;
     [self.view addSubview:downButton];
-    [self setButtonTitleColor:downButton];
+    [BDUtils setButtonTitleColor:downButton];
     //
     downChoiceButton1 = [[UIButton alloc] initWithFrame:CGRectMake((DeviceWidth - 300)/3, 155, 150, 40)];
     downChoiceButton1.tag = 1;
@@ -201,7 +195,7 @@
 //    inputTextView.placeholder = @"欢迎给我们的服务提建议";
 //    [self.view addSubview:inputTextView];
     //
-    UIButton *submitButton = [[UIButton alloc] initWithFrame:CGRectMake(10, DeviceHeight/2 - 140, DeviceWidth - 20, 40)];
+    UIButton *submitButton = [[UIButton alloc] initWithFrame:CGRectMake(10, DeviceHeight*2/3 - 140, DeviceWidth - 20, 40)];
     [submitButton setBackgroundColor:[UIColor systemOrangeColor]];
 //    [submitButton setImage:[UIImage systemImageNamed:@"star"] forState:UIControlStateNormal];
     [submitButton setTitle:@"提交评价" forState:UIControlStateNormal];
@@ -214,15 +208,14 @@
     submitButton.layer.borderWidth = 0.5;
     [self.view addSubview:submitButton];
 //    [self setButtonTitleColor:submitButton];
-    
 }
 
 - (void)upButtonClicked:(UIButton *)button {
     //
-    //
     BOOL isSelected = [button isSelected];
     [button setSelected:!isSelected];
-    if ([button isEnabled]) {
+    
+    if ([button isSelected]) {
         self.isSolved = YES;
         //
         [downButton setSelected:NO];
@@ -261,6 +254,7 @@
     BOOL isSelected = [button isSelected];
     [button setSelected:!isSelected];
     //
+    self.note = @"";
     if (!self.isSolved) {
         if (downChoiceButton1.isSelected) {
             self.note = [NSString stringWithFormat:@"%@ 答非所问", self.note];
@@ -281,6 +275,7 @@
     NSLog(@"%s, threadtid:%@, note: %@", __PRETTY_FUNCTION__, self.threadTid, self.note);
     // TODO: 网络http接口提交
     
+    [BDUIApis showTipWithVC:self withMessage:@"提交评价中，请稍后"];
     __weak __typeof(self)weakSelf = self;
     [BDCoreApis visitorRate:self.threadTid
                   withScore:self.isSolved ? 5 : 0
@@ -308,15 +303,6 @@
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
-}
-
-- (void)setButtonTitleColor:(UIButton *)button {
-    UIUserInterfaceStyle mode = UITraitCollection.currentTraitCollection.userInterfaceStyle;
-    if (mode == UIUserInterfaceStyleDark) {
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    } else if (mode == UIUserInterfaceStyleLight) {
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    }
 }
 
 

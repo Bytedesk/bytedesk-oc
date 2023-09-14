@@ -6,9 +6,9 @@
 //  Copyright © 2018年 Bytedesk.com. All rights reserved.
 //
 #import "BDChatKFViewController.h"
-#import "BDMsgViewCell.h"
+#import "BDMsgTableViewCell.h"
 #import "BDMsgNotificationViewCell.h"
-#import "BDCommodityTableViewCell.h"
+#import "BDMsgCommodityViewCell.h"
 #import "BDConstants.h"
 #import "BDRateViewController.h"
 #import "BDLeaveMessageViewController.h"
@@ -16,6 +16,7 @@
 //#import "BDChatVideoViewController.h"
 #import "BDUIUtils.h"
 #import "BDVideoCompress.h"
+#import "BDImageViewController.h"
 
 #import "BDInputView.h"
 #import "BDEmotionView.h"
@@ -44,56 +45,43 @@
 #define EMOTION_PLUS_VIEW_HEIGHT           216.0f
 #define VIEW_ANIMATION_DURATION            0.25f
 #define TEXTBUBBLE_MAX_TEXT_WIDTH          180.0f
-
 #define RECORD_VOICE_VIEW_HUD_WIDTH_HEIGHT 150.0f
+#define TIMESTAMP_HEIGHT                   30.0f
 
 //static CGFloat const kToolbarHeight = 60;
 //static CGFloat const kEmotionViewHeight = 232;
 
 @interface BDChatKFViewController ()<UITableViewDelegate, UITableViewDataSource,
 //UINavigationControllerBackButtonHandlerProtocol,
-KFDSMsgViewCellDelegate,
+BDMsgTableViewCellDelegate,
 UIImagePickerControllerDelegate, UINavigationControllerDelegate,
 UIDocumentPickerDelegate,
 UIDocumentInteractionControllerDelegate,
-UIDocumentInteractionControllerDelegate,
+BDMsgCommodityViewCellDelegate,
 BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
-{
+{}
 
-}
+@property (nonatomic, strong) UITableView *mTableView;
+@property (nonatomic, strong) NSDictionary *mEmotionToTextDictionary;
 
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSDictionary *emotionToTextDictionary;
-
-@property(nonatomic, strong) UIImageView *currentImageView;
-//@property(nonatomic, strong) NSArray<UIImage *> *images;
-
-// 是否为访客端
-@property(nonatomic, assign) BOOL mIsVisitor; // 是否访客端调用接口
 @property(nonatomic, assign) BOOL mIsPush;
 @property(nonatomic, assign) BOOL mIsRobot;
 @property(nonatomic, assign) BOOL mIsThreadClosed;
-
 @property(nonatomic, assign) BOOL mIsInternetReachable;
-@property(nonatomic, strong) NSString *mTitle;
 
 @property(nonatomic, strong) UIRefreshControl *mRefreshControl;
 @property(nonatomic, strong) NSMutableArray<BDMessageModel *> *mMessageArray;
 
-//@property(nonatomic, strong) UIView *parentView;
-@property(nonatomic, assign) NSInteger mGetMessageFromChannelPage;
+//@property(nonatomic, assign) NSInteger mGetMessageFromChannelPage;
 
+@property(nonatomic, strong) NSString *mTitle;
 @property(nonatomic, strong) NSString *mUid; // visitorUid/cid/gid
 @property(nonatomic, strong) NSString *mWorkGroupWid; // 工作组wid
-@property(nonatomic, strong) NSString *mTidOrUidOrGid; // 统一代表：thread.tid/contact.uid/group.gid
+@property(nonatomic, strong) NSString *mTid; // thread.tid
 @property(nonatomic, strong) NSString *mAgentUid; // 指定坐席uid
 @property(nonatomic, strong) NSString *mThreadType; // 区分客服会话thread、同事会话contact、群组会话group
-@property(nonatomic, strong) NSString *mRequestType; // 区分工作组会话、指定客服会话
 
-//@property(nonatomic, strong) NSString *threadTopic;
 @property(nonatomic, strong) BDThreadModel *mThreadModel;
-@property(nonatomic, strong) BDContactModel *mContactModel;
-@property(nonatomic, strong) BDGroupModel *mGroupModel;
 
 @property(nonatomic, assign) NSInteger rateScore;
 @property(nonatomic, strong) NSString *rateNote;
@@ -104,32 +92,36 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 @property(nonatomic, assign) BOOL mWithCustomDict;
 @property(nonatomic, strong) NSDictionary *mCustomDict;
 
-//客服端
-@property (nonatomic, strong) UIImagePickerController *mImagePickerController;
-@property(nonatomic, assign) BOOL forceEnableBackGesture;
+@property (nonatomic, strong) UIImagePickerController  *mImagePickerController;
+
 //
-@property (nonatomic, strong) BDInputView               *kfInputView;
-@property (nonatomic, strong) BDEmotionView             *kfEmotionView;
-@property (nonatomic, strong) BDPlusView                *kfPlusView;
-@property (nonatomic, strong) BDRecordVoiceViewHUD      *kfRecordVoiceViewHUD;
+@property (nonatomic, strong) BDInputView               *mInputView;
+@property (nonatomic, strong) BDEmotionView             *mEmotionView;
+@property (nonatomic, strong) BDPlusView                *mPlusView;
+@property (nonatomic, strong) BDRecordVoiceViewHUD      *mRecordVoiceViewHUD;
 
 @property (nonatomic, assign) CGFloat                   inputViewY;
 @property (nonatomic, assign) CGFloat                   keyboardY;
 @property (nonatomic, assign) CGFloat                   keyboardHeight;
 
 @property (nonatomic, assign) BOOL                      isEmotionPlusPressedToHideKeyboard;
-@property (nonatomic, assign) BOOL                      mIsViewControllerClosed;
+@property (nonatomic, assign) BOOL                      isViewControllerClosed;
+@property(nonatomic, assign) BOOL                       forceEnableBackGesture;
+
+@property(nonatomic, strong) NSString *notifyIdentifier;
+@property(nonatomic, strong) NSString *commodityIdentifier;
+@property(nonatomic, strong) NSString *msgIdentifier;
 
 @end
 
 @implementation BDChatKFViewController
 
 @synthesize mImagePickerController,
-            tableView,
-            kfInputView,
-            kfEmotionView,
-            kfPlusView,
-            kfRecordVoiceViewHUD,
+            mTableView,
+            mInputView,
+            mEmotionView,
+            mPlusView,
+            mRecordVoiceViewHUD,
             inputViewY,
             keyboardY,
             keyboardHeight,
@@ -139,67 +131,55 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 
 - (void)loadView {
     [super loadView];
+//    NSLog(@"%s", __PRETTY_FUNCTION__);
     //
     self.view.backgroundColor = UIColor.clearColor;
     //
     CGRect tableFrame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)); //  - kToolbarHeight
-    self.tableView = [[UITableView alloc] initWithFrame:tableFrame];
-    self.tableView.separatorColor = [UIColor clearColor];
-    self.tableView.backgroundColor = [UIColor systemGroupedBackgroundColor];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
+    self.mTableView = [[UITableView alloc] initWithFrame:tableFrame];
+    self.mTableView.separatorColor = [UIColor clearColor];
+    self.mTableView.backgroundColor = [UIColor systemGroupedBackgroundColor];
+    self.mTableView.delegate = self;
+    self.mTableView.dataSource = self;
     //
-    UIEdgeInsets tableViewInsets = self.tableView.contentInset;
+    UIEdgeInsets tableViewInsets = self.mTableView.contentInset;
     tableViewInsets.bottom = INPUTBAR_HEIGHT * 2;
-    self.tableView.contentInset = tableViewInsets;
-    self.tableView.scrollIndicatorInsets = tableViewInsets;
-    [self.view addSubview:self.tableView];
+    self.mTableView.contentInset = tableViewInsets;
+    self.mTableView.scrollIndicatorInsets = tableViewInsets;
+    [self.view addSubview:self.mTableView];
     //
-    self.mGetMessageFromChannelPage = 0;
+//    self.mGetMessageFromChannelPage = 0;
     UITapGestureRecognizer *singleFingerTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-    [self.tableView addGestureRecognizer:singleFingerTap];
+    [self.mTableView addGestureRecognizer:singleFingerTap];
     //输入框Toolbar
     CGRect inputViewFrame = CGRectMake(0.0f, self.view.frame.size.height - INPUTBAR_HEIGHT, self.view.frame.size.width, INPUTBAR_HEIGHT);
-    self.kfInputView = [[BDInputView alloc] initWithFrame:inputViewFrame];
-    self.kfInputView.delegate = self;
-    [self.view addSubview:self.kfInputView];
+    self.mInputView = [[BDInputView alloc] initWithFrame:inputViewFrame];
+    self.mInputView.delegate = self;
+    [self.view addSubview:self.mInputView];
     //
-    self.emotionToTextDictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:self.class] pathForResource:@"EmotionToText" ofType:@"plist"]];
+    self.mEmotionToTextDictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:self.class] pathForResource:@"EmotionToText" ofType:@"plist"]];
     //
     // FIXME: 加载大量图片容易引起界面卡顿，待优化
     CGRect recordVoiceViewFrame = CGRectMake((self.view.frame.size.width - RECORD_VOICE_VIEW_HUD_WIDTH_HEIGHT)/2,
                                              (self.view.frame.size.height - RECORD_VOICE_VIEW_HUD_WIDTH_HEIGHT)/2,
                                              RECORD_VOICE_VIEW_HUD_WIDTH_HEIGHT,
                                              RECORD_VOICE_VIEW_HUD_WIDTH_HEIGHT);
-    self.kfRecordVoiceViewHUD = [[BDRecordVoiceViewHUD alloc] initWithFrame:recordVoiceViewFrame];
-    [self.view addSubview:self.kfRecordVoiceViewHUD];
-    self.kfRecordVoiceViewHUD.hidden = TRUE;
+    self.mRecordVoiceViewHUD = [[BDRecordVoiceViewHUD alloc] initWithFrame:recordVoiceViewFrame];
+    [self.view addSubview:self.mRecordVoiceViewHUD];
+    self.mRecordVoiceViewHUD.hidden = TRUE;
     //
     CGRect emotionViewFrame = CGRectMake(0.0f, self.view.frame.size.height, self.view.frame.size.width, EMOTION_PLUS_VIEW_HEIGHT);
-    self.kfEmotionView = [[BDEmotionView alloc] initWithFrame:emotionViewFrame];
-    self.kfEmotionView.delegate = self;
-    [self.view addSubview:self.kfEmotionView];
+    self.mEmotionView = [[BDEmotionView alloc] initWithFrame:emotionViewFrame];
+    self.mEmotionView.delegate = self;
+    [self.view addSubview:self.mEmotionView];
     //
     CGRect plusViewFrame = emotionViewFrame;
-    self.kfPlusView = [[BDPlusView alloc] initWithFrame:plusViewFrame];
-    self.kfPlusView.delegate = self;
-    [self.view addSubview:self.kfPlusView];
+    self.mPlusView = [[BDPlusView alloc] initWithFrame:plusViewFrame];
+    self.mPlusView.delegate = self;
+    [self.view addSubview:self.mPlusView];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear: animated];
-    [BDSettings setCurrentTid:@""];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -208,6 +188,13 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     self.title = self.mThreadModel ? self.mThreadModel.nickname : self.mTitle;
 //    self.parentView = self.navigationController.view;
 //    [self.view setQmui_shouldShowDebugColor:YES];
+    // 方便uiTableviewcell复用
+    self.notifyIdentifier = @"notifyCell";
+    self.commodityIdentifier = @"commodityCell";
+    self.msgIdentifier = @"msgCell";
+    [self.mTableView registerClass:[BDMsgNotificationViewCell class] forCellReuseIdentifier:self.notifyIdentifier];
+    [self.mTableView registerClass:[BDMsgCommodityViewCell class] forCellReuseIdentifier:self.commodityIdentifier];
+    [self.mTableView registerClass:[BDMsgTableViewCell class] forCellReuseIdentifier:self.msgIdentifier];
     //
     if (self.mIsPush) {
 //        self.navigationItem.leftBarButtonItem = [UIBarButtonItem qmui_backItemWithTarget:self action:@selector(handleBackButtonEvent:)];// 自定义返回按钮要自己写代码去 pop 界面
@@ -219,7 +206,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     self.forceEnableBackGesture = YES;
     //
     self.mRefreshControl = [[UIRefreshControl alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    [self.tableView addSubview:self.mRefreshControl];
+    [self.mTableView addSubview:self.mRefreshControl];
     [self.mRefreshControl addTarget:self action:@selector(refreshMessages) forControlEvents:UIControlEventValueChanged];
     //
     self.mImagePickerController = [[UIImagePickerController alloc] init];
@@ -237,11 +224,15 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     // [self refreshMessages];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear: animated];
+    [BDSettings setCurrentTid:@""];
+}
+
 #pragma mark - 初始化
 
 - (void)initWithWorkGroupWid:(NSString *)wId withTitle:(NSString *)title withPush:(BOOL)isPush {
     // titleView状态：1. 连接中...(发送请求到服务器，进入队列)，2. 排队中...(队列中等待客服接入会话), 3. 接入会话（一闪而过）
-    self.mIsVisitor = YES;
     self.mIsRobot = NO;
     self.mIsPush = isPush;
     self.mIsThreadClosed = NO;
@@ -257,7 +248,6 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     self.mUid = wId;
     self.mThreadModel = [[BDThreadModel alloc] init];
     self.mThreadType = BD_THREAD_TYPE_WORKGROUP;
-    self.mRequestType = BD_THREAD_REQUEST_TYPE_WORK_GROUP;
     //
     self.rateScore = 5;
     self.rateNote = @"";
@@ -287,7 +277,6 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 
 - (void)initWithAgentUid:(NSString *)uId withTitle:(NSString *)title withPush:(BOOL)isPush {
     //
-    self.mIsVisitor = YES;
     self.mIsRobot = NO;
     self.mIsPush = isPush;
     self.mIsThreadClosed = NO;
@@ -302,7 +291,6 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     self.mUid = uId;
     self.mThreadModel = [[BDThreadModel alloc] init];
     self.mThreadType = BD_THREAD_TYPE_APPOINTED;
-    self.mRequestType = BD_THREAD_REQUEST_TYPE_APPOINTED;
     //
     self.rateScore = 5;
     self.rateNote = @"";
@@ -314,7 +302,6 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     [BDCoreApis requestThreadWithAgentUid:uId resultSuccess:^(NSDictionary *dict) {
         //
         [self dealWithRequestThreadResult:dict];
-        
     } resultFailed:^(NSError *error) {
         NSLog(@"%s, %@", __PRETTY_FUNCTION__, error);
         if (error) {
@@ -346,7 +333,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
  */
 - (void)dealWithRequestThreadResult:(NSDictionary *)dict {
     // 如果点击了左上角返回或关闭按钮之后，网络请求才返回m，则不需要继续处理此返回结果
-    if (self.mIsViewControllerClosed) {
+    if (self.isViewControllerClosed) {
         return;
     }
     //
@@ -354,30 +341,35 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     NSNumber *status_code = [dict objectForKey:@"status_code"];
     NSLog(@"%s message:%@, status_code:%@", __PRETTY_FUNCTION__, message, status_code);
     self.mIsRobot = FALSE;
-    [self.kfInputView switchToAgent];
-    [self.kfPlusView switchToAgent];
+    [self.mInputView switchToAgent];
+    [self.mPlusView switchToAgent];
+    // 解析数据
+    self.mThreadModel = [[BDThreadModel alloc] initWithKeFuRequestDictionary:dict[@"data"][@"thread"]];
+    self.mTid = self.mThreadModel.tid;
+    // 修改UI界面
+    NSNumber *appointed = dict[@"data"][@"thread"][@"appointed"];
+    if ([appointed boolValue]) {
+        self.navigationItem.title = dict[@"data"][@"thread"][@"agent"][@"nickname"];
+    } else {
+        self.navigationItem.title = dict[@"data"][@"thread"][@"workGroup"][@"nickname"];
+    }
     //
-    if ([status_code isEqualToNumber:[NSNumber numberWithInt:200]] ||
-        [status_code isEqualToNumber:[NSNumber numberWithInt:201]]) {
-        // 创建新会话 / 继续进行中会话
-        
-        // 解析数据
-        self.mThreadModel = [[BDThreadModel alloc] initWithKeFuRequestDictionary:dict[@"data"][@"thread"]];
-        self.mTidOrUidOrGid = self.mThreadModel.tid;
-
-        // 修改UI界面
-        NSNumber *appointed = dict[@"data"][@"thread"][@"appointed"];
-        if ([appointed boolValue]) {
-            self.navigationItem.title = dict[@"data"][@"thread"][@"agent"][@"nickname"];
-        } else {
-            self.navigationItem.title = dict[@"data"][@"thread"][@"workGroup"][@"nickname"];
-        }
-
+    if ([status_code isEqualToNumber:[NSNumber numberWithInt:206]]) {
+        // 保存聊天记录
+        BDMessageModel *messageModel = [[BDMessageModel alloc] initWithRobotDictionary:dict[@"data"]];
+        [[BDDBApis sharedInstance] insertMessage:messageModel];
+        [self reloadTableData];
+    } else {
         // 保存聊天记录
         BDMessageModel *messageModel = [[BDMessageModel alloc] initWithDictionary:dict[@"data"]];
         [[BDDBApis sharedInstance] insertMessage:messageModel];
         [self reloadTableData];
-        
+    }
+    //
+    if ([status_code isEqualToNumber:[NSNumber numberWithInt:200]] ||
+        [status_code isEqualToNumber:[NSNumber numberWithInt:201]]) {
+        // 创建新会话 / 继续进行中会话
+
         // TODO: 发送商品信息
         if (self.mWithCustomDict) {
             NSString *customJson = [BDUtils dictToJson:self.mCustomDict];
@@ -386,74 +378,17 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
         
     } else if ([status_code isEqualToNumber:[NSNumber numberWithInt:202]]) {
         // 提示排队中
-        
-        // 解析数据
-        self.mThreadModel = [[BDThreadModel alloc] initWithKeFuRequestDictionary:dict[@"data"][@"thread"]];
-        self.mTidOrUidOrGid = self.mThreadModel.tid;
-        
-        // 修改UI界面
-        NSNumber *appointed = dict[@"data"][@"thread"][@"appointed"];
-        if ([appointed boolValue]) {
-            self.navigationItem.title = dict[@"data"][@"thread"][@"agent"][@"nickname"];
-        } else {
-            self.navigationItem.title = dict[@"data"][@"thread"][@"workGroup"][@"nickname"];
-        }
-        
-        // 保存聊天记录
-        BDMessageModel *messageModel = [[BDMessageModel alloc] initWithDictionary:dict[@"data"]];
-        [[BDDBApis sharedInstance] insertMessage:messageModel];
-        [self reloadTableData];
-        
-        // TODO: 发送商品信息
-//        if (self.mWithCustomDict) {
-//            NSString *customJson = [BDUtils dictToJson:self.mCustomDict];
-//            [self sendCommodityMessage:customJson];
-//        }
+
         
     } else if ([status_code isEqualToNumber:[NSNumber numberWithInt:203]]) {
         // 当前非工作时间，请自助查询或留言
-        
-        // 解析数据
-        self.mThreadModel = [[BDThreadModel alloc] initWithKeFuRequestDictionary:dict[@"data"][@"thread"]];
-        self.mTidOrUidOrGid = self.mThreadModel.tid;
-//        self.threadTopic = [NSString stringWithFormat:@"thread/%@", self.mTidOrUidOrGid];
-//        [[BDMQTTApis sharedInstance] subscribeTopic:self.threadTopic];
-        
-        // 修改UI界面
-        NSNumber *appointed = dict[@"data"][@"thread"][@"appointed"];
-        if ([appointed boolValue]) {
-            self.navigationItem.title = dict[@"data"][@"thread"][@"agent"][@"nickname"];
-        } else {
-            self.navigationItem.title = dict[@"data"][@"thread"][@"workGroup"][@"nickname"];
-        }
-        
-        // 保存聊天记录
-        BDMessageModel *messageModel = [[BDMessageModel alloc] initWithDictionary:dict[@"data"]];
-        [[BDDBApis sharedInstance] insertMessage:messageModel];
-        [self reloadTableData];
         
         // 跳转留言页面
         [self shareLeaveMsgButtonPressed:nil];
         
     } else if ([status_code isEqualToNumber:[NSNumber numberWithInt:204]]) {
         // 当前无客服在线，请自助查询或留言
-        // 修改UI界面
-        NSNumber *appointed = dict[@"data"][@"thread"][@"appointed"];
-        if ([appointed boolValue]) {
-            self.navigationItem.title = dict[@"data"][@"thread"][@"agent"][@"nickname"];
-        } else {
-            self.navigationItem.title = dict[@"data"][@"thread"][@"workGroup"][@"nickname"];
-        }
-        
-        // 解析数据
-        self.mThreadModel = [[BDThreadModel alloc] initWithKeFuRequestDictionary:dict[@"data"][@"thread"]];
-        self.mTidOrUidOrGid = self.mThreadModel.tid;
 
-        // 保存聊天记录
-        BDMessageModel *messageModel = [[BDMessageModel alloc] initWithDictionary:dict[@"data"]];
-        [[BDDBApis sharedInstance] insertMessage:messageModel];
-        [self reloadTableData];
-        
         // 跳转留言页面
         [self shareLeaveMsgButtonPressed:nil];
         
@@ -463,27 +398,15 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 //        self.titleView.title = dict[@"data"][@"thread"][@"workGroup"][@"nickname"];
 ////        self.titleView.subtitle = dict[@"message"];
 //        self.titleView.needsLoadingView = NO;
-        self.mTidOrUidOrGid = dict[@"data"][@"thread"][@"tid"];
 //
     } else if ([status_code isEqualToNumber:[NSNumber numberWithInt:206]]) {
         // 返回机器人初始欢迎语 + 欢迎问题列表
         NSLog(@"robot dict %@", dict);
         self.mIsRobot = YES;
-        // 修改UI界面
-        self.navigationItem.title = dict[@"data"][@"thread"][@"workGroup"][@"nickname"];
-        
-        // 解析数据
-        self.mThreadModel = [[BDThreadModel alloc] initWithKeFuRequestDictionary:dict[@"data"][@"thread"]];
-        self.mTidOrUidOrGid = self.mThreadModel.tid;
-
-        // 保存聊天记录
-        BDMessageModel *messageModel = [[BDMessageModel alloc] initWithRobotDictionary:dict[@"data"]];
-        [[BDDBApis sharedInstance] insertMessage:messageModel];
-        [self reloadTableData];
         
         // 切换到机器人模式
-        [self.kfInputView switchToRobot];
-        [self.kfPlusView switchToRobot];
+        [self.mInputView switchToRobot];
+        [self.mPlusView switchToRobot];
         
     } else {
         // 请求会话失败
@@ -498,7 +421,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 // 针对Present打开模式，左上角返回按钮处理action
 - (void)handleCloseButtonEvent:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    self.mIsViewControllerClosed = YES;
+    self.isViewControllerClosed = YES;
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
     }];
 }
@@ -506,7 +429,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 // 针对Push打开模式，左上角返回按钮处理action
 - (void)handleBackButtonEvent:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    self.mIsViewControllerClosed = YES;
+    self.isViewControllerClosed = YES;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -525,9 +448,9 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     }]];
     [actionSheet addAction:[UIAlertAction actionWithTitle:@"清空聊天记录" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         //
-        if ([self.mRequestType isEqualToString:BD_THREAD_REQUEST_TYPE_APPOINTED]) {
-            NSLog(@"清空指定坐席 %@", self.mTidOrUidOrGid);
-            [BDCoreApis clearMessagesWithThread:self.mTidOrUidOrGid];
+        if ([self.mThreadType isEqualToString:BD_THREAD_REQUEST_TYPE_APPOINTED]) {
+            NSLog(@"清空指定坐席 %@", self.mTid);
+            [BDCoreApis clearMessagesWithThread:self.mTid];
         } else {
             NSLog(@"清空聊天记录-工作组 %@", self.mWorkGroupWid);
             [BDCoreApis clearMessagesWithWorkGroup:self.mWorkGroupWid];
@@ -548,16 +471,13 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *notifyIdentifier = @"notifyCell";
-    static NSString *commodityIdentifier = @"commodityCell";
-    static NSString *msgIdentifier = @"msgCell";
     //
     BDMessageModel *messageModel = [self.mMessageArray objectAtIndex:indexPath.row];
     if ([messageModel isNotification]) {
         //        NSLog(@"通知 type: %@, content: %@", messageModel.type, messageModel.content);
-        BDMsgNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:notifyIdentifier];
+        BDMsgNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.notifyIdentifier];
         if (!cell) {
-            cell = [[BDMsgNotificationViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:notifyIdentifier];
+            cell = [[BDMsgNotificationViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:self.notifyIdentifier];
         }
         [cell initWithMessageModel:messageModel];
         cell.tag = indexPath.row;
@@ -570,12 +490,13 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
         return cell;
     } else if ([messageModel.type isEqualToString:BD_MESSAGE_TYPE_COMMODITY]) {
         //        NSLog(@"商品 type: %@, content: %@", messageModel.type, messageModel.content);
-        BDCommodityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:commodityIdentifier];
+        BDMsgCommodityViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.commodityIdentifier];
         if (!cell) {
-            cell = [[BDCommodityTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commodityIdentifier];
+            cell = [[BDMsgCommodityViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:self.commodityIdentifier];
         }
         [cell initWithMessageModel:messageModel];
         cell.tag = indexPath.row;
+        cell.delegate = self;
         // 存储id最小的
         if ([messageModel.server_id integerValue] < self.mLastMessageId) {
             self.mLastMessageId = [messageModel.server_id integerValue];
@@ -585,9 +506,9 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
         return cell;
     } else {
         //
-        BDMsgViewCell *cell = [tableView dequeueReusableCellWithIdentifier:msgIdentifier];
+        BDMsgTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.msgIdentifier];
         if (!cell) {
-            cell = [[BDMsgViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:msgIdentifier];
+            cell = [[BDMsgTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:self.msgIdentifier];
             cell.delegate = self;
         }
         //
@@ -597,6 +518,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
         if ([messageModel.server_id integerValue] < self.mLastMessageId) {
             self.mLastMessageId = [messageModel.server_id integerValue];
         }
+        cell.delegate = self;
 //      NSLog(@"server_id: %@, lastMessageId: %li", messageModel.server_id, (long)self.mLastMessageId);
         //
         return cell;
@@ -614,38 +536,24 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
         //
         if ([messageModel.type isEqualToString:BD_MESSAGE_TYPE_TEXT]) {
             //
-            if ([messageModel isSend]) {
-                height = messageModel.contentSize.height + messageModel.contentViewInsets.top + messageModel.contentViewInsets.bottom + 30;
-            } else {
-                height = messageModel.contentSize.height + messageModel.contentViewInsets.top + messageModel.contentViewInsets.bottom + 40;
-            }
+            height = messageModel.contentSize.height + messageModel.contentViewInsets.top + messageModel.contentViewInsets.bottom + TIMESTAMP_HEIGHT;
         } else if ([messageModel.type isEqualToString:BD_MESSAGE_TYPE_ROBOT]) {
-            //
-//            CGSize size = [BDUIUtils sizeOfRobotContent:messageModel.content];
             CGSize size = [BDUIUtils sizeOfRobotContentAttr:messageModel.contentAttr];
-            //
-            if ([messageModel isSend]) {
-                height = size.height + messageModel.contentViewInsets.top + messageModel.contentViewInsets.bottom + 30;
-            } else {
-                height = size.height + messageModel.contentViewInsets.top + messageModel.contentViewInsets.bottom + 50;
-            }
-            
-        } else if ([messageModel.type isEqualToString:BD_MESSAGE_TYPE_COMMODITY]) {
-            height = 100;
-        } else if ([messageModel.type isEqualToString:BD_MESSAGE_TYPE_IMAGE] ||
-                   [messageModel.type isEqualToString:BD_MESSAGE_TYPE_RED_PACKET]) {
+            height = size.height + messageModel.contentViewInsets.top + messageModel.contentViewInsets.bottom + TIMESTAMP_HEIGHT;
+        } else if ([messageModel.type isEqualToString:BD_MESSAGE_TYPE_IMAGE]) {
             height = 280;
         } else if ([messageModel.type isEqualToString:BD_MESSAGE_TYPE_VOICE]) {
             height = 90;
         } else if ([messageModel.type isEqualToString:BD_MESSAGE_TYPE_FILE]) {
             height = 100;
-        } else if ([messageModel.type isEqualToString:BD_MESSAGE_TYPE_VIDEO] ||
-                   [messageModel.type isEqualToString:BD_MESSAGE_TYPE_SHORTVIDEO]) {
+        } else if ([messageModel.type isEqualToString:BD_MESSAGE_TYPE_VIDEO]) {
             height = 120;
+        } else if ([messageModel.type isEqualToString:BD_MESSAGE_TYPE_COMMODITY]) {
+            height = 100;
         } else {
             height = 80;
         }
-        NSLog(@"%s, type: %@, height: %f", __PRETTY_FUNCTION__, messageModel.type, height);
+//        NSLog(@"%s, type: %@, height: %f", __PRETTY_FUNCTION__, messageModel.type, height);
     }
     //
     return height;
@@ -653,11 +561,9 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 
 -(void)tableViewScrollToBottom:(BOOL)animated {
 //    NSLog(@"tableViewScrollToBottom");
-    
-    NSInteger rows = [self.tableView numberOfRowsInSection:0];
-    
+    NSInteger rows = [self.mTableView numberOfRowsInSection:0];
     if(rows > 0) {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rows - 1 inSection:0]
+        [self.mTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rows - 1 inSection:0]
                               atScrollPosition:UITableViewScrollPositionBottom
                                       animated:animated];
     }
@@ -668,30 +574,23 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 
 - (void)reloadTableData {
     //
-    if ([self.mRequestType isEqualToString:BD_THREAD_REQUEST_TYPE_APPOINTED]) {
-        NSLog(@"1. 访客端获取聊天记录: 指定坐席 %@", self.mTidOrUidOrGid);
-        self.mMessageArray = [BDCoreApis getMessagesWithThread:self.mTidOrUidOrGid];
+    if ([self.mThreadType isEqualToString:BD_THREAD_REQUEST_TYPE_APPOINTED]) {
+        NSLog(@"1. 访客端获取聊天记录: 指定坐席 %@", self.mTid);
+        self.mMessageArray = [BDCoreApis getMessagesWithThread:self.mTid];
     } else {
         NSLog(@"1. 访客端获取聊天记录：工作组 %@", self.mWorkGroupWid);
         self.mMessageArray = [BDCoreApis getMessagesWithWorkGroup:self.mWorkGroupWid];
     }
-    for (int i = 0; i < self.mMessageArray.count; i++) {
-        BDMessageModel *msgModel = [self.mMessageArray objectAtIndex:i];
-        if ([msgModel.type isEqualToString:BD_MESSAGE_TYPE_ROBOT]) {
-            NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithData:[msgModel.content dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
-            [attributedString addAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:16]} range:NSMakeRange(0, attributedString.length)];
-            msgModel.contentAttr = attributedString;
-        }
-        self.mMessageArray[i] = msgModel;
-    }
     //
-//    if ([self.mMessageArray count] == 0) {
-//        [self showEmptyViewWithText:@"消息记录为空" detailText:@"请尝试下拉刷新" buttonTitle:nil buttonAction:NULL];
-//    } else if (self.emptyViewShowing) {
-//        [self hideEmptyView];
-//    }
+    for (int i = 0; i < self.mMessageArray.count; i++) {
+        BDMessageModel *messageModel = [self.mMessageArray objectAtIndex:i];
+        if ([messageModel.type isEqualToString:BD_MESSAGE_TYPE_ROBOT]) {
+            messageModel.contentAttr = [BDUtils transformContentToContentAttr:messageModel.content];
+        }
+        self.mMessageArray[i] = messageModel;
+    }
     // 刷新tableView
-    [self.tableView reloadData];
+    [self.mTableView reloadData];
     [self tableViewScrollToBottom:NO];
 }
 
@@ -708,9 +607,9 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
             message.status = status;
             // 更新UI
             NSIndexPath *reloadIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-            [self.tableView beginUpdates];
-            [self.tableView reloadRowsAtIndexPaths:@[reloadIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-            [self.tableView endUpdates];
+            [self.mTableView beginUpdates];
+            [self.mTableView reloadRowsAtIndexPaths:@[reloadIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [self.mTableView endUpdates];
         }
     }
 }
@@ -724,17 +623,17 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
             message.status = BD_MESSAGE_STATUS_ERROR;
             // 更新UI
             NSIndexPath *reloadIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-            [self.tableView beginUpdates];
-            [self.tableView reloadRowsAtIndexPaths:@[reloadIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-            [self.tableView endUpdates];
+            [self.mTableView beginUpdates];
+            [self.mTableView reloadRowsAtIndexPaths:@[reloadIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [self.mTableView endUpdates];
         }
     }
 }
 
 - (void)updateCurrentThread {
     NSString *preTid = [BDSettings getCurrentTid];
-    [BDCoreApis updateCurrentThread:preTid currentTid:self.mTidOrUidOrGid resultSuccess:^(NSDictionary *dict) {
-        [BDSettings setCurrentTid:self.mTidOrUidOrGid];
+    [BDCoreApis updateCurrentThread:preTid currentTid:self.mTid resultSuccess:^(NSDictionary *dict) {
+        [BDSettings setCurrentTid:self.mTid];
     } resultFailed:^(NSError *error) {
         NSLog(@"updateCurrentThread %@", error);
         if (error) {
@@ -751,7 +650,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 
 - (BOOL)canPopViewController {
     // 这里不要做一些费时的操作，否则可能会卡顿。
-    self.mIsViewControllerClosed = YES;
+    self.isViewControllerClosed = YES;
     [BDCoreApis cancelAllHttpRequest];
     NSLog(@"%s", __PRETTY_FUNCTION__);
 //    [self unregisterNotifications];
@@ -809,26 +708,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
         return;
     }
     
-    // 自定义发送消息本地id，消息发送成功之后，服务器会返回此id，可以用来判断消息发送状态
-    NSString *localId = [[NSUUID UUID] UUIDString];
-    NSLog(@"%s, content:%@, tid:%@, sessionType:%@, localId:%@ ", __PRETTY_FUNCTION__, content, self.mTidOrUidOrGid,  self.mThreadType, localId);
-    
-    // 插入本地消息, 可通过返回的messageModel首先更新本地UI，然后再发送消息
-    BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertTextMessageLocal:self.mTidOrUidOrGid withWorkGroupWid:self.mWorkGroupWid withContent:content withLocalId:localId withSessionType:self.mThreadType];
-    
-    // 立刻更新UI，插入消息到界面并显示发送状态 activity indicator
-    [self.mMessageArray addObject:messageModel];
-    NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:[self.mMessageArray count]-1 inSection:0];
-    //
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:@[insertIndexPath] withRowAnimation:UITableViewRowAnimationBottom];
-    [self.tableView endUpdates];
-//    [self.tableView reloadData];
-    // FIXME: 未往上滚动？
-    [self tableViewScrollToBottom:NO];
-    //
-//    [self reloadTableData];
-    
+    NSString *localId = [self insertLocalMessageAndReload:content withType:BD_MESSAGE_TYPE_TEXT withSend:YES];
     // 异步发送消息
     [[BDMQTTApis sharedInstance] sendTextMessageProtobuf:localId content:content thread:self.mThreadModel];
 }
@@ -836,18 +716,18 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 //
 -(void)sendImageMessage:(NSString *)imageUrl {
     
-    NSString *localId = [[NSUUID UUID] UUIDString];
+    NSString *localId = [BDUtils getGuid];
     // 插入本地消息
-    BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertImageMessageLocal:self.mUid withWorkGroupWid:self.mWorkGroupWid withContent:imageUrl withLocalId:localId withSessionType:self.mThreadType];
+    BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertImageMessageLocal:self.mUid withWorkGroupWid:self.mWorkGroupWid withContent:imageUrl withLocalId:localId withSessionType:self.mThreadType withSend:YES];
     NSLog(@"%s %@ %@", __PRETTY_FUNCTION__, localId, messageModel.image_url);
     
     // TODO: 立刻更新UI，插入消息到界面并显示发送状态 activity indicator
     NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:[self.mMessageArray count] inSection:0];
     [self.mMessageArray addObject:messageModel];
     
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
-    [self.tableView endUpdates];
+    [self.mTableView beginUpdates];
+    [self.mTableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
+    [self.mTableView endUpdates];
     [self tableViewScrollToBottom:YES];
     //
     [[BDMQTTApis sharedInstance] sendImageMessageProtobuf:localId content:imageUrl thread:self.mThreadModel];
@@ -855,18 +735,18 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 
 -(void)sendFileMessage:(NSString *)fileUrl {
     
-    NSString *localId = [[NSUUID UUID] UUIDString];
+    NSString *localId = [BDUtils getGuid];
     // 插入本地消息
-    BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertFileMessageLocal:self.mUid withWorkGroupWid:self.mWorkGroupWid withContent:fileUrl withLocalId:localId withSessionType:self.mThreadType withFormat:@"" withFileName:@"" withFileSize:@""];
+    BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertFileMessageLocal:self.mUid withWorkGroupWid:self.mWorkGroupWid withContent:fileUrl withLocalId:localId withSessionType:self.mThreadType withFormat:@"" withFileName:@"" withFileSize:@"" withSend:YES];
     NSLog(@"%s %@ %@", __PRETTY_FUNCTION__, localId, messageModel.image_url);
     
     // TODO: 立刻更新UI，插入消息到界面并显示发送状态 activity indicator
     NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:[self.mMessageArray count] inSection:0];
     [self.mMessageArray addObject:messageModel];
     
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
-    [self.tableView endUpdates];
+    [self.mTableView beginUpdates];
+    [self.mTableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
+    [self.mTableView endUpdates];
     [self tableViewScrollToBottom:YES];
     //
     [[BDMQTTApis sharedInstance] sendFileMessageProtobuf:localId content:fileUrl thread:self.mThreadModel];
@@ -874,18 +754,18 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 
 -(void)sendVoiceMessage:(NSString *)voiceUrl {
     
-    NSString *localId = [[NSUUID UUID] UUIDString];
+    NSString *localId = [BDUtils getGuid];
     // 插入本地消息
-    BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertVoiceMessageLocal:self.mUid withWorkGroupWid:self.mWorkGroupWid withContent:voiceUrl withLocalId:localId withSessionType:self.mThreadType withVoiceLength:0 withFormat:@""];
+    BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertVoiceMessageLocal:self.mUid withWorkGroupWid:self.mWorkGroupWid withContent:voiceUrl withLocalId:localId withSessionType:self.mThreadType withVoiceLength:0 withFormat:@"" withSend:YES];
     NSLog(@"%s %@ %@", __PRETTY_FUNCTION__, localId, messageModel.image_url);
     
     // TODO: 立刻更新UI，插入消息到界面并显示发送状态 activity indicator
     NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:[self.mMessageArray count] inSection:0];
     [self.mMessageArray addObject:messageModel];
     
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
-    [self.tableView endUpdates];
+    [self.mTableView beginUpdates];
+    [self.mTableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
+    [self.mTableView endUpdates];
     [self tableViewScrollToBottom:YES];
     //
     [[BDMQTTApis sharedInstance] sendVoiceMessageProtobuf:localId content:voiceUrl thread:self.mThreadModel];
@@ -893,18 +773,18 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 
 -(void)sendVideoMessage:(NSString *)videoUrl {
     
-    NSString *localId = [[NSUUID UUID] UUIDString];
+    NSString *localId = [BDUtils getGuid];
     // 插入本地消息
-    BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertVideoMessageLocal:self.mUid withWorkGroupWid:self.mWorkGroupWid withContent:videoUrl withLocalId:localId withSessionType:self.mThreadType];
+    BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertVideoMessageLocal:self.mUid withWorkGroupWid:self.mWorkGroupWid withContent:videoUrl withLocalId:localId withSessionType:self.mThreadType withSend:YES];
     NSLog(@"%s %@ %@", __PRETTY_FUNCTION__, localId, messageModel.image_url);
     
     // TODO: 立刻更新UI，插入消息到界面并显示发送状态 activity indicator
     NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:[self.mMessageArray count] inSection:0];
     [self.mMessageArray addObject:messageModel];
     
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
-    [self.tableView endUpdates];
+    [self.mTableView beginUpdates];
+    [self.mTableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
+    [self.mTableView endUpdates];
     [self tableViewScrollToBottom:YES];
     //
     [[BDMQTTApis sharedInstance] sendVideoMessageProtobuf:localId content:videoUrl thread:self.mThreadModel];
@@ -961,7 +841,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     
     // TODO: 插入本地消息，显示发送状态
     //
-    [BDCoreApis queryAnswer:self.mTidOrUidOrGid withQuestinQid:aid resultSuccess:^(NSDictionary *dict) {
+    [BDCoreApis queryAnswer:self.mTid withQuestinQid:aid resultSuccess:^(NSDictionary *dict) {
         NSLog(@"%s %@", __PRETTY_FUNCTION__, dict);
         //
         NSNumber *status_code = [dict objectForKey:@"status_code"];
@@ -1027,7 +907,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     
     // 请求人工客服
     // TODO: mTidOrUidOrGid 替换为 agentUid, agentUid不能为空
-    [BDCoreApis requestAgent:self.mWorkGroupWid withType:self.mRequestType withAgentUid:self.mTidOrUidOrGid resultSuccess:^(NSDictionary *dict) {
+    [BDCoreApis requestAgent:self.mWorkGroupWid resultSuccess:^(NSDictionary *dict) {
         
         [self dealWithRequestThreadResult:dict];
         
@@ -1046,7 +926,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     [self startLoadingWithText:@"上传中..."];
     
     // 自定义发送消息本地id，消息发送成功之后，服务器会返回此id，可以用来判断消息发送状态
-    NSString *localId = [[NSUUID UUID] UUIDString];
+    NSString *localId = [BDUtils getGuid];
     NSString *videoName = [NSString stringWithFormat:@"%@_%@.mp4", [BDUtils getCurrentTimeString], [BDSettings getUsername]];
     [BDCoreApis uploadVideoData:videoData withVideoName:videoName withLocalId:localId resultSuccess:^(NSDictionary *dict) {
         NSLog(@"%s %@", __PRETTY_FUNCTION__, dict);
@@ -1058,16 +938,16 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
             NSString *videoUrl = dict[@"data"];
             
             // 插入本地消息
-            BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertVideoMessageLocal:self.mTidOrUidOrGid withWorkGroupWid:self.mWorkGroupWid withContent:videoUrl withLocalId:localId withSessionType:self.mThreadType];
+            BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertVideoMessageLocal:self.mTid withWorkGroupWid:self.mWorkGroupWid withContent:videoUrl withLocalId:localId withSessionType:self.mThreadType withSend:YES];
             NSLog(@"%s %@ %@", __PRETTY_FUNCTION__, localId, messageModel.video_or_short_url);
             
             // TODO: 立刻更新UI，插入消息到界面并显示发送状态 activity indicator
             NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:[self.mMessageArray count] inSection:0];
             [self.mMessageArray addObject:messageModel];
             
-            [self.tableView beginUpdates];
-            [self.tableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
-            [self.tableView endUpdates];
+            [self.mTableView beginUpdates];
+            [self.mTableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
+            [self.mTableView endUpdates];
             [self tableViewScrollToBottom:YES];
             
             // 异步发送视频消息
@@ -1088,7 +968,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     // TODO: 显示上传进度
     [self startLoadingWithText:@"上传中..."];
     // 自定义发送消息本地id，消息发送成功之后，服务器会返回此id，可以用来判断消息发送状态
-    NSString *localId = [[NSUUID UUID] UUIDString];
+    NSString *localId = [BDUtils getGuid];
     NSString *imageName = [NSString stringWithFormat:@"%@_%@.png", [BDUtils getCurrentTimeString], [BDSettings getUsername]];
     //
     [BDCoreApis uploadImageData:imageData withImageName:imageName withLocalId:localId resultSuccess:^(NSDictionary *dict) {
@@ -1101,16 +981,16 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
             NSString *imageUrl = dict[@"data"];
             
             // 插入本地消息
-            BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertImageMessageLocal:self.mTidOrUidOrGid withWorkGroupWid:self.mWorkGroupWid withContent:imageUrl withLocalId:localId withSessionType:self.mThreadType];
+            BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertImageMessageLocal:self.mTid withWorkGroupWid:self.mWorkGroupWid withContent:imageUrl withLocalId:localId withSessionType:self.mThreadType withSend:YES];
             NSLog(@"%s %@ %@", __PRETTY_FUNCTION__, localId, messageModel.image_url);
             
             // TODO: 立刻更新UI，插入消息到界面并显示发送状态 activity indicator
             NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:[self.mMessageArray count] inSection:0];
             [self.mMessageArray addObject:messageModel];
             
-            [self.tableView beginUpdates];
-            [self.tableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
-            [self.tableView endUpdates];
+            [self.mTableView beginUpdates];
+            [self.mTableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
+            [self.mTableView endUpdates];
             [self tableViewScrollToBottom:YES];
             
             // 异步发送图片消息
@@ -1137,7 +1017,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     // TODO: 语音发送之后，上传成功之前，增加发送语音消息气泡
 
     // 自定义发送消息本地id，消息发送成功之后，服务器会返回此id，可以用来判断消息发送状态
-    NSString *localId = [[NSUUID UUID] UUIDString];
+    NSString *localId = [BDUtils getGuid];
     [BDCoreApis uploadVoiceData:voiceData withVoiceName:amrVoiceFileName withLocalId:localId resultSuccess:^(NSDictionary *dict) {
         NSLog(@"%s %@", __PRETTY_FUNCTION__, dict);
         
@@ -1146,20 +1026,20 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
         if ([status_code isEqualToNumber:[NSNumber numberWithInt:200]]) {
             
             // 自定义发送消息本地id，消息发送成功之后，服务器会返回此id，可以用来判断消息发送状态
-            NSString *localId = [[NSUUID UUID] UUIDString];
+            NSString *localId = [BDUtils getGuid];
             NSString *voiceUrl = dict[@"data"];
             
             // 插入本地消息
-            BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertVoiceMessageLocal:self.mUid withWorkGroupWid:self.mWorkGroupWid withContent:voiceUrl withLocalId:localId withSessionType:self.mThreadType withVoiceLength:voiceLength  withFormat:@"amr"];
+            BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertVoiceMessageLocal:self.mUid withWorkGroupWid:self.mWorkGroupWid withContent:voiceUrl withLocalId:localId withSessionType:self.mThreadType withVoiceLength:voiceLength  withFormat:@"amr" withSend:YES];
             NSLog(@"%s %@ %@", __PRETTY_FUNCTION__, localId, messageModel.voice_url);
             
             // TODO: 立刻更新UI，插入消息到界面并显示发送状态 activity indicator
             NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:[self.mMessageArray count] inSection:0];
             [self.mMessageArray addObject:messageModel];
             //
-            [self.tableView beginUpdates];
-            [self.tableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
-            [self.tableView endUpdates];
+            [self.mTableView beginUpdates];
+            [self.mTableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
+            [self.mTableView endUpdates];
             [self tableViewScrollToBottom:YES];
             
             //
@@ -1182,52 +1062,29 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 
 // 发送商品消息
 -(void)sendCommodityMessage:(NSString *)content {
-    NSLog(@"%s, content:%@, tid:%@, sessionType:%@ ", __PRETTY_FUNCTION__, content, self.mTidOrUidOrGid,  self.mThreadType);
+    NSLog(@"%s, content:%@, tid:%@, sessionType:%@ ", __PRETTY_FUNCTION__, content, self.mTid,  self.mThreadType);
     
 //    // 自定义发送消息本地id，消息发送成功之后，服务器会返回此id，可以用来判断消息发送状态
-    NSString *localId = [[NSUUID UUID] UUIDString];
+    NSString *localId = [BDUtils getGuid];
 //
     // 插入本地消息, 可通过返回的messageModel首先更新本地UI，然后再发送消息
-    BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertCommodityMessageLocal:self.mTidOrUidOrGid withWorkGroupWid:self.mWorkGroupWid withContent:content withLocalId:localId withSessionType:self.mThreadType];
+    BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertCommodityMessageLocal:self.mTid withWorkGroupWid:self.mWorkGroupWid withContent:content withLocalId:localId withSessionType:self.mThreadType withSend:YES];
 //    NSLog(@"%s %@ %@", __PRETTY_FUNCTION__, localId, messageModel.content);
 
     // TODO: 立刻更新UI，插入消息到界面并显示发送状态 activity indicator
     NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:[self.mMessageArray count] inSection:0];
     [self.mMessageArray addObject:messageModel];
 
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
-    [self.tableView endUpdates];
+    [self.mTableView beginUpdates];
+    [self.mTableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
+    [self.mTableView endUpdates];
     [self tableViewScrollToBottom:YES];
     
     //
     [[BDMQTTApis sharedInstance] sendCommodityMessageProtobuf:localId content:content thread:self.mThreadModel];
-    
-
 }
 
-// 发送红包消息
--(void)sendRedPacketMessage:(NSString *)content {
-    NSLog(@"%s, content:%@, tid:%@, sessionType:%@ ", __PRETTY_FUNCTION__, content, self.mTidOrUidOrGid,  self.mThreadType);
-    
-    // 自定义发送消息本地id，消息发送成功之后，服务器会返回此id，可以用来判断消息发送状态
-    NSString *localId = [[NSUUID UUID] UUIDString];
-    
-    // 插入本地消息, 可通过返回的messageModel首先更新本地UI，然后再发送消息
-    BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertRedPacketMessageLocal:self.mTidOrUidOrGid withWorkGroupWid:self.mWorkGroupWid withContent:content withLocalId:localId withSessionType:self.mThreadType];
-    NSLog(@"%s %@ %@", __PRETTY_FUNCTION__, localId, messageModel.content);
-    
-    // TODO: 立刻更新UI，插入消息到界面并显示发送状态 activity indicator
-    NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:[self.mMessageArray count] inSection:0];
-    [self.mMessageArray addObject:messageModel];
-    
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
-    [self.tableView endUpdates];
-    [self tableViewScrollToBottom:YES];
-}
-
-#pragma mark - KFDSMsgViewCellDelegate
+#pragma mark - BDMsgViewCellDelegate
 
 - (void)saveImageCellWith:(NSInteger)tag {
     NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -1255,8 +1112,6 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                                 actionWithTitle:@"确定"
                                 style:UIAlertActionStyleDefault
                                 handler:^(UIAlertAction * action) {
-        //Handle your yes please button action here
-        //
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:tag inSection:0];
         if (indexPath.row < [self.mMessageArray count]) {
             BDMessageModel *itemToDelete = [self.mMessageArray objectAtIndex:indexPath.row];
@@ -1264,7 +1119,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
             [BDCoreApis markDeletedMessage:itemToDelete.mid resultSuccess:^(NSDictionary *dict) {
                 //
                 [self.mMessageArray removeObjectAtIndex:indexPath.row];
-                [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [self.mTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
                 
             } resultFailed:^(NSError *error) {
                 [BDUIApis showErrorWithVC:self withMessage:@"删除失败"];
@@ -1276,7 +1131,6 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                                    actionWithTitle:@"取消"
                                    style:UIAlertActionStyleDefault
                                    handler:^(UIAlertAction * action) {
-        //Handle your yes please button action here
     }];
     [alert addAction:yesButton];
     [alert addAction:cancelButton];
@@ -1292,7 +1146,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
         [BDCoreApis markDeletedMessage:itemToDelete.mid resultSuccess:^(NSDictionary *dict) {
             //
             [self.mMessageArray removeObjectAtIndex:indexPath.row];
-            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self.mTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             //
             [[BDMQTTApis sharedInstance] sendRecallMessageProtobufThread:self.mThreadModel recallMid:itemToDelete.mid];
             
@@ -1302,13 +1156,12 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     }
 }
 
-#pragma mark 点击客服头像跳转到客服详情页面：展示客服评价记录
-#pragma mark 点击访客头像进入个人详情页
-
-- (void)avatarClicked:(BDMessageModel *)messageModel {
-    NSLog(@"%s %@", __PRETTY_FUNCTION__, messageModel.avatar);
-    
-}
+//#pragma mark 点击客服头像跳转到客服详情页面：展示客服评价记录
+//#pragma mark 点击访客头像进入个人详情页
+//
+//- (void)avatarClicked:(BDMessageModel *)messageModel {
+//    NSLog(@"%s %@", __PRETTY_FUNCTION__, messageModel.avatar);
+//}
 
 - (void)linkUrlClicked:(NSString *)url {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, url);
@@ -1327,44 +1180,9 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 
 - (void) imageViewClicked:(UIImageView *)imageView {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    self.currentImageView = imageView;
-    
-//    if (!self.imagePreviewViewController) {
-//        self.imagePreviewViewController = [[QMUIImagePreviewViewController alloc] init];
-//        self.imagePreviewViewController.presentingStyle = QMUIImagePreviewViewControllerTransitioningStyleZoom;// 将 present 动画改为 zoom，也即从某个位置放大到屏幕中央。默认样式为 fade。
-//        self.imagePreviewViewController.imagePreviewView.delegate = self;
-//        self.imagePreviewViewController.imagePreviewView.currentImageIndex = 0;// 默认查看的图片的 index
-//
-//        // QMUIImagePreviewViewController 对于以 window 的方式展示的情况，默认会开启手势拖拽退出预览功能。
-//        // 如果使用了手势拖拽，并且退出预览时需要飞到某个 rect，则需要实现这个 block，在里面自己去 exit，如果不实现这个 block，退出动画会使用 fadeOut 那种
-//        //        __weak __typeof(self)weakSelf = self;
-//        //        self.imagePreviewViewController.customGestureExitBlock = ^(QMUIImagePreviewViewController *aImagePreviewViewController, QMUIZoomImageView *currentZoomImageView) {
-//        //            [weakSelf.currentImageView setImage:currentZoomImageView.image];
-//        //            [aImagePreviewViewController exitPreviewToRectInScreenCoordinate:[weakSelf.currentImageView convertRect:weakSelf.currentImageView.frame toView:nil]];
-//        //        };
-//
-//        __weak __typeof(self)weakSelf = self;
-//
-//        // 如果使用 zoom 动画，则需要在 sourceImageView 里返回一个 UIView，由这个 UIView 的布局位置决定动画的起点/终点，如果用 fade 则不需要使用 sourceImageView。
-//        // 另外当 sourceImageView 返回 nil 时会强制使用 fade 动画，常见的使用场景是 present 时 sourceImageView 还在屏幕内，但 dismiss 时 sourceImageView 已经不在可视区域，即可通过返回 nil 来改用 fade 动画。
-//        self.imagePreviewViewController.sourceImageView = ^UIView *{
-//            //            return weakSelf.imageButton;
-//            return weakSelf.currentImageView;
-//        };
-//
-//        // 当需要在退出大图预览时做一些事情的时候，可配合 UIViewController (QMUI) 的 qmui_visibleStateDidChangeBlock 来实现。
-//        self.imagePreviewViewController.qmui_visibleStateDidChangeBlock = ^(QMUIImagePreviewViewController *viewController, QMUIViewControllerVisibleState visibleState) {
-//            if (visibleState == QMUIViewControllerWillDisappear) {
-//                UIImage *currentImage = [viewController.imagePreviewView zoomImageViewAtIndex:viewController.imagePreviewView.currentImageIndex].image;
-//                if (currentImage) {
-//                    [weakSelf.currentImageView setImage:currentImage];
-//                }
-//            }
-//        };
-//    }
-//    //    [self.imagePreviewViewController startPreviewFromRectInScreenCoordinate:[imageView convertRect:imageView.frame toView:nil] cornerRadius:imageView.layer.cornerRadius];
-//    [self presentViewController:self.imagePreviewViewController animated:YES completion:nil];
+    [self showFullScreenImage:imageView.image];
 }
+
 
 - (void) fileViewClicked:(NSString *)fileUrl {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, fileUrl);
@@ -1424,6 +1242,41 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     }
 }
 
+- (void) robotQuestionClicked:(NSString *)aid withQuestion:(NSString *)question withAnswer:(NSString *)answer {
+    NSLog(@"%s, aid: %@, question:%@, answer: %@", __PRETTY_FUNCTION__, aid, question, answer);
+    
+    [self insertLocalMessageAndReload:question withType:BD_MESSAGE_TYPE_TEXT withSend:YES];
+    
+    [self insertLocalMessageAndReload:answer withType:BD_MESSAGE_TYPE_ROBOT withSend:NO];
+    
+}
+
+- (NSString *) insertLocalMessageAndReload:(NSString *)content withType:(NSString *)type withSend:(BOOL)isSend {
+    // 自定义发送消息本地id，消息发送成功之后，服务器会返回此id，可以用来判断消息发送状态
+    NSString *localId = [BDUtils getGuid]; //[[NSUUID UUID] UUIDString];
+    NSLog(@"%s, content:%@, tid:%@, sessionType:%@, localId:%@ ", __PRETTY_FUNCTION__, content, self.mTid,  self.mThreadType, localId);
+    
+    BDMessageModel *messageModel;
+    if ([type isEqualToString:BD_MESSAGE_TYPE_TEXT]) {
+        // 插入本地消息, 可通过返回的messageModel首先更新本地UI，然后再发送消息
+        messageModel = [[BDDBApis sharedInstance] insertTextMessageLocal:self.mTid withWorkGroupWid:self.mWorkGroupWid withContent:content withLocalId:localId withSessionType:self.mThreadType withSend:isSend];
+    } else if ([type isEqualToString:BD_MESSAGE_TYPE_ROBOT]) {
+        messageModel = [[BDDBApis sharedInstance] insertRobotMessageLocal:self.mTid withWorkGroupWid:self.mWorkGroupWid withContent:content withLocalId:localId withSessionType:self.mThreadType withSend:isSend];
+    }
+
+    // 立刻更新UI，插入消息到界面并显示发送状态 activity indicator
+    [self.mMessageArray addObject:messageModel];
+    NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:[self.mMessageArray count]-1 inSection:0];
+    //
+    [self.mTableView beginUpdates];
+    [self.mTableView insertRowsAtIndexPaths:@[insertIndexPath] withRowAnimation:UITableViewRowAnimationBottom];
+    [self.mTableView endUpdates];
+    // FIXME: 未往上滚动？
+    [self tableViewScrollToBottom:NO];
+    
+    return localId;
+}
+
 // 答案有帮助
 - (void) robotRateUpBtnClicked:(BDMessageModel *)messageModel {
     NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -1448,11 +1301,17 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     }];
 }
 
-- (void) shouldReloadTable {
+#pragma mark BDMsgCommodityViewCellDelegate
+
+- (void)sendCommodityButtonClicked:(BDMessageModel *)messageModel {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
-//    [self.tableView reloadData];
+    [self sendCommodityMessage:messageModel.content];
 }
+
+//- (void)commodityBackgroundClicked:(BDMessageModel *)messageModel {
+//    NSLog(@"%s", __PRETTY_FUNCTION__);
+//}
 
 #pragma mark UIImagePickerControllerDelegate
 
@@ -1471,12 +1330,13 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     if([mediaType isEqualToString:@"public.movie"]) {
         //被选中的是视频
-        // TODO：上传视频
+        // TODO：上传视频.
         NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
         NSLog(@"videoURL %@", [videoURL absoluteString]);
         //
-        //        NSData *videoData = [NSData dataWithContentsOfURL:videoURL];
-        //        [self uploadVideoData:videoData];
+//        NSData *videoData = [NSData dataWithContentsOfURL:videoURL];
+//        [self uploadVideoData:videoData];
+//
         [BDVideoCompress compressVideoWithVideoUrl:videoURL withBiteRate:@(1500 * 1024) withFrameRate:@(30) withVideoWidth:@(960) withVideoHeight:@(540) compressComplete:^(id responseObjc) {
             //
             NSString *filePathStr = [responseObjc objectForKey:@"urlStr"];
@@ -1519,7 +1379,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     //    NSLog(@"%s", __PRETTY_FUNCTION__);
 //    [self.toolbarTextField resignFirstResponder];
 //    [self hideToolbarViewWithKeyboardUserInfo:nil];
-    [self.kfInputView resignFirstResponder];
+    [self.mInputView resignFirstResponder];
 }
 
 #pragma mark - 下拉刷新
@@ -1527,17 +1387,6 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 - (void)refreshMessages {
     //
     NSLog(@"1. 客服会话：访客端拉取服务器聊天记录 %li", (long)self.mLastMessageId);
-//        根据最旧一条聊天记录加载之前20条聊天记录
-//        [BDCoreApis getMessageWithUser:[BDSettings getUid] withId:self.mLastMessageId resultSuccess:^(NSDictionary *dict) {
-//            //
-//            [self insertMessagesToTable:dict];
-////            [self reloadTableData];
-//            [self.mRefreshControl endRefreshing];
-//        } resultFailed:^(NSError *error) {
-////            // [QMUITips showError:@"加载失败" inView:self.view hideAfterDelay:2.0f];
-//            [self.mRefreshControl endRefreshing];
-//        }];
-
 //        分页加载聊天记录
 //        [BDCoreApis getMessageWithUser:[BDSettings getUid]
 //                              withPage:self.mGetMessageFromChannelPage
@@ -1552,41 +1401,9 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 //             // [QMUITips showError:@"加载失败" inView:view hideAfterDelay:2.0f];
 //             [self.mRefreshControl endRefreshing];
 //         }];
-
-}
-
-- (void)insertMessagesToTable:(NSDictionary *)dict {
     
-    NSNumber *status_code = [dict objectForKey:@"status_code"];
-    if ([status_code isEqualToNumber:[NSNumber numberWithInt:200]]) {
-        
-        NSMutableArray *messageArray = dict[@"data"][@"content"];
-        // 翻转数组
-        NSMutableArray *messageArrayReverse = (NSMutableArray *)[[messageArray reverseObjectEnumerator] allObjects];
-        
-        for (NSDictionary *messageDict in messageArrayReverse) {
-            BDMessageModel *messageModel = [[BDMessageModel alloc] initWithDictionary:messageDict];
-            
-            if (![self.mMessageArray containsObject:messageModel]) {
-                
-                // 插入最后
-                NSUInteger index = [self.mMessageArray count];
-                [self.mMessageArray addObject:messageModel];
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                
-                [self.tableView beginUpdates];
-                [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                [self.tableView endUpdates];
-            }
-        }
-        
-        // 滚动到底部
-        [self tableViewScrollToBottom:NO];
-        
-    } else {
-        NSString *message = [dict objectForKey:@"message"];
-        [BDUIApis showErrorWithVC:self withMessage:message];
-    }
+    [self.mRefreshControl endRefreshing];
+
 }
 
 
@@ -1697,8 +1514,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     NSLog(@"留言 %s", __PRETTY_FUNCTION__);
     
     BDLeaveMessageViewController *leaveMessageVC = [[BDLeaveMessageViewController alloc] init];
-    [leaveMessageVC initWithType:self.mRequestType withUid:self.mUid withPush:NO];
-//    [self.navigationController pushViewController:leaveMessageVC animated:YES];
+    [leaveMessageVC initWithType:self.mThreadType withUid:self.mUid withPush:NO];
     UINavigationController *leavenavigationController = [[UINavigationController alloc] initWithRootViewController:leaveMessageVC];
     [self.navigationController presentViewController:leavenavigationController animated:YES completion:^{
         
@@ -1713,20 +1529,13 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     [self.navigationController presentViewController:ratevc animated:YES completion:^{
 
     }];
-    
-//    UINavigationController *ratenavigationController = [[UINavigationController alloc] initWithRootViewController:ratevc];
-//    [self.navigationController presentViewController:ratenavigationController animated:YES completion:^{
-//
-//    }];
 }
 
 - (void)shareShowFAQButtonPressed:(id)sender {
     NSLog(@"常见问题 %s", __PRETTY_FUNCTION__);
     
     BDFaqViewController *faqvc = [[BDFaqViewController alloc] init];
-    [faqvc initWithType:self.mRequestType withUid:self.mUid withPush:NO];
-//    [self.navigationController pushViewController:faqvc animated:YES];
-    
+    [faqvc initWithType:self.mThreadType withUid:self.mUid withPush:NO];
     UINavigationController *faqnavigationController = [[UINavigationController alloc] initWithRootViewController:faqvc];
     [self.navigationController presentViewController:faqnavigationController animated:YES completion:^{
         
@@ -1804,7 +1613,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     // TODO: 选取文件之后，上传成功之前，增加发送文件消息气泡，增加文件发送进度
     
     // 自定义发送消息本地id，消息发送成功之后，服务器会返回此id，可以用来判断消息发送状态
-    NSString *localId = [[NSUUID UUID] UUIDString];
+    NSString *localId = [BDUtils getGuid];
     [BDCoreApis uploadFileData:fileData withFileName:fileName withLocalId:localId resultSuccess:^(NSDictionary *dict) {
         NSLog(@"%s %@", __PRETTY_FUNCTION__, dict);
         //
@@ -1812,20 +1621,20 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
         if ([status_code isEqualToNumber:[NSNumber numberWithInt:200]]) {
             
             // 自定义发送消息本地id，消息发送成功之后，服务器会返回此id，可以用来判断消息发送状态
-            NSString *localId = [[NSUUID UUID] UUIDString];
+            NSString *localId = [BDUtils getGuid];
             NSString *fileUrl = dict[@"data"];
             
             // 插入本地消息
-            BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertFileMessageLocal:self.mUid withWorkGroupWid:self.mWorkGroupWid withContent:fileUrl withLocalId:localId withSessionType:self.mThreadType withFormat:fileType withFileName:fileName withFileSize:fileSize];
+            BDMessageModel *messageModel = [[BDDBApis sharedInstance] insertFileMessageLocal:self.mUid withWorkGroupWid:self.mWorkGroupWid withContent:fileUrl withLocalId:localId withSessionType:self.mThreadType withFormat:fileType withFileName:fileName withFileSize:fileSize withSend:YES];
             NSLog(@"%s %@ %@", __PRETTY_FUNCTION__, localId, messageModel.file_url);
             
             // TODO: 立刻更新UI，插入消息到界面并显示发送状态 activity indicator
             NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:[self.mMessageArray count] inSection:0];
             [self.mMessageArray addObject:messageModel];
             
-            [self.tableView beginUpdates];
-            [self.tableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
-            [self.tableView endUpdates];
+            [self.mTableView beginUpdates];
+            [self.mTableView insertRowsAtIndexPaths:[NSMutableArray arrayWithObjects:insertIndexPath, nil] withRowAnimation:UITableViewRowAnimationBottom];
+            [self.mTableView endUpdates];
             [self tableViewScrollToBottom:YES];
             
             // 发送文件消息
@@ -1844,7 +1653,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 -(void)emotionFaceButtonPressed:(id)sender
 {
     UIButton *emotionButton = (UIButton *)sender;
-    NSString *emotionText = [[self emotionToTextDictionary] objectForKey:[NSString stringWithFormat:@"Expression_%ld", (long)emotionButton.tag]];
+    NSString *emotionText = [[self mEmotionToTextDictionary] objectForKey:[NSString stringWithFormat:@"Expression_%ld", (long)emotionButton.tag]];
 //    NSLog(@"emotion %@", emotionText);
     
     //取余为0，即整除
@@ -1853,7 +1662,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
         emotionText = @"删除";
     }
     
-    NSString *content = [self.kfInputView.inputTextView text];
+    NSString *content = [self.mInputView.inputTextView text];
     NSInteger contentLength = [content length];
     NSString *newContent;
 
@@ -1877,20 +1686,20 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                 newContent = [content substringToIndex:contentLength-1];
             }
 
-            self.kfInputView.inputTextView.text = newContent;
+            self.mInputView.inputTextView.text = newContent;
         }
     }
     else
     {
-        [self.kfInputView.inputTextView setText:[NSString stringWithFormat:@"%@%@", content, emotionText]];
+        [self.mInputView.inputTextView setText:[NSString stringWithFormat:@"%@%@", content, emotionText]];
     }
 
-    [self.kfInputView textViewDidChange:kfInputView.inputTextView];
+    [self.mInputView textViewDidChange:mInputView.inputTextView];
 }
 
 -(void)emotionViewSendButtonPressed:(id)sender
 {
-    NSString *content = [self.kfInputView.inputTextView text];
+    NSString *content = [self.mInputView.inputTextView text];
 
     if ([content length] == 0) {
         return;
@@ -1903,142 +1712,60 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 //
 -(void)recordVoiceButtonTouchDown:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    
-//#if TARGET_IPHONE_SIMULATOR
-//
-//#else
-    
-//    if ([BDUtils canRecordVoice]) {
-        //显示录音HUD
-        self.kfRecordVoiceViewHUD.hidden = FALSE;
-        //开始录音
-        [self.kfRecordVoiceViewHUD startVoiceRecordingToUsername:self.mUid];
-    
-        //添加录音虚拟气泡
-//        KFMessageItem *inputtingVoiceMessage = [[KFMessageItem alloc] init];
-//        inputtingVoiceMessage.isSendFromMe = TRUE;
-//        inputtingVoiceMessage.username = workgroupname;
-//        inputtingVoiceMessage.messageType = KFMessageTypeRecordingVoice;
-//        inputtingVoiceMessage.voiceMessageLength = 0;
-//        inputtingVoiceMessage.messageContent = @"recording";
-//        inputtingVoiceMessage.timestamp = [NSDate date];
-//        [messagesMutableArray addObject:inputtingVoiceMessage];
-    
-        [self.tableView reloadData];
-        [self tableViewScrollToBottom:YES];
-        
-//    }
-    
-//#endif
+    //显示录音HUD
+    self.mRecordVoiceViewHUD.hidden = FALSE;
+    //开始录音
+    [self.mRecordVoiceViewHUD startVoiceRecordingToUsername:self.mUid];
+    [self.mTableView reloadData];
+    [self tableViewScrollToBottom:YES];
 }
-
 
 -(void)recordVoiceButtonTouchUpInside:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    
-//#if TARGET_IPHONE_SIMULATOR
-//
-//#else
-//
-//#endif
-    
-//    if ([BDUtils canRecordVoice]) {
-        self.kfRecordVoiceViewHUD.hidden = TRUE;
-        NSString *amrVoiceFileName = [kfRecordVoiceViewHUD stopVoiceRecording];
-        int voiceLength = (int)kfRecordVoiceViewHUD.voiceRecordLength;
-//        for (int i = 0; i < [messagesMutableArray count]; i++) {
-//            KFMessageItem *item = [messagesMutableArray objectAtIndex:i];
-//            if (item.isSendFromMe && item.messageType == KFMessageTypeRecordingVoice && item.voiceMessageLength == 0) {
-//                [messagesMutableArray removeObject:item];
-//                [kfTableView reloadData];
-//            }
-//        }
-        //
-        if ([amrVoiceFileName isEqualToString:@"tooshort"]) {
-            NSLog(@"tooshort");
-        }
-        else if ([amrVoiceFileName isEqualToString:@"toolong"]) {
-            NSLog(@"toolong");
-        }
-        else
-        {
-            //
-//            KFMessageItem *sendingVoiceItem = [[KFMessageItem alloc] init];
-//            sendingVoiceItem.isSendFromMe = TRUE;
-//            sendingVoiceItem.username = workgroupname;
-//            sendingVoiceItem.messageType = KFMessageTypeSendingVoice;
-//            sendingVoiceItem.voiceFileName = voiceFilename;
-//            sendingVoiceItem.timestamp = [NSDate date];
-//            [messagesMutableArray addObject:sendingVoiceItem];
-//            //
-//            [kfTableView reloadData];
-//            [self tableViewScrollToBottom:YES];
-//            //上传、发送语音文件
-//            [[KFUtils sharedInstance] uploadVoice:voiceFilename workgroupName:workgroupname];
-            [self uploadAmrVoice:amrVoiceFileName voiceLength:voiceLength];
-        }
-//    }
-}
 
+    self.mRecordVoiceViewHUD.hidden = TRUE;
+    NSString *amrVoiceFileName = [mRecordVoiceViewHUD stopVoiceRecording];
+    int voiceLength = (int)mRecordVoiceViewHUD.voiceRecordLength;
+    //
+    if ([amrVoiceFileName isEqualToString:@"tooshort"]) {
+        NSLog(@"tooshort");
+    }
+    else if ([amrVoiceFileName isEqualToString:@"toolong"]) {
+        NSLog(@"toolong");
+    }
+    else
+    {
+        [self uploadAmrVoice:amrVoiceFileName voiceLength:voiceLength];
+    }
+}
 
 -(void)recordVoiceButtonTouchUpOutside:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    
-//#if TARGET_IPHONE_SIMULATOR
-//
-//#else
-//
-//#endif
-    
-    self.kfRecordVoiceViewHUD.hidden = TRUE;
-    [self.kfRecordVoiceViewHUD cancelVoiceRecording];
 
-    
+    self.mRecordVoiceViewHUD.hidden = TRUE;
+    [self.mRecordVoiceViewHUD cancelVoiceRecording];
 }
-
 
 -(void)recordVoiceButtonTouchDragInside:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    
-//#if TARGET_IPHONE_SIMULATOR
-//
-//#else
-//
-//#endif
-    
-//    if ([BDUtils canRecordVoice]) {
-    
-        //
-        self.kfRecordVoiceViewHUD.microphoneImageView.hidden = FALSE;
-        self.kfRecordVoiceViewHUD.signalWaveImageView.hidden = FALSE;
-        self.kfRecordVoiceViewHUD.cancelArrowImageView.hidden = TRUE;
-        //
-        self.kfRecordVoiceViewHUD.hintLabel.text = @"上滑取消";
-        self.kfRecordVoiceViewHUD.hintLabel.backgroundColor = [UIColor clearColor];
-        
-//    }
-
+    //
+    self.mRecordVoiceViewHUD.microphoneImageView.hidden = FALSE;
+    self.mRecordVoiceViewHUD.signalWaveImageView.hidden = FALSE;
+    self.mRecordVoiceViewHUD.cancelArrowImageView.hidden = TRUE;
+    //
+    self.mRecordVoiceViewHUD.hintLabel.text = @"上滑取消";
+    self.mRecordVoiceViewHUD.hintLabel.backgroundColor = [UIColor clearColor];
 }
 
 -(void)recordVoiceButtonTouchDragOutside:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    
-//#if TARGET_IPHONE_SIMULATOR
-//
-//#else
-//
-//#endif
-    
-//    if ([BDUtils canRecordVoice]) {
-        //
-        self.kfRecordVoiceViewHUD.microphoneImageView.hidden = TRUE;
-        self.kfRecordVoiceViewHUD.signalWaveImageView.hidden = TRUE;
-        self.kfRecordVoiceViewHUD.cancelArrowImageView.hidden = FALSE;
-        //
-        self.kfRecordVoiceViewHUD.hintLabel.text = @"松手取消";
-        self.kfRecordVoiceViewHUD.hintLabel.backgroundColor = [UIColor redColor];
-//    }
-
+    //
+    self.mRecordVoiceViewHUD.microphoneImageView.hidden = TRUE;
+    self.mRecordVoiceViewHUD.signalWaveImageView.hidden = TRUE;
+    self.mRecordVoiceViewHUD.cancelArrowImageView.hidden = FALSE;
+    //
+    self.mRecordVoiceViewHUD.hintLabel.text = @"松手取消";
+    self.mRecordVoiceViewHUD.hintLabel.backgroundColor = [UIColor redColor];
 }
 
 
@@ -2048,7 +1775,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 //    NSString *content = self.kfInputView.inputTextView.text;
     if ([content stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]].length > 0) {
         [self sendTextMessage:content];
-        [self.kfInputView.inputTextView setText:@""];
+        [self.mInputView.inputTextView setText:@""];
     }
 }
 
@@ -2064,23 +1791,23 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     NSLog(@"%s",__PRETTY_FUNCTION__);
     
     //如果当前按住说话按钮隐藏，则将其显示，并隐藏输入框
-    if ([self.kfInputView recordVoiceButton].hidden) {
+    if ([self.mInputView recordVoiceButton].hidden) {
         NSLog(@"%s 1",__PRETTY_FUNCTION__);
-        [self.kfInputView recordVoiceButton].hidden = FALSE;
-        [self.kfInputView inputTextView].hidden = TRUE;
-        [[self.kfInputView inputTextView] resignFirstResponder];
+        [self.mInputView recordVoiceButton].hidden = FALSE;
+        [self.mInputView inputTextView].hidden = TRUE;
+        [[self.mInputView inputTextView] resignFirstResponder];
     }
     //如果当前按住说话按钮显示，则将其隐藏，并显示输入框，并将其获取焦点
     else {
         NSLog(@"%s 2",__PRETTY_FUNCTION__);
-        [self.kfInputView recordVoiceButton].hidden = TRUE;
-        [self.kfInputView inputTextView].hidden = FALSE;
-        [[self.kfInputView inputTextView] becomeFirstResponder];
+        [self.mInputView recordVoiceButton].hidden = TRUE;
+        [self.mInputView inputTextView].hidden = FALSE;
+        [[self.mInputView inputTextView] becomeFirstResponder];
     }
     
     //
-    CGFloat emotionViewFrameY = [kfEmotionView frame].origin.y;
-    CGFloat plusViewFrameY = [self.kfPlusView frame].origin.y;
+    CGFloat emotionViewFrameY = [mEmotionView frame].origin.y;
+    CGFloat plusViewFrameY = [self.mPlusView frame].origin.y;
     CGFloat frameHeight = self.view.frame.size.height;
     
     //如果当前Emotion扩展处于显示状态, 则隐藏Emotion扩展，
@@ -2093,19 +1820,19 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                          animations:^{
                              //
                              //调整kfTableView
-                             UIEdgeInsets tableViewContentInsets = [self.tableView contentInset];
+                             UIEdgeInsets tableViewContentInsets = [self.mTableView contentInset];
                              tableViewContentInsets.bottom -= EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.tableView setContentInset:tableViewContentInsets];
+                             [self.mTableView setContentInset:tableViewContentInsets];
                              
                              //调整kfInputView到页面底部
-                             CGRect inputViewFrame = [self.kfInputView frame];
+                             CGRect inputViewFrame = [self.mInputView frame];
                              inputViewFrame.origin.y += EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.kfInputView setFrame:inputViewFrame];
+                             [self.mInputView setFrame:inputViewFrame];
                              
                              //隐藏emotionView
-                             CGRect emotionViewFrame = [self.kfEmotionView frame];
+                             CGRect emotionViewFrame = [self.mEmotionView frame];
                              emotionViewFrame.origin.y += EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.kfEmotionView setFrame:emotionViewFrame];
+                             [self.mEmotionView setFrame:emotionViewFrame];
                              
                          } completion:^(BOOL finished) {
                              
@@ -2122,18 +1849,18 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                          animations:^{
                              
                              //调整kfTableView
-                             UIEdgeInsets tableViewContentInsets = [self.tableView contentInset];
+                             UIEdgeInsets tableViewContentInsets = [self.mTableView contentInset];
                              tableViewContentInsets.bottom -= EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.tableView setContentInset:tableViewContentInsets];
+                             [self.mTableView setContentInset:tableViewContentInsets];
                              
                              //调整kfInputView到页面底部
 //                             CGRect inputViewFrame = [self.kfInputView frame];
 //                             inputViewFrame.origin.y += EMOTION_PLUS_VIEW_HEIGHT;
 //                             [self.kfInputView setFrame:inputViewFrame];
                              
-                             CGRect plusViewFrame = [self.kfPlusView frame];
+                             CGRect plusViewFrame = [self.mPlusView frame];
                              plusViewFrame.origin.y += EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.kfPlusView setFrame:plusViewFrame];
+                             [self.mPlusView setFrame:plusViewFrame];
                              
                          } completion:^(BOOL finished) {
                              
@@ -2150,18 +1877,17 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     NSLog(@"%s",__PRETTY_FUNCTION__);
     
     //如果输入框目前处于隐藏状态,即：显示录音button状态，则：1.隐藏录音button，2.显示输入框，3.更换switchViewButton image
-    if ([self.kfInputView inputTextView].hidden) {
+    if ([self.mInputView inputTextView].hidden) {
         NSLog(@"%s 1",__PRETTY_FUNCTION__);
-        
-        [self.kfInputView recordVoiceButton].hidden = TRUE;
-        [self.kfInputView inputTextView].hidden = FALSE;
-        [[self.kfInputView switchVoiceButton] setImage:[UIImage systemImageNamed:@"mic.circle" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateNormal];
-        [[self.kfInputView switchVoiceButton] setImage:[UIImage systemImageNamed:@"mic.circle.fill" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateHighlighted];
+        [self.mInputView recordVoiceButton].hidden = TRUE;
+        [self.mInputView inputTextView].hidden = FALSE;
+        [[self.mInputView switchVoiceButton] setImage:[UIImage systemImageNamed:@"mic.circle" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateNormal];
+        [[self.mInputView switchVoiceButton] setImage:[UIImage systemImageNamed:@"mic.circle.fill" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateHighlighted];
     }
     
-    CGFloat inputViewFrameY = [self.kfInputView frame].origin.y;
-    CGFloat emotionViewFrameY = [kfEmotionView frame].origin.y;
-    CGFloat plusViewFrameY = [self.kfPlusView frame].origin.y;
+    CGFloat inputViewFrameY = [self.mInputView frame].origin.y;
+    CGFloat emotionViewFrameY = [mEmotionView frame].origin.y;
+    CGFloat plusViewFrameY = [self.mPlusView frame].origin.y;
     CGFloat frameHeight = self.view.frame.size.height;
     
     //当前输入工具栏在会话页面最底部，显示表情
@@ -2174,19 +1900,19 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                          animations:^{
                              
                              //调整kfTableView
-                             UIEdgeInsets tableViewContentInsets = [self.tableView contentInset];
+                             UIEdgeInsets tableViewContentInsets = [self.mTableView contentInset];
                              tableViewContentInsets.bottom += EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.tableView setContentInset:tableViewContentInsets];
+                             [self.mTableView setContentInset:tableViewContentInsets];
                              
                              //调整kfInputView
-                             CGRect inputViewFrame = [self.kfInputView frame];
+                             CGRect inputViewFrame = [self.mInputView frame];
                              inputViewFrame.origin.y -= EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.kfInputView setFrame:inputViewFrame];
+                             [self.mInputView setFrame:inputViewFrame];
                              
                              //调整kfEmotionView
-                             CGRect emotionViewFrame = [self.kfEmotionView frame];
+                             CGRect emotionViewFrame = [self.mEmotionView frame];
                              emotionViewFrame.origin.y -= EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.kfEmotionView setFrame:emotionViewFrame];
+                             [self.mEmotionView setFrame:emotionViewFrame];
                              
                          } completion:^(BOOL finished) {
                              
@@ -2203,12 +1929,12 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                          animations:^{
                              
                              //输入框设置焦点，显示键盘
-                             [self.kfInputView becomeFirstResponder];
+                             [self.mInputView becomeFirstResponder];
                              
                              //隐藏emotionView
-                             CGRect emotionViewFrame = [self.kfEmotionView frame];
+                             CGRect emotionViewFrame = [self.mEmotionView frame];
                              emotionViewFrame.origin.y += EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.kfEmotionView setFrame:emotionViewFrame];
+                             [self.mEmotionView setFrame:emotionViewFrame];
                              
                              //
                          } completion:^(BOOL finished) {
@@ -2223,19 +1949,16 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                               delay:0.0f
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
-                             
                              //
-                             CGRect emotionViewFrame = [self.kfEmotionView frame];
+                             CGRect emotionViewFrame = [self.mEmotionView frame];
                              emotionViewFrame.origin.y -= EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.kfEmotionView setFrame:emotionViewFrame];
+                             [self.mEmotionView setFrame:emotionViewFrame];
                              
                              //
-                             CGRect plusViewFrame = [self.kfPlusView frame];
+                             CGRect plusViewFrame = [self.mPlusView frame];
                              plusViewFrame.origin.y += EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.kfPlusView setFrame:plusViewFrame];
-                             
-                             //
-                             
+                             [self.mPlusView setFrame:plusViewFrame];
+                                                          
                          } completion:^(BOOL finished) {
                              
                          }];
@@ -2249,29 +1972,29 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
             
-                            UIEdgeInsets tableViewContentInsets = [self.tableView contentInset];
+                            UIEdgeInsets tableViewContentInsets = [self.mTableView contentInset];
                             tableViewContentInsets.bottom = EMOTION_PLUS_VIEW_HEIGHT + INPUTBAR_HEIGHT;
-                            [self.tableView setContentInset:tableViewContentInsets];
+                            [self.mTableView setContentInset:tableViewContentInsets];
                              
                              //隐藏键盘
-                             UIView *keyboard = self.kfInputView.inputTextView.inputAccessoryView.superview;
+                             UIView *keyboard = self.mInputView.inputTextView.inputAccessoryView.superview;
                              CGRect keyboardFrame = keyboard.frame;
                              keyboardFrame.origin.y = frameHeight;
                              [keyboard setFrame:keyboardFrame];
                              
 //                             isEmotionPlusPressedToHideKeyboard = TRUE;
                              
-                             [self.kfInputView resignFirstResponder];
+                             [self.mInputView resignFirstResponder];
                              
                              //调整inputViewFrame
-                             CGRect inputViewFrame = [self.kfInputView frame];
+                             CGRect inputViewFrame = [self.mInputView frame];
                              inputViewFrame.origin.y = frameHeight - EMOTION_PLUS_VIEW_HEIGHT - INPUTBAR_HEIGHT;
-                             [self.kfInputView setFrame:inputViewFrame];
+                             [self.mInputView setFrame:inputViewFrame];
                              
                              //显示kfEmotionView
-                             CGRect emotionViewFrame = [self.kfEmotionView frame];
+                             CGRect emotionViewFrame = [self.mEmotionView frame];
                              emotionViewFrame.origin.y -= EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.kfEmotionView setFrame:emotionViewFrame];
+                             [self.mEmotionView setFrame:emotionViewFrame];
                              
                              
                          } completion:^(BOOL finished) {
@@ -2287,17 +2010,17 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     NSLog(@"%s",__PRETTY_FUNCTION__);
     
     //如果输入框目前处于隐藏状态,即：显示录音button状态，则：1.隐藏录音button，2.显示输入框，3.更换switchViewButton image
-    if ([self.kfInputView inputTextView].hidden) {
+    if ([self.mInputView inputTextView].hidden) {
         NSLog(@"%s 1",__PRETTY_FUNCTION__);
-        [self.kfInputView recordVoiceButton].hidden = TRUE;
-        [self.kfInputView inputTextView].hidden = FALSE;
-        [[self.kfInputView switchVoiceButton] setImage:[UIImage systemImageNamed:@"mic.circle" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateNormal];
-        [[self.kfInputView switchVoiceButton] setImage:[UIImage systemImageNamed:@"mic.circle.fill" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateHighlighted];
+        [self.mInputView recordVoiceButton].hidden = TRUE;
+        [self.mInputView inputTextView].hidden = FALSE;
+        [[self.mInputView switchVoiceButton] setImage:[UIImage systemImageNamed:@"mic.circle" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateNormal];
+        [[self.mInputView switchVoiceButton] setImage:[UIImage systemImageNamed:@"mic.circle.fill" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateHighlighted];
     }
     
-    CGFloat inputViewFrameY = [self.kfInputView frame].origin.y;
-    CGFloat emotionViewFrameY = [kfEmotionView frame].origin.y;
-    CGFloat plusViewFrameY = [self.kfPlusView frame].origin.y;
+    CGFloat inputViewFrameY = [self.mInputView frame].origin.y;
+    CGFloat emotionViewFrameY = [self.mEmotionView frame].origin.y;
+    CGFloat plusViewFrameY = [self.mPlusView frame].origin.y;
     CGFloat frameHeight = self.view.frame.size.height;
     
     //当前输入工具栏在会话页面最底部，显示plus
@@ -2310,19 +2033,19 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                          animations:^{
                              
                              //调整kfTableView
-                             UIEdgeInsets tableViewContentInsets = [self.tableView contentInset];
+                             UIEdgeInsets tableViewContentInsets = [self.mTableView contentInset];
                              tableViewContentInsets.bottom += EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.tableView setContentInset:tableViewContentInsets];
+                             [self.mTableView setContentInset:tableViewContentInsets];
                              
                              //调整kfInputView
-                             CGRect inputViewFrame = [self.kfInputView frame];
+                             CGRect inputViewFrame = [self.mInputView frame];
                              inputViewFrame.origin.y -= EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.kfInputView setFrame:inputViewFrame];
+                             [self.mInputView setFrame:inputViewFrame];
                              
                              //调整kfPlusView
-                             CGRect plusViewFrame = [self.kfPlusView frame];
+                             CGRect plusViewFrame = [self.mPlusView frame];
                              plusViewFrame.origin.y -= EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.kfPlusView setFrame:plusViewFrame];
+                             [self.mPlusView setFrame:plusViewFrame];
                              
                          } completion:^(BOOL finished) {
                              
@@ -2338,17 +2061,17 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
             
-             if ([self.kfInputView isFirstResponder]) {
+             if ([self.mInputView isFirstResponder]) {
                  NSLog(@"kfInputView isFirstResponder");
                  //输入框设置焦点，显示键盘
-                 [self.kfInputView resignFirstResponder];
+                 [self.mInputView resignFirstResponder];
              } else {
                  //输入框设置焦点，显示键盘
-                 [self.kfInputView becomeFirstResponder];
+                 [self.mInputView becomeFirstResponder];
                  //隐藏plusView
-                 CGRect plusViewFrame = [self.kfPlusView frame];
+                 CGRect plusViewFrame = [self.mPlusView frame];
                  plusViewFrame.origin.y += EMOTION_PLUS_VIEW_HEIGHT;
-                 [self.kfPlusView setFrame:plusViewFrame];
+                 [self.mPlusView setFrame:plusViewFrame];
              }
 
          } completion:^(BOOL finished) {
@@ -2365,14 +2088,14 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                          animations:^{
                              
                              //
-                             CGRect plusViewFrame = [self.kfPlusView frame];
+                             CGRect plusViewFrame = [self.mPlusView frame];
                              plusViewFrame.origin.y -= EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.kfPlusView setFrame:plusViewFrame];
+                             [self.mPlusView setFrame:plusViewFrame];
                              
                              //
-                             CGRect emotionViewFrame = [self.kfEmotionView frame];
+                             CGRect emotionViewFrame = [self.mEmotionView frame];
                              emotionViewFrame.origin.y += EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.kfEmotionView setFrame:emotionViewFrame];
+                             [self.mEmotionView setFrame:emotionViewFrame];
                              
                              //
                              
@@ -2389,27 +2112,27 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
                             
-                            UIEdgeInsets tableViewContentInsets = [self.tableView contentInset];
+                            UIEdgeInsets tableViewContentInsets = [self.mTableView contentInset];
                             tableViewContentInsets.bottom = EMOTION_PLUS_VIEW_HEIGHT + INPUTBAR_HEIGHT;
-                            [self.tableView setContentInset:tableViewContentInsets];
+                            [self.mTableView setContentInset:tableViewContentInsets];
                              
                              //隐藏键盘
-                             UIView *keyboard = self.kfInputView.inputTextView.inputAccessoryView.superview;
+                             UIView *keyboard = self.mInputView.inputTextView.inputAccessoryView.superview;
                              CGRect keyboardFrame = keyboard.frame;
                              keyboardFrame.origin.y = frameHeight;
                              [keyboard setFrame:keyboardFrame];
                                                           
-                             [self.kfInputView resignFirstResponder];
+                             [self.mInputView resignFirstResponder];
                              
                              //调整inputViewFrame
-                             CGRect inputViewFrame = [self.kfInputView frame];
+                             CGRect inputViewFrame = [self.mInputView frame];
                              inputViewFrame.origin.y = frameHeight - EMOTION_PLUS_VIEW_HEIGHT - INPUTBAR_HEIGHT;
-                             [self.kfInputView setFrame:inputViewFrame];
+                             [self.mInputView setFrame:inputViewFrame];
                              
                              //显示kfPlusView
-                             CGRect plusViewFrame = [self.kfPlusView frame];
+                             CGRect plusViewFrame = [self.mPlusView frame];
                              plusViewFrame.origin.y -= EMOTION_PLUS_VIEW_HEIGHT;
-                             [self.kfPlusView setFrame:plusViewFrame];
+                             [self.mPlusView setFrame:plusViewFrame];
                              
                          } completion:^(BOOL finished) {
                              
@@ -2433,27 +2156,27 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
         
-        CGSize Size = self.view.frame.size;
+        CGSize screenSize = self.view.frame.size;
         
-        UIEdgeInsets tableViewInsets = self.tableView.contentInset;
+        UIEdgeInsets tableViewInsets = self.mTableView.contentInset;
         tableViewInsets.bottom = INPUTBAR_HEIGHT * 2;
-        self.tableView.contentInset = tableViewInsets;
-        self.tableView.scrollIndicatorInsets = tableViewInsets;
+        self.mTableView.contentInset = tableViewInsets;
+        self.mTableView.scrollIndicatorInsets = tableViewInsets;
         
         //调整kfInputView
-        self.kfInputView.frame = CGRectMake(0.0f,
-                                            Size.height - INPUTBAR_HEIGHT,
-                                            Size.width,
+        self.mInputView.frame = CGRectMake(0.0f,
+                                            screenSize.height - INPUTBAR_HEIGHT,
+                                            screenSize.width,
                                             INPUTBAR_HEIGHT);
         
-        self.kfEmotionView.frame = CGRectMake(0.0f,
-                                              Size.height,
-                                              Size.width,
+        self.mEmotionView.frame = CGRectMake(0.0f,
+                                              screenSize.height,
+                                              screenSize.width,
                                               EMOTION_PLUS_VIEW_HEIGHT);
         
-        self.kfPlusView.frame = CGRectMake(0.0f,
-                                           Size.height,
-                                           Size.width,
+        self.mPlusView.frame = CGRectMake(0.0f,
+                                           screenSize.height,
+                                           screenSize.width,
                                            EMOTION_PLUS_VIEW_HEIGHT);
         
     } completion:^(BOOL finished) {
@@ -2479,14 +2202,14 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
         
-        CGRect inputViewFrame = [self.kfInputView frame];
+        CGRect inputViewFrame = [self.mInputView frame];
         inputViewFrame.origin.y = self.keyboardY - INPUTBAR_HEIGHT;
-        [self.kfInputView setFrame:inputViewFrame];
+        [self.mInputView setFrame:inputViewFrame];
         
-        UIEdgeInsets tableViewInsets = self.tableView.contentInset;
+        UIEdgeInsets tableViewInsets = self.mTableView.contentInset;
         tableViewInsets.bottom = self.keyboardHeight + INPUTBAR_HEIGHT * 2;
-        self.tableView.contentInset = tableViewInsets;
-        self.tableView.scrollIndicatorInsets = tableViewInsets;
+        self.mTableView.contentInset = tableViewInsets;
+        self.mTableView.scrollIndicatorInsets = tableViewInsets;
         
     } completion:^(BOOL finished) {
         
@@ -2512,19 +2235,19 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
 //        tableViewContentInsets.bottom -= EMOTION_PLUS_VIEW_HEIGHT;
 //        [self.tableView setContentInset:tableViewContentInsets];
         
-        CGRect inputViewFrame = [self.kfInputView frame];
+        CGRect inputViewFrame = [self.mInputView frame];
         inputViewFrame.origin.y = self.keyboardY - INPUTBAR_HEIGHT;
-        [self.kfInputView setFrame:inputViewFrame];
+        [self.mInputView setFrame:inputViewFrame];
         
         //调整kfPlusView
-        CGRect plusViewFrame = [self.kfPlusView frame];
+        CGRect plusViewFrame = [self.mPlusView frame];
         plusViewFrame.origin.y = inputViewFrame.origin.y + INPUTBAR_HEIGHT;
-        [self.kfPlusView setFrame:plusViewFrame];
+        [self.mPlusView setFrame:plusViewFrame];
         
         //隐藏emotionView
-        CGRect emotionViewFrame = [self.kfEmotionView frame];
+        CGRect emotionViewFrame = [self.mEmotionView frame];
         emotionViewFrame.origin.y = inputViewFrame.origin.y + INPUTBAR_HEIGHT;;
-        [self.kfEmotionView setFrame:emotionViewFrame];
+        [self.mEmotionView setFrame:emotionViewFrame];
         
     } completion:^(BOOL finished) {
         
@@ -2652,7 +2375,7 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
         return;
     }
     //
-    if ([messageModel.thread_tid isEqualToString:self.mTidOrUidOrGid]) {
+    if ([messageModel.thread_tid isEqualToString:self.mTid]) {
         //        self.titleView.subtitle = @"对方正在输入...";
     }
     // 延时执行，标题还原
@@ -2699,11 +2422,20 @@ BDEmotionViewDelegate, KFPlusViewDelegate, BDInputViewDelegate>
     [self reloadTableData];
 }
 
-
 - (void)notifyKickoff:(NSNotification *)notification {
     NSLog(@"%s", __PRETTY_FUNCTION__);
 //    NSString *content = [notification object];
 }
 
+#pragma mark -
+
+- (void)showFullScreenImage:(UIImage *)image {
+    
+    BDImageViewController *imageVc = [[BDImageViewController alloc] init];
+    imageVc.image = image;
+    //
+    UINavigationController *imageNavigationController = [[UINavigationController alloc] initWithRootViewController:imageVc];
+    [self.navigationController presentViewController:imageNavigationController animated:YES completion:nil];
+}
 
 @end

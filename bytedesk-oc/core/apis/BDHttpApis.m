@@ -90,9 +90,9 @@
 // 设置设备信息
 #define httpVisitorSetDeviceinfo              [NSString stringWithFormat:@"%@%@", [BDConfig getApiBaseUrl], @"/fingerprint2/ios/deviceInfo"]
 // 获取工作组在线状态
-#define httpVisitorGetWorkGroupStatus       [NSString stringWithFormat:@"%@%@", [BDConfig getApiBaseUrl], @"/status/workGroup"]
+#define httpVisitorGetWorkGroupStatus       [NSString stringWithFormat:@"%@%@", [BDConfig getApiVisitorBaseUrl], @"/status/workGroup"]
 // 获取客服在线状态
-#define httpVisitorGetAgentStatus           [NSString stringWithFormat:@"%@%@", [BDConfig getApiBaseUrl], @"/status/agent"]
+#define httpVisitorGetAgentStatus           [NSString stringWithFormat:@"%@%@", [BDConfig getApiVisitorBaseUrl], @"/status/agent"]
 // 获取访客的所有历史会话记录
 #define httpVisitorGetHistory               [NSString stringWithFormat:@"%@%@", [BDConfig getApiBaseUrl], @"/thread/visitor/history"]
 // http rest api同步发送消息
@@ -143,6 +143,8 @@
 #define httpUserProfile                      [NSString stringWithFormat:@"%@%@", [BDConfig getApiBaseUrl], @"/user/profile"]
 // 根据uid获取用户信息
 #define httpUserProfileUid                  [NSString stringWithFormat:@"%@%@", [BDConfig getApiBaseUrl], @"/user/profile/uid"]
+// 访客个人资料
+#define httpVisitorProfile                      [NSString stringWithFormat:@"%@%@", [BDConfig getApiVisitorBaseUrl], @"/profile"]
 // 根据uid获取crm信息
 #define httpCrmUid                  [NSString stringWithFormat:@"%@%@", [BDConfig getApiBaseUrl], @"/crm/get/uid"]
 // 在线的客服
@@ -1390,6 +1392,45 @@ static BDHttpApis *sharedInstance = nil;
     }];
 }
 
+- (void)requestAgent:(NSString *)workGroupWid
+//            withType:(NSString *)type
+//        withAgentUid:(NSString *)agentUid
+       resultSuccess:(SuccessCallbackBlock)success
+        resultFailed:(FailedCallbackBlock)failed {
+    //
+    [_mHttpSessionManager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [BDSettings getPassportAccessToken]] forHTTPHeaderField:@"Authorization"];
+    //
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            workGroupWid, @"wId",
+                            [BDSettings getClient], @"client",
+                            nil];
+    //
+    [_mHttpSessionManager GET:httpVisitorRequestAgent parameters:params headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        //
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        //
+        if(responseObject) {
+            //
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            //            NSLog(@"%s %@", __PRETTY_FUNCTION__, dict);
+            success(dict);
+        }
+        else {
+            NSDictionary *userinfoDict = [NSDictionary dictionaryWithObject:@"ERROR" forKey:NSLocalizedDescriptionKey];
+            NSError *error = [NSError errorWithDomain:BD_ERROR_WITH_DOMAIN code:0 userInfo:userinfoDict];
+            failed(error);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        //
+        [self failError:error resultSuccess:^(NSDictionary *dict) {
+            success(dict);
+        } resultFailed:^(NSError *error) {
+            failed(error);
+        }];
+    }];
+}
+
+
 
 - (void)getContactThread:(NSString *)cid
            resultSuccess:(SuccessCallbackBlock)success
@@ -1464,45 +1505,6 @@ static BDHttpApis *sharedInstance = nil;
     }];
 }
 
-- (void)requestAgent:(NSString *)workGroupWid
-            withType:(NSString *)type
-        withAgentUid:(NSString *)agentUid
-       resultSuccess:(SuccessCallbackBlock)success
-        resultFailed:(FailedCallbackBlock)failed {
-    //
-    [_mHttpSessionManager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [BDSettings getPassportAccessToken]] forHTTPHeaderField:@"Authorization"];
-    //
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            workGroupWid, @"wId",
-                            type, @"type",
-                            agentUid, @"aId",
-                            [BDSettings getClient], @"client",
-                            nil];
-    //
-    [_mHttpSessionManager GET:httpVisitorRequestAgent parameters:params headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-        //
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        //
-        if(responseObject) {
-            //
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-            //            NSLog(@"%s %@", __PRETTY_FUNCTION__, dict);
-            success(dict);
-        }
-        else {
-            NSDictionary *userinfoDict = [NSDictionary dictionaryWithObject:@"ERROR" forKey:NSLocalizedDescriptionKey];
-            NSError *error = [NSError errorWithDomain:BD_ERROR_WITH_DOMAIN code:0 userInfo:userinfoDict];
-            failed(error);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        //
-        [self failError:error resultSuccess:^(NSDictionary *dict) {
-            success(dict);
-        } resultFailed:^(NSError *error) {
-            failed(error);
-        }];
-    }];
-}
 
 - (void)requestQuestionnairWithTid:(NSString *)tid
                            itemQid:(NSString *)qid
@@ -1940,7 +1942,6 @@ static BDHttpApis *sharedInstance = nil;
             NSNumber *number201 = [NSNumber numberWithInt:201];
             NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"no data", @"data", @"success", @"message", number201, @"status_code", nil];
             NSLog(@"%s, %@", __PRETTY_FUNCTION__, dict);
-            
             success(dict);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -2203,9 +2204,6 @@ static BDHttpApis *sharedInstance = nil;
     //数据上行为json格式
     _mHttpSessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
     //
-//    NSString *scoreString = [NSString stringWithFormat:@"%ld",(long)score];
-//    NSInteger inviteInteger = invite ? 1 : 0;
-//    NSString *inviteString = [NSString stringWithFormat:@"%ld", (long)inviteInteger];
     NSNumber *scoreNumber = [NSNumber numberWithInteger:score];
     NSNumber *inviteNumber = [NSNumber numberWithBool:invite];
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -2333,7 +2331,6 @@ static BDHttpApis *sharedInstance = nil;
                 [[BDDBApis sharedInstance] insertThread:threadModel];
             }
             [BDNotify notifyThreadUpdate];
-            
             //
             success(dict);
         } else {
@@ -2355,7 +2352,7 @@ static BDHttpApis *sharedInstance = nil;
     }];
 }
 
-- (void)userProfileResultSuccess:(SuccessCallbackBlock)success resultFailed:(FailedCallbackBlock)failed {
+- (void)getAgentProfileResultSuccess:(SuccessCallbackBlock)success resultFailed:(FailedCallbackBlock)failed {
     //
     [_mHttpSessionManager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [BDSettings getPassportAccessToken]] forHTTPHeaderField:@"Authorization"];
     //
@@ -2424,11 +2421,54 @@ static BDHttpApis *sharedInstance = nil;
     }];
 }
 
+- (void)getVisitorProfileResultSuccess:(SuccessCallbackBlock)success resultFailed:(FailedCallbackBlock)failed {
+    //
+    [_mHttpSessionManager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [BDSettings getPassportAccessToken]] forHTTPHeaderField:@"Authorization"];
+    //
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [BDSettings getClient], @"client",
+                            nil];
+    //
+    [_mHttpSessionManager GET:httpVisitorProfile parameters:params headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        // progress
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        //
+        if(responseObject){
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+//            NSLog(@"%s, %@", __PRETTY_FUNCTION__, dict);
+            NSDictionary *infoDict = dict[@"data"];
+            [BDSettings setUid:[infoDict objectForKey:@"uid"]];
+            [BDSettings setUsername:[infoDict objectForKey:@"username"]];
+            [BDSettings setNickname:[infoDict objectForKey:@"nickname"]];
+            [BDSettings setAvatar:[infoDict objectForKey:@"avatar"]];
+            //
+            success(dict);
+        } else {
+            NSNumber *number201 = [NSNumber numberWithInt:201];
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"no data", @"data",
+                                  @"success", @"message",
+                                  number201, @"status_code",
+                                  nil];
+            NSLog(@"%s, %@", __PRETTY_FUNCTION__, dict);
+            success(dict);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        //
+        [self failError:error resultSuccess:^(NSDictionary *dict) {
+            success(dict);
+        } resultFailed:^(NSError *error) {
+            failed(error);
+        }];
+    }];
+}
+
+
 - (void)getUserProfileByUid:(NSString *)uid resultSuccess:(SuccessCallbackBlock)success resultFailed:(FailedCallbackBlock)failed {
     //
     [_mHttpSessionManager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [BDSettings getPassportAccessToken]] forHTTPHeaderField:@"Authorization"];
     //
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            uid, @"uid",
                             [BDSettings getClient], @"client",
                             nil];
     //
@@ -2466,6 +2506,7 @@ static BDHttpApis *sharedInstance = nil;
     [_mHttpSessionManager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [BDSettings getPassportAccessToken]] forHTTPHeaderField:@"Authorization"];
     //
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            uid, @"uid",
                             [BDSettings getClient], @"client",
                             nil];
     //
@@ -2499,8 +2540,7 @@ static BDHttpApis *sharedInstance = nil;
 }
 
 
-- (void)userOnline:(int)page
-          withSize:(int)size
+- (void)userOnline:(int)page withSize:(int)size
      resultSuccess:(SuccessCallbackBlock)success
       resultFailed:(FailedCallbackBlock)failed {
     //
@@ -6994,7 +7034,6 @@ static BDHttpApis *sharedInstance = nil;
            resultFailed:(FailedCallbackBlock)failed {
     
 //    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     [manager POST:httpVisitorUploadImage parameters:nil headers:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {

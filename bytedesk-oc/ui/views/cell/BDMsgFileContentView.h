@@ -8,10 +8,6 @@
 
 #import "BDMsgBaseContentView.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface BDMsgFileContentView : BDMsgBaseContentView
 
 @end
-
-NS_ASSUME_NONNULL_END

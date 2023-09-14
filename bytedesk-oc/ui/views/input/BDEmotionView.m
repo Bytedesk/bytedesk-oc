@@ -30,15 +30,15 @@
  */
 @interface BDEmotionFaceView ()
 
-@property (nonatomic, assign) NSInteger m_scrollViewWidth;
-@property (nonatomic, assign) NSInteger m_emotionFaceMargin;
+@property (nonatomic, assign) NSInteger mScrollViewWidth;
+@property (nonatomic, assign) NSInteger mEmotionFaceMargin;
 
 @end
 
 @implementation BDEmotionFaceView
 
-@synthesize m_scrollViewWidth,
-            m_emotionFaceMargin,
+@synthesize mScrollViewWidth,
+            mEmotionFaceMargin,
             delegate;
 
 -(id)initWithFrame:(CGRect)frame
@@ -46,8 +46,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        m_scrollViewWidth = [[UIScreen mainScreen] bounds].size.width;
-        m_emotionFaceMargin = (m_scrollViewWidth - EMOTION_FACE_WIDTH*7)/8;
+        mScrollViewWidth = [[UIScreen mainScreen] bounds].size.width;
+        mEmotionFaceMargin = (mScrollViewWidth - EMOTION_FACE_WIDTH*7)/8;
         
         //self.backgroundColor = [UIColor redColor];
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -61,7 +61,7 @@
                 for (int j = 0; j < 7;  j++) {
                     
                     //
-                    CGRect frame = CGRectMake(m_scrollViewWidth*page + m_emotionFaceMargin + (EMOTION_FACE_WIDTH + m_emotionFaceMargin)*j,
+                    CGRect frame = CGRectMake(mScrollViewWidth*page + mEmotionFaceMargin + (EMOTION_FACE_WIDTH + mEmotionFaceMargin)*j,
                                               EMOTION_TOP_MARGIN + (EMOTION_FACE_HEIGHT + EMOTION_TOP_MARGIN)*i,
                                               EMOTION_FACE_WIDTH,
                                               EMOTION_FACE_HEIGHT);
@@ -89,15 +89,10 @@
     return self;
 }
 
-
--(void)emotionFacePressed:(id)sender
-{
-    
-    if ([delegate respondsToSelector:@selector(emotionFaceButtonPressed:)])
-    {
+-(void)emotionFacePressed:(id)sender {
+    if ([delegate respondsToSelector:@selector(emotionFaceButtonPressed:)]) {
         [delegate performSelector:@selector(emotionFaceButtonPressed:) withObject:sender];
     }
-    
 }
 
 
@@ -109,11 +104,11 @@
 
 @property (nonatomic, strong) UIView            *topLineView;
 @property (nonatomic, strong) UIScrollView      *scrollView;
-@property (nonatomic, strong) BDEmotionFaceView *emotionFaceView;
+//@property (nonatomic, strong) BDEmotionFaceView *emotionFaceView;
 @property (nonatomic, strong) UIPageControl     *pageControl;
 @property (nonatomic, strong) UIButton          *sendButton;
 
-@property (nonatomic, assign) NSInteger m_scrollViewWidth;
+@property (nonatomic, assign) NSInteger mScrollViewWidth;
 
 
 @end
@@ -122,10 +117,10 @@
 
 @synthesize topLineView,
             scrollView,
-            emotionFaceView,
+//            emotionFaceView,
             pageControl,
             sendButton,
-            m_scrollViewWidth,
+            mScrollViewWidth,
             delegate;
 
 - (id)initWithFrame:(CGRect)frame
@@ -133,7 +128,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        m_scrollViewWidth = [[UIScreen mainScreen] bounds].size.width;
+        mScrollViewWidth = [[UIScreen mainScreen] bounds].size.width;
         self.backgroundColor = [UIColor clearColor]; //UIColorFromRGB(0XEBEBEB);
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin;
         [self setUpViews];
@@ -145,7 +140,7 @@
 {
     topLineView = nil;
     scrollView = nil;
-    emotionFaceView = nil;
+//    emotionFaceView = nil;
     pageControl = nil;
     sendButton = nil;
 }
@@ -184,12 +179,12 @@
         
         CGRect scrollViewFrame = CGRectMake(0.0f,
                                   0.0f,
-                                  m_scrollViewWidth,
+                                  mScrollViewWidth,
                                   SCROLLVIEW_HEIGHT);
         
         scrollView = [[UIScrollView alloc] initWithFrame: scrollViewFrame];
         scrollView.pagingEnabled = YES;
-        scrollView.contentSize = CGSizeMake(m_scrollViewWidth * 5, SCROLLVIEW_HEIGHT);
+        scrollView.contentSize = CGSizeMake(mScrollViewWidth * 5, SCROLLVIEW_HEIGHT);
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.showsVerticalScrollIndicator = NO;
         scrollView.delegate = self;
@@ -197,7 +192,7 @@
 
         CGRect faceViewFrame = CGRectMake(0.0f,
                                   0.0f,
-                                  m_scrollViewWidth * 5,
+                                  mScrollViewWidth * 5,
                                   SCROLLVIEW_HEIGHT);
         
         BDEmotionFaceView *faceView = [[BDEmotionFaceView alloc] initWithFrame: faceViewFrame];
@@ -213,7 +208,7 @@
 {
     if (!pageControl) {
         
-        pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((m_scrollViewWidth - PAGESCROLL_WIDTH)/2,
+        pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((mScrollViewWidth - PAGESCROLL_WIDTH)/2,
                                                                       SCROLLVIEW_HEIGHT,
                                                                       PAGESCROLL_WIDTH,
                                                                       PAGESCROLL_HEIGHT)];
@@ -232,7 +227,7 @@
 {
     if (!sendButton) {
         
-        CGRect frame = CGRectMake(m_scrollViewWidth - SENDBUTTON_WIDTH,
+        CGRect frame = CGRectMake(mScrollViewWidth - SENDBUTTON_WIDTH,
                                   SCROLLVIEW_HEIGHT + (PAGESCROLL_HEIGHT - SENDBUTTON_HEIGHT),
                                   SENDBUTTON_WIDTH,
                                   SENDBUTTON_HEIGHT);
@@ -241,11 +236,11 @@
         [sendButton setFrame:frame];
 //        [sendButton setBackgroundImage:[UIImage imageNamed:@"EmotionsSendBtnGrey_ios7" inBundle:[NSBundle bundleForClass:self.class] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
 //        [sendButton setBackgroundImage:[UIImage imageNamed:@"EmotionsSendBtnBlue" inBundle:[NSBundle bundleForClass:self.class] compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
-//
         [[sendButton titleLabel] setFont:[UIFont systemFontOfSize:15.0f]];
         [sendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [sendButton setTitle:@"发送" forState:UIControlStateNormal];
-        
+        [sendButton setBackgroundImage:[UIImage imageNamed:@"EmotionsSendBtnBlue" inBundle:[NSBundle bundleForClass:self.class] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        [sendButton setBackgroundImage:[UIImage imageNamed:@"EmotionsSendBtnBlueHL" inBundle:[NSBundle bundleForClass:self.class] compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
         sendButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
         
         [sendButton addTarget:self action:@selector(emotionViewSendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -257,22 +252,19 @@
 
 #pragma mark UIScrollViewDelegate
 
--(void)scrollViewDidEndDecelerating:(UIScrollView *)lscrollView
-{
-    [pageControl setCurrentPage:lscrollView.contentOffset.x/m_scrollViewWidth];
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)lscrollView {
+    [pageControl setCurrentPage:lscrollView.contentOffset.x/mScrollViewWidth];
     [pageControl updateCurrentPageDisplay];
 }
 
--(void)pageControlIndicatorPressed:(id)sender
-{
+-(void)pageControlIndicatorPressed:(id)sender {
     NSInteger currentIndex = pageControl.currentPage;
-    [scrollView scrollRectToVisible:CGRectMake(m_scrollViewWidth*currentIndex, 0, m_scrollViewWidth, SCROLLVIEW_HEIGHT) animated:YES];
+    [scrollView scrollRectToVisible:CGRectMake(mScrollViewWidth*currentIndex, 0, mScrollViewWidth, SCROLLVIEW_HEIGHT) animated:YES];
 }
 
 #pragma mark BDEmotionFaceViewDelegate
 
--(void)emotionFaceButtonPressed:(UIButton *)sender
-{
+-(void)emotionFaceButtonPressed:(UIButton *)sender {
     if ([delegate respondsToSelector:@selector(emotionFaceButtonPressed:)]) {
         [delegate performSelector:@selector(emotionFaceButtonPressed:) withObject:sender];
     }
@@ -280,8 +272,7 @@
 
 #pragma mark 
 
--(void)emotionViewSendButtonPressed:(UIButton *)sender
-{
+-(void)emotionViewSendButtonPressed:(UIButton *)sender {
     if ([delegate respondsToSelector:@selector(emotionViewSendButtonPressed:)]) {
         [delegate performSelector:@selector(emotionViewSendButtonPressed:) withObject:sender];
     }

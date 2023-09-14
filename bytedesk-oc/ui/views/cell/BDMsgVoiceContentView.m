@@ -93,8 +93,8 @@
 //    return YES;
 //}
 
-- (void)refresh:(BDMessageModel *)data isAgent:(BOOL)agent{
-    [super refresh:data isAgent:agent];
+- (void)initWithMessageModel:(BDMessageModel *)data {
+    [super initWithMessageModel:data];
 //    NSLog(@"%s voice_url:%@ length:%@", __PRETTY_FUNCTION__, self.model.voice_url, self.model.length);
     
     // TODO: 图片大小按照图片长宽比例显示
@@ -158,7 +158,7 @@
     self.voiceLengthLabel.frame = voiceLengthLabelFrame;
     self.voiceUnreadImageView.frame = voiceUnreadImageViewFrame;
     self.voiceUploadOrDownloadIndicatorView.frame = voiceUploadOrDownloadIndicatorViewFrame;
-    self.bubbleImageView.frame = bubbleFrame;
+    self.bubbleView.frame = bubbleFrame;
     self.model.contentSize = boundsFrame.size;
 }
 

@@ -6,8 +6,8 @@
 //  Copyright © 2018年 bytedesk.com. All rights reserved.
 //
 //@import MQTTClient;
-//#import <MQTTClient/MQTTClient.h>
 #import "MQTTClient.h"
+//#import <MQTTClient/MQTTClient.h>
 
 #import "BDMQTTApis.h"
 #import "BDSettings.h"
@@ -18,7 +18,7 @@
 #import "BDConfig.h"
 //#import "AESCipher.h"
 
-#import "ExtraParam.h"
+#import "BDExtraParam.h"
 #import "BDThreadModel.h"
 #import "BDQueueModel.h"
 #import "BDMessageModel.h"
@@ -273,7 +273,6 @@ static BDMQTTApis *sharedInstance = nil;
                qos:(MQTTQosLevel)qos retained:(BOOL)retained mid:(unsigned int)mid {
     // New message received in topic
     NSLog(@"%s new message, topic:%@, retained:%@, mid:%d", __PRETTY_FUNCTION__, topic, retained?@"true":@"false", mid);
-    //
     NSError* error;
     Message *message = [Message parseFromData:data extensionRegistry:nil error:&error];
     if (error) {
@@ -288,18 +287,7 @@ static BDMQTTApis *sharedInstance = nil;
     [threadModel setNickname:message.thread.nickname];
     [threadModel setAvatar:message.thread.avatar];
     [threadModel setContent:message.thread.content];
-    // string to date
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//    NSDate *dateFromString = [dateFormatter dateFromString:message.thread.timestamp];
-//    [threadModel setTimestamp:dateFromString];
     [threadModel setTimestamp:message.thread.timestamp];
-    // date to string
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setLocale:[NSLocale currentLocale]];
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//    NSString *stringDate = [dateFormatter stringFromDate:[NSDate date]];
-//    [threadModel setTopic:[message.thread.topic substringFromIndex:9]];
     [threadModel setTopic:message.thread.topic];
     [threadModel setClient:message.client];
     [threadModel setCurrent_uid:[BDSettings getUid]];
@@ -564,7 +552,7 @@ static BDMQTTApis *sharedInstance = nil;
              threadNickname:(NSString *)threadNickname
                threadAvatar:(NSString *)threadAvatar
                threadClient:(NSString *)threadClient
-                 extraParam:(ExtraParam *)extraParam {
+                 extraParam:(BDExtraParam *)extraParam {
     //
     NSLog(@"%s, type:%@, content:%@, topic:%@, nickname:%@", __PRETTY_FUNCTION__, type, content, topic, threadNickname);
 
@@ -764,7 +752,7 @@ static BDMQTTApis *sharedInstance = nil;
                 }];
 }
 
-- (void)sendMessageProtobuf:(NSString *)mid type:(NSString *)type content:(NSString *)content thread:(BDThreadModel *)thread extraParam:(ExtraParam *)extraParam {
+- (void)sendMessageProtobuf:(NSString *)mid type:(NSString *)type content:(NSString *)content thread:(BDThreadModel *)thread extraParam:(BDExtraParam *)extraParam {
     [self sendMessageProtobuf:mid type:type content:content tid:thread.tid topic:thread.topic threadType:thread.type threadNickname:thread.nickname threadAvatar:thread.avatar threadClient:thread.client extraParam:extraParam];
 }
 
@@ -801,13 +789,13 @@ static BDMQTTApis *sharedInstance = nil;
 }
 
 - (void)sendPreviewMessageProtobufThread:(BDThreadModel *)thread previewContent:(NSString *)previewContent {
-    ExtraParam *extraParam = [[ExtraParam alloc] init];
+    BDExtraParam *extraParam = [[BDExtraParam alloc] init];
     [extraParam setPreviewContent:previewContent];
     [self sendMessageProtobuf:[[NSUUID UUID] UUIDString] type:BD_MESSAGE_TYPE_NOTIFICATION_PREVIEW content:@"content" thread:thread extraParam:extraParam];
 }
 
 - (void)sendRecallMessageProtobufThread:(BDThreadModel *)thread recallMid:(NSString *)recallMid {
-    ExtraParam *extraParam = [[ExtraParam alloc] init];
+    BDExtraParam *extraParam = [[BDExtraParam alloc] init];
     [extraParam setRecallMid:recallMid];
     [self sendMessageProtobuf:[[NSUUID UUID] UUIDString] type:BD_MESSAGE_TYPE_NOTIFICATION_RECALL content:@"content" thread:thread extraParam:extraParam];
 }
@@ -821,31 +809,28 @@ static BDMQTTApis *sharedInstance = nil;
 }
 
 - (void)sendReceiptMessageProtobufThread:(BDThreadModel *)thread receiptMid:(NSString *)receiptMid receiptStatus:(NSString *)receiptStatus {
-    ExtraParam *extraParam = [[ExtraParam alloc] init];
+    BDExtraParam *extraParam = [[BDExtraParam alloc] init];
     [extraParam setReceiptMid:receiptMid];
     [extraParam setReceiptStatus:receiptStatus];
     [self sendMessageProtobuf:[[NSUUID UUID] UUIDString] type:BD_MESSAGE_TYPE_NOTIFICATION_RECEIPT content:@"content" thread:thread extraParam:extraParam];
 }
 
 - (void)sendTransferMessageProtobufThread:(BDThreadModel *)thread transferTopic:(NSString *)transferTopic transferContent:(NSString *)transferContent {
-    ExtraParam *extraParam = [[ExtraParam alloc] init];
+    BDExtraParam *extraParam = [[BDExtraParam alloc] init];
     [extraParam setTransferTopic:transferTopic];
     [extraParam setTransferContent:transferContent];
-    //
     [self sendMessageProtobuf:[[NSUUID UUID] UUIDString] type:BD_MESSAGE_TYPE_NOTIFICATION_TRANSFER content:@"content" thread:thread extraParam:extraParam];
 }
 
 - (void)sendTransferAcceptMessageProtobufThread:(BDThreadModel *)thread transferTopic:(NSString *)transferTopic {
-    ExtraParam *extraParam = [[ExtraParam alloc] init];
+    BDExtraParam *extraParam = [[BDExtraParam alloc] init];
     [extraParam setTransferTopic:transferTopic];
-    //
     [self sendMessageProtobuf:[[NSUUID UUID] UUIDString] type:BD_MESSAGE_TYPE_NOTIFICATION_TRANSFER_ACCEPT content:@"content" thread:thread extraParam:extraParam];
 }
 
 - (void)sendTransferRejectMessageProtobufThread:(BDThreadModel *)thread transferTopic:(NSString *)transferTopic {
-    ExtraParam *extraParam = [[ExtraParam alloc] init];
+    BDExtraParam *extraParam = [[BDExtraParam alloc] init];
     [extraParam setTransferTopic:transferTopic];
-    //
     [self sendMessageProtobuf:[[NSUUID UUID] UUIDString] type:BD_MESSAGE_TYPE_NOTIFICATION_TRANSFER_REJECT content:@"content" thread:thread extraParam:extraParam];
 }
 

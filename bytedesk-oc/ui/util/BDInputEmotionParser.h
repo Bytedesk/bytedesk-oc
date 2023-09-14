@@ -8,17 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum : NSUInteger
-{
-    KFDSInputTokenTypeText,
-    KFDSInputTokenTypeEmoticon,
-    
+typedef enum : NSUInteger {
+    BDInputTokenTypeText,
+    BDInputTokenTypeEmoticon,
 } KFDSInputTokenType;
 
 @interface BDInputTextToken : NSObject
 
 @property (nonatomic,copy)      NSString    *text;
-
 @property (nonatomic,assign)    KFDSInputTokenType   type;
 
 @end
@@ -27,7 +24,6 @@ typedef enum : NSUInteger
 @interface BDInputEmotionParser : NSObject
 
 + (instancetype)currentParser;
-
 - (NSArray *)tokens:(NSString *)text;
 
 @end

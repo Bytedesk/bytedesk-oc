@@ -173,10 +173,9 @@ CGFloat const kFontSize = 17.0f;
                                                                        INPUTBAR_SWITCH_VOICE_BUTTON_WIDTH_HEIGHT)];
         [[self switchVoiceButton] setImage:[UIImage systemImageNamed:@"mic.circle" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateNormal];
         [[self switchVoiceButton] setImage:[UIImage systemImageNamed:@"mic.circle.fill" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateHighlighted];
-        
-        [switchVoiceButton addTarget:self action:@selector(switchVoiceButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        
-//        [switchVoiceButton setTintColor:[UIColor orangeColor]];
+        [switchVoiceButton addTarget:self action:@selector(handleSwitchVoiceButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        // TODO: 暂时隐藏，待录音完善之后，再发布
+        [switchVoiceButton setHidden:YES];
     }
     
     return switchVoiceButton;
@@ -197,7 +196,7 @@ CGFloat const kFontSize = 17.0f;
         [[self switchAgentButton] setImageEdgeInsets:UIEdgeInsetsMake(2, 10, 10, -10)];
         [[self switchAgentButton] setTitleEdgeInsets:UIEdgeInsetsMake(15, -13, -5, 0)];
         //
-        [switchAgentButton addTarget:self action:@selector(switchAgentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [switchAgentButton addTarget:self action:@selector(handleSwitchAgentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         //
 //        [self.switchAgentButton setTintColor:[UIColor orangeColor]];
         [self setButtonTitleColor:self.switchAgentButton];
@@ -229,7 +228,7 @@ CGFloat const kFontSize = 17.0f;
         
         inputTextView.layer.cornerRadius = 5.0f;
         inputTextView.layer.borderWidth = 0.7f;
-        inputTextView.layer.borderColor =  [UIColor colorWithRed:200.0f/255.0f
+        inputTextView.layer.borderColor = [UIColor colorWithRed:200.0f/255.0f
                                                            green:200.0f/255.0f
                                                             blue:205.0f/255.0f
                                                            alpha:1.0f].CGColor;
@@ -252,24 +251,11 @@ CGFloat const kFontSize = 17.0f;
         
         recordVoiceButton = [[UIButton alloc] initWithFrame:frame];
         [recordVoiceButton setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-        
-//        [recordVoiceButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//        [recordVoiceButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
         [[recordVoiceButton titleLabel] setFont:[UIFont systemFontOfSize:14.0f]];
         [recordVoiceButton setTitle:@"按住 说话" forState:UIControlStateNormal];
         [recordVoiceButton setTitle:@"松开 取消" forState:UIControlStateHighlighted];
-        
-//        UIImage *normalImage = [UIImage imageNamed:@"VoiceBtn_Black_ios7" inBundle:[NSBundle bundleForClass:self.class] compatibleWithTraitCollection:nil];
-//        [recordVoiceButton setBackgroundImage:[normalImage stretchableImageWithLeftCapWidth:normalImage.size.width/2 topCapHeight:normalImage.size.height/2] forState:UIControlStateNormal];
-//        UIImage *highligntedImage = [UIImage imageNamed:@"VoiceBtn_BlackHL_ios7" inBundle:[NSBundle bundleForClass:self.class] compatibleWithTraitCollection:nil];
-//        [recordVoiceButton setBackgroundImage:[highligntedImage stretchableImageWithLeftCapWidth:highligntedImage.size.width/2 topCapHeight:highligntedImage.size.height/2] forState:UIControlStateHighlighted];
-        //
-//        [recordVoiceButton setBackgroundImage:[UIImage systemImageNamed:@""] forState:UIControlStateNormal];
-//        [recordVoiceButton setBackgroundImage:[UIImage systemImageNamed:@""] forState:UIControlStateHighlighted];
-        //
         recordVoiceButton.layer.cornerRadius = 5.0;
         recordVoiceButton.layer.masksToBounds = YES;
-//        recordVoiceButton.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:0.2].CGColor;
         recordVoiceButton.layer.borderColor = [UIColor systemGrayColor].CGColor;
         recordVoiceButton.layer.borderWidth = 0.5;
         //
@@ -279,9 +265,7 @@ CGFloat const kFontSize = 17.0f;
         [recordVoiceButton addTarget:self action:@selector(recordVoiceButtonTouchDragInside:) forControlEvents:UIControlEventTouchDragInside];
         [recordVoiceButton addTarget:self action:@selector(recordVoiceButtonTouchDragOutside:) forControlEvents:UIControlEventTouchDragOutside];
         //
-//        [recordVoiceButton setTintColor:[UIColor orangeColor]];
         [self setButtonTitleColor:self.recordVoiceButton];
-//        [recordVoiceButton setTitleColor:BDColorScheme.colorBlack forState:UIControlStateNormal];
     }
     return recordVoiceButton;
 }
@@ -306,12 +290,10 @@ CGFloat const kFontSize = 17.0f;
                                           INPUTBAR_SWITCH_EMOTION_PLUS_BUTTON_WIDTH_HEIGHT)];
 
         [switchEmotionButton setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin];
-        [switchEmotionButton addTarget:self action:@selector(switchEmotionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [switchEmotionButton addTarget:self action:@selector(handleSwitchEmotionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         //
         [switchEmotionButton setImage:[UIImage systemImageNamed:@"face.smiling" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateNormal];
         [switchEmotionButton setImage:[UIImage systemImageNamed:@"face.smiling.inverse" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateHighlighted];
-        //
-//        [switchEmotionButton setTintColor:[UIColor orangeColor]];
     }
     
     return switchEmotionButton;
@@ -328,7 +310,7 @@ CGFloat const kFontSize = 17.0f;
                                                                       INPUTBAR_SWITCH_EMOTION_PLUS_BUTTON_WIDTH_HEIGHT)];
         //
         [switchPlusButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin];
-        [switchPlusButton addTarget:self action:@selector(switchPlusButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [switchPlusButton addTarget:self action:@selector(handleSwitchPlusButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         //
         [switchPlusButton setImage:[UIImage systemImageNamed:@"plus.circle" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateNormal];
         [switchPlusButton setImage:[UIImage systemImageNamed:@"plus.circle.fill" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:25]] forState:UIControlStateHighlighted];
@@ -364,14 +346,8 @@ CGFloat const kFontSize = 17.0f;
 
 #pragma mark UIButton Selectors
 
--(void)showMenuButtonPressed:(id)sender {
-    //
-    if ([delegate respondsToSelector:@selector(showMenuButtonPressed:)]) {
-        [delegate performSelector:@selector(showMenuButtonPressed:) withObject:nil];
-    }
-}
 
--(void)switchVoiceButtonPressed:(id)sender {
+-(void)handleSwitchVoiceButtonPressed:(id)sender {
 
     if ([delegate respondsToSelector:@selector(switchVoiceButtonPressed:)]) {
         [delegate performSelector:@selector(switchVoiceButtonPressed:) withObject:nil];
@@ -389,14 +365,14 @@ CGFloat const kFontSize = 17.0f;
     }
 }
 
--(void)switchAgentButtonPressed:(id)sender {
+-(void)handleSwitchAgentButtonPressed:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     if ([delegate respondsToSelector:@selector(switchAgentButtonPressed:)]) {
         [delegate performSelector:@selector(switchAgentButtonPressed:) withObject:nil];
     }
 }
 
--(void)switchEmotionButtonPressed:(id)sender {
+-(void)handleSwitchEmotionButtonPressed:(id)sender {
     //执行Delegate
     if ([delegate respondsToSelector:@selector(switchEmotionButtonPressed:)]) {
         [delegate performSelector:@selector(switchEmotionButtonPressed:) withObject:nil];
@@ -411,7 +387,7 @@ CGFloat const kFontSize = 17.0f;
     }
 }
 
--(void)switchPlusButtonPressed:(id)sender {
+-(void)handleSwitchPlusButtonPressed:(id)sender {
     if ([delegate respondsToSelector:@selector(switchPlusButtonPressed:)]) {
         [delegate performSelector:@selector(switchPlusButtonPressed:) withObject:nil];
     }
@@ -593,7 +569,7 @@ CGFloat const kFontSize = 17.0f;
 
 - (void)switchToAgent {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    self.switchVoiceButton.hidden = FALSE;
+//    self.switchVoiceButton.hidden = FALSE;
     self.switchAgentButton.hidden = TRUE;
     self.switchEmotionButton.hidden = FALSE;
     CGRect textFrame = self.inputTextView.frame;

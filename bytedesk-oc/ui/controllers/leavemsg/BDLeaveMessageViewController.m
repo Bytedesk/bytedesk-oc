@@ -7,7 +7,7 @@
 //
 
 #import "BDLeaveMessageViewController.h"
-#import "BDLeaveRecordViewController.h"
+#import "BDLeaveHistoryViewController.h"
 #import "BDVideoCompress.h"
 #import "UITextView+Placeholder.h"
 
@@ -203,7 +203,7 @@
 }
 
 - (void)showLeaveRecords {
-    BDLeaveRecordViewController *bdleaveRecordVC = [[BDLeaveRecordViewController alloc] init];
+    BDLeaveHistoryViewController *bdleaveRecordVC = [[BDLeaveHistoryViewController alloc] init];
     [self.navigationController pushViewController:bdleaveRecordVC animated:YES];
 }
 
@@ -334,105 +334,5 @@
     }];
     
 }
-
-
-//#pragma mark - Table view data source
-//
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    return 4;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    if (section == 2) {
-//        return 2;
-//    }
-//    return 1;
-//}
-//
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-//    return @"";
-//}
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    //
-//    if (indexPath.section == 0) {
-//        return 100;
-//    }
-//    else if (indexPath.section == 1) {
-//        return 100;
-//    }
-//    else if (indexPath.section == 2) {
-//        return 44;
-//    }
-//    else if (indexPath.section == 3) {
-//        return 44;
-//    }
-//    return 40;
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//
-//    if (indexPath.section == 0) {
-//        NSString *identifier = @"identifierContent";
-//        BDFormContentViewCell *contentCell = [tableView dequeueReusableCellWithIdentifier:identifier];
-//        if (!contentCell) {
-//            contentCell = [[BDFormContentViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-//        }
-//        contentCell.delegate = self;
-//        return contentCell;
-//    }
-//    else if (indexPath.section == 1) {
-//        NSString *identifier = @"identifierImage";
-//        //
-//        UITableViewCell *imageViewCell = [tableView dequeueReusableCellWithIdentifier:identifier];
-//        if (!imageViewCell) {
-//            imageViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-//        }
-//        [imageViewCell.imageView setImageWithURL:[NSURL URLWithString:self.mFileUrl] placeholderImage:[UIImage imageNamed:@"AlbumAddBtn.png" inBundle:[NSBundle bundleForClass:self.class] compatibleWithTraitCollection:nil]];
-//        imageViewCell.imageView.userInteractionEnabled = YES;
-//        //
-//        UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(presentViewController:)];
-//        tapped.numberOfTapsRequired = 1;
-//        [imageViewCell.imageView addGestureRecognizer:tapped];
-//
-//        return imageViewCell;
-//    }
-//    else if (indexPath.section == 2) {
-//        if (indexPath.row == 0) {
-//            NSString *identifier = @"identifierPhone";
-//            BDFormPhoneViewCell *phoneCell = [tableView dequeueReusableCellWithIdentifier:identifier];
-//            if (!phoneCell) {
-//                phoneCell = [[BDFormPhoneViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-//            }
-//            phoneCell.delegate = self;
-//            return phoneCell;
-//        } else {
-//            NSString *identifier = @"identifierEmail";
-//            BDFormEmailViewCell *emailCell = [tableView dequeueReusableCellWithIdentifier:identifier];
-//            if (!emailCell) {
-//                emailCell = [[BDFormEmailViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-//            }
-//            emailCell.delegate = self;
-//            return emailCell;
-//        }
-//    }
-//
-//    NSString *identifier = @"identifierSubmit";
-//    BDFormSubmitViewCell *submitCell = [tableView dequeueReusableCellWithIdentifier:identifier];
-//    if (!submitCell) {
-//        submitCell = [[BDFormSubmitViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-//    }
-//    submitCell.delegate = self;
-//
-//    return submitCell;
-//}
-//
-//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    NSLog(@"%s, %@", __PRETTY_FUNCTION__, indexPath);
-//    if (indexPath.section == 0) {
-////        [self chooseCategory];
-//    }
-//}
 
 @end

@@ -26,7 +26,7 @@
 @property (nonatomic, strong) UIButton  *shareRateButton;
 //@property (nonatomic, strong) UIButton  *shareShowFAQButton;
 
-@property (nonatomic, assign) NSInteger m_buttonMargin;
+@property (nonatomic, assign) NSInteger mButtonMargin;
 
 @end
 
@@ -41,14 +41,14 @@
             shareFileButton,
             shareLeaveMsgButton,
 
-            m_buttonMargin;
+            mButtonMargin;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        m_buttonMargin = ([UIScreen mainScreen].bounds.size.width - SHAREMORE_ITEMS_WIDTH*4)/5;
+        mButtonMargin = ([UIScreen mainScreen].bounds.size.width - SHAREMORE_ITEMS_WIDTH*4)/5;
         self.backgroundColor = [UIColor clearColor]; //UIColorFromRGB(0XEBEBEB);
         self.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 
@@ -106,7 +106,7 @@
 {
     if (!sharePickPhotoButton) {
         
-        CGRect frame = CGRectMake(m_buttonMargin,
+        CGRect frame = CGRectMake(mButtonMargin,
                                   SHAREMORE_ITEMS_TOP_MARGIN,
                                   SHAREMORE_ITEMS_WIDTH,
                                   SHAREMORE_ITEMS_HEIGHT);
@@ -168,7 +168,7 @@
 {
     if (!shareTakePhotoButton) {
         
-        CGRect frame = CGRectMake(m_buttonMargin*2 + SHAREMORE_ITEMS_WIDTH,
+        CGRect frame = CGRectMake(mButtonMargin*2 + SHAREMORE_ITEMS_WIDTH,
                                   SHAREMORE_ITEMS_TOP_MARGIN,
                                   SHAREMORE_ITEMS_WIDTH,
                                   SHAREMORE_ITEMS_HEIGHT);
@@ -207,7 +207,7 @@
 {
     if (!shareFileButton) {
         
-        CGRect frame = CGRectMake(m_buttonMargin * 3 + SHAREMORE_ITEMS_WIDTH * 2,
+        CGRect frame = CGRectMake(mButtonMargin * 3 + SHAREMORE_ITEMS_WIDTH * 2,
                                   SHAREMORE_ITEMS_TOP_MARGIN,
                                   SHAREMORE_ITEMS_WIDTH,
                                   SHAREMORE_ITEMS_HEIGHT);
@@ -246,7 +246,7 @@
 {
     if (!shareLeaveMsgButton) {
         
-        CGRect frame = CGRectMake(m_buttonMargin*4 + SHAREMORE_ITEMS_WIDTH * 3,
+        CGRect frame = CGRectMake(mButtonMargin*4 + SHAREMORE_ITEMS_WIDTH * 3,
                                   SHAREMORE_ITEMS_TOP_MARGIN,
                                   SHAREMORE_ITEMS_WIDTH,
                                   SHAREMORE_ITEMS_HEIGHT);
@@ -285,7 +285,7 @@
 {
     if (!shareRateButton) {
         
-        CGRect frame = CGRectMake(m_buttonMargin,
+        CGRect frame = CGRectMake(mButtonMargin,
                                   SHAREMORE_ITEMS_TOP_MARGIN * 2 + SHAREMORE_ITEMS_HEIGHT,
                                   SHAREMORE_ITEMS_WIDTH,
                                   SHAREMORE_ITEMS_HEIGHT);
@@ -410,13 +410,14 @@
 
 - (void)switchToRobot {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    self.sharePickPhotoButton.hidden = TRUE;
-    self.shareTakePhotoButton.hidden = TRUE;
-    self.shareFileButton.hidden = TRUE;
     //
     self.shareLeaveMsgButton.frame = self.sharePickPhotoButton.frame;
     self.shareRateButton.frame = self.shareTakePhotoButton.frame;
 //    self.shareShowFAQButton.frame = self.shareFileButton.frame;
+    //
+    self.sharePickPhotoButton.hidden = TRUE;
+    self.shareTakePhotoButton.hidden = TRUE;
+    self.shareFileButton.hidden = TRUE;
 }
 
 - (void)switchToAgent {

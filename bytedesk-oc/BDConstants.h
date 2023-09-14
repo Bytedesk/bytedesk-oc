@@ -46,14 +46,14 @@
 //#define CLIENT_OAUTH_TOKEN                  @"https://api.bytedesk.com/oauth/token"
 
 // 加载聊天记录
-#define BD_GET_MESSAGE_TYPE_WORKGROUP            @"workGroup"  // 加载工作组会话
+#define BD_GET_MESSAGE_TYPE_WORKGROUP            @"workgroup"  // 加载工作组会话
 #define BD_GET_MESSAGE_TYPE_APPOINTED            @"appointed"  // 指定坐席
 #define BD_GET_MESSAGE_TYPE_USER                 @"user"  // 加载所有访客会话
 #define BD_GET_MESSAGE_TYPE_THREAD               @"thread"  // 加载thread会话
 #define BD_GET_MESSAGE_TYPE_CONTACT              @"contact" // 一对一
 #define BD_GET_MESSAGE_TYPE_GROUP                @"group"   // 群组
 
-#define BD_THREAD_REQUEST_TYPE_WORK_GROUP       @"workGroup"
+#define BD_THREAD_REQUEST_TYPE_WORK_GROUP       @"workgroup"
 #define BD_THREAD_REQUEST_TYPE_APPOINTED        @"appointed"
 
 // 会话类型
@@ -236,7 +236,7 @@
 #define BD_MESSAGE_TYPE_ROBOT               @"robot"  // 智能问答
 #define BD_MESSAGE_TYPE_ROBOTV2             @"robotv2"  // 智能问答
 #define BD_MESSAGE_TYPE_QUESTIONNAIRE       @"questionnaire"   // 调查问卷
-#define BD_MESSAGE_TYPE_WORKGROUP           @"workGroup"   // 选择工作组
+#define BD_MESSAGE_TYPE_WORKGROUP           @"workgroup"   // 选择工作组
 #define BD_MESSAGE_TYPE_NOTIFICATION        @"notification"    // 通知消息类型
 #define BD_MESSAGE_TYPE_CUSTOM              @"custom"   // 自定义消息类型：内容放在content字段
 #define BD_MESSAGE_TYPE_RED_PACKET          @"red_packet" // 红包

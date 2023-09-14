@@ -460,6 +460,19 @@ static BDCoreApis *sharedInstance = nil;
     }];
 }
 
++ (void)requestAgent:(NSString *)workGroupWid
+//            withType:(NSString *)type
+//        withAgentUid:(NSString *)agentUid
+       resultSuccess:(SuccessCallbackBlock)success
+        resultFailed:(FailedCallbackBlock)failed {
+    //
+    [[BDHttpApis sharedInstance] requestAgent:workGroupWid resultSuccess:^(NSDictionary *dict) {
+        success(dict);
+    } resultFailed:^(NSError *error) {
+        failed(error);
+    }];
+}
+
 + (void)getContactThread:(NSString *)cid
            resultSuccess:(SuccessCallbackBlock)success
             resultFailed:(FailedCallbackBlock)failed {
@@ -476,20 +489,6 @@ static BDCoreApis *sharedInstance = nil;
           resultFailed:(FailedCallbackBlock)failed {
     //
     [[BDHttpApis sharedInstance] getGroupThread:gid resultSuccess:^(NSDictionary *dict) {
-        success(dict);
-    } resultFailed:^(NSError *error) {
-        failed(error);
-    }];
-}
-
-
-+ (void)requestAgent:(NSString *)workGroupWid
-            withType:(NSString *)type
-        withAgentUid:(NSString *)agentUid
-       resultSuccess:(SuccessCallbackBlock)success
-        resultFailed:(FailedCallbackBlock)failed {
-    //
-    [[BDHttpApis sharedInstance] requestAgent:workGroupWid withType:type withAgentUid:agentUid resultSuccess:^(NSDictionary *dict) {
         success(dict);
     } resultFailed:^(NSError *error) {
         failed(error);
@@ -969,10 +968,20 @@ static BDCoreApis *sharedInstance = nil;
  @param success <#success description#>
  @param failed <#failed description#>
  */
-+ (void)userProfileResultSuccess:(SuccessCallbackBlock)success
++ (void)getAgentProfileResultSuccess:(SuccessCallbackBlock)success
                     resultFailed:(FailedCallbackBlock)failed {
     //
-    [[BDHttpApis sharedInstance] userProfileResultSuccess:^(NSDictionary *dict) {
+    [[BDHttpApis sharedInstance] getAgentProfileResultSuccess:^(NSDictionary *dict) {
+        success(dict);
+    } resultFailed:^(NSError *error) {
+        failed(error);
+    }];
+}
+
++ (void)getVisitorProfileResultSuccess:(SuccessCallbackBlock)success
+                    resultFailed:(FailedCallbackBlock)failed {
+    //
+    [[BDHttpApis sharedInstance] getVisitorProfileResultSuccess:^(NSDictionary *dict) {
         success(dict);
     } resultFailed:^(NSError *error) {
         failed(error);

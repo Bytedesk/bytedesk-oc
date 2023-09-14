@@ -75,12 +75,12 @@
                                {
                                    NSString *rawText = [text substringWithRange:NSMakeRange(index, result.range.location - index)];
                                    BDInputTextToken *token = [[BDInputTextToken alloc] init];
-                                   token.type = KFDSInputTokenTypeText;
+                                   token.type = BDInputTokenTypeText;
                                    token.text = rawText;
                                    [tokens addObject:token];
                                }
                                BDInputTextToken *token = [[BDInputTextToken alloc] init];
-                               token.type = KFDSInputTokenTypeEmoticon;
+                               token.type = BDInputTokenTypeEmoticon;
                                token.text = rangeText;
                                [tokens addObject:token];
                                
@@ -92,7 +92,7 @@
     {
         NSString *rawText = [text substringWithRange:NSMakeRange(index, [text length] - index)];
         BDInputTextToken *token = [[BDInputTextToken alloc] init];
-        token.type = KFDSInputTokenTypeText;
+        token.type = BDInputTokenTypeText;
         token.text = rawText;
         [tokens addObject:token];
     }

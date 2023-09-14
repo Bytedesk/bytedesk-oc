@@ -24,7 +24,7 @@
         _progressLabel.textColor = [UIColor whiteColor];
         [self addSubview:_progressLabel];
         
-        _activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleMedium];
         [self addSubview:_activity];
     }
     

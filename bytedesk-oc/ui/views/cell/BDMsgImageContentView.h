@@ -9,13 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BDMsgBaseContentView.h"
 
-//@protocol KFDSMsgImageContentViewDelegate <NSObject>
-//
-//@end
-
-
 @interface BDMsgImageContentView : BDMsgBaseContentView
-
-//@property(nonatomic, assign) id<KFDSMsgImageContentViewDelegate>  subdelegate;
 
 @end

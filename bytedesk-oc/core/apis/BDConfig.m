@@ -102,14 +102,6 @@
 }
 
 + (void)restoreDefault {
-//  [[NSUserDefaults standardUserDefaults] setValue:BD_MQTT_HOST forKey:BD_MQTT_HOST_KEY];
-//    [[MMKV defaultMMKV] setString:BD_MQTT_HOST forKey:BD_MQTT_HOST_KEY];
-//    [[MMKV defaultMMKV] setUInt32:BD_MQTT_PORT forKey:BD_MQTT_PORT_KEY];
-//    [[MMKV defaultMMKV] setString:BD_WEBRTC_STUN_SERVER forKey:BD_WEBRTC_STUN_SERVER_KEY];
-//    [[MMKV defaultMMKV] setString:BD_WEBRTC_TURN_SERVER forKey:BD_WEBRTC_TURN_SERVER_KEY];
-//    [[MMKV defaultMMKV] setString:BD_WEBRTC_TURN_USERNAME forKey:BD_WEBRTC_TURN_USERNAME_KEY];
-//    [[MMKV defaultMMKV] setString:BD_WEBRTC_TURN_PASSWORD forKey:BD_WEBRTC_TURN_PASSWORD_KEY];
-//    [[MMKV defaultMMKV] setString:BD_REST_API_HOST forKey:BD_REST_API_HOST_KEY];
     [[NSUserDefaults standardUserDefaults] setValue:BD_MQTT_HOST forKey:BD_MQTT_HOST_KEY];
     [[NSUserDefaults standardUserDefaults] setInteger:BD_MQTT_PORT forKey:BD_MQTT_PORT_KEY];
     [[NSUserDefaults standardUserDefaults] setValue:BD_WEBRTC_STUN_SERVER forKey:BD_WEBRTC_STUN_SERVER_KEY];
@@ -120,10 +112,6 @@
 }
 
 + (void)enableLocalHost {
-//    [[MMKV defaultMMKV] setString:@"127.0.0.1" forKey:BD_MQTT_HOST_KEY];
-//    [[MMKV defaultMMKV] setUInt32:BD_MQTT_PORT forKey:BD_MQTT_PORT_KEY];
-//    [[MMKV defaultMMKV] setString:BD_WEBRTC_STUN_SERVER forKey:BD_WEBRTC_STUN_SERVER_KEY];
-//    [[MMKV defaultMMKV] setString:@"http://127.0.0.1:8000/" forKey:BD_REST_API_HOST_KEY];
     [[NSUserDefaults standardUserDefaults] setValue:@"127.0.0.1" forKey:BD_MQTT_HOST_KEY];
     [[NSUserDefaults standardUserDefaults] setInteger:BD_MQTT_PORT forKey:BD_MQTT_PORT_KEY];
     [[NSUserDefaults standardUserDefaults] setValue:BD_WEBRTC_STUN_SERVER forKey:BD_WEBRTC_STUN_SERVER_KEY];

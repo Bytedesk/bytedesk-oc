@@ -53,8 +53,8 @@
 //    return YES;
 //}
 
-- (void)refresh:(BDMessageModel *)data isAgent:(BOOL)agent{
-    [super refresh:data isAgent:agent];
+- (void)initWithMessageModel:(BDMessageModel *)data{
+    [super initWithMessageModel:data];
 //    NSLog(@"%s %@", __PRETTY_FUNCTION__, self.model.pic_url);
     
     NSString *imageUrl = self.model.image_url;
@@ -83,19 +83,17 @@
     if ([self.model isSend]) {
         imageFrame = CGRectMake(contentInsets.left+2, contentInsets.top, size.width, size.height);
         bubbleFrame = CGRectMake(0, 0, contentInsets.left + size.width + contentInsets.right + 8, contentInsets.top + size.height + contentInsets.bottom + 5);
-//        boundsFrame = CGRectMake(BDScreen.width - bubbleFrame.size.width - 55, 23, bubbleFrame.size.width,  bubbleFrame.size.height);
         boundsFrame = CGRectMake(BDScreen.width - bubbleFrame.size.width, 23, bubbleFrame.size.width,  bubbleFrame.size.height);
     }
     else {
         imageFrame = CGRectMake(contentInsets.left+3, contentInsets.top, size.width, size.height);
         bubbleFrame = CGRectMake(0, 0, contentInsets.left + size.width + contentInsets.right + 8, contentInsets.top + size.height + contentInsets.bottom + 5);
-//        boundsFrame = CGRectMake(50, 40, bubbleFrame.size.width, bubbleFrame.size.height);
         boundsFrame = CGRectMake(0, 40, bubbleFrame.size.width, bubbleFrame.size.height);
     }
     self.frame = boundsFrame;
     
     self.imageView.frame = imageFrame;
-    self.bubbleImageView.frame = bubbleFrame;
+    self.bubbleView.frame = bubbleFrame;
     self.model.contentSize = boundsFrame.size;
 }
 
